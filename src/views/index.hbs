@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    Provincia:
+    <select name="province" id="province">
+        <option disabled selected>Seleccione una provincia</option>
+    </select>
+    Ciudad:
+    <select name="city" id="city" disabled>
+        <option selected disabled>---</option>
+    </select>
+    
+    <script>
+        (async () => {
+            const province = document.querySelector("#province");
+            const city = document.querySelector("#city");
+
+            const responseProvinces = await fetch('http://localhost:3000/provinces');
+            const provinces = await responseProvinces.json();
+
+            provinces.map(p => {
+                let opt = document.createElement('option');
+                opt.value = p._id;
+                opt.innerText = p.showName;
+
+                province.appendChild(opt);
+            })
+
+            province.addEventListener("change", async () => {
+                const currentProvince = province.value;
+                let responseCities = await fetch(`http://localhost:3000/cities/${currentProvince}`);
+                currentCities = await responseCities.json();
+                
+                if(!currentCities) return alert('No existe esa provincia!');
+
+                
+                city.removeAttribute('disabled');
+
+                city.innerHTML = '';
+                let disabledOptCity = document.createElement('option');
+                disabledOptCity.innerHTML = '---';
+                disabledOptCity.setAttribute('disabled', true);
+                disabledOptCity.setAttribute('selected', true);
+                city.appendChild(disabledOptCity);
+
+                currentCities.map( c => {
+                    let opt = document.createElement('option');
+                    opt.value = c._id;
+                    opt.innerText = c.name;
+                    console.log(c);
+                    city.appendChild(opt);
+                })
+            })
+        })()
+    </script>
+</body>
+</html>
