@@ -1,17 +1,20 @@
-require('dotenv').config();
+//Importamos la funcion config de dotenv que puede leer archivos .env
+
+require('dotenv').config(); 
 
 //Constantes a declarar para que tome el index
 const express = require('express');
+const app = express();
 
-//const MongoStore = require ('connect-mongo');
 const db = require('./database');
 
-const {create } = require('express-handlebars')
+
+// Handlebars
+
+const { create } = require('express-handlebars')
 
 const {join} = require('path')
 
-
-const app = express();
 
 //Config de Handlebars
 
@@ -25,9 +28,6 @@ const hbs = create ({
 app.engine('.hbs', hbs.engine)
 app.set('view engine', '.hbs')
 app.set ('views', join(__dirname, 'views'))
-
-
-console.log ("Mensaje de prueba");
 
 const router = express.Router();
 
@@ -65,9 +65,11 @@ router.get('/cities/:id', async (req, res) => {
 
 app.use('/', router);
 
+
 //Conexion al servidor web
 
 app.set('port', process.env.PORT || 3000);
+
 
 app.listen(app.get('port'));
 console.log ('Escuchando el puerto', app.get('port'));

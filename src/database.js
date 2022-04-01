@@ -1,17 +1,16 @@
 
-//Creamos la constante Moongose que requiere del modulo mongoose/
+//Creamos una constante donde importamos mongoose
 const mongoose = require('mongoose');
 
 
-//Especificamos donde se encuentra el servidor mongo
-
-//mongoose.connect('mongodb://192.168.5.54/prueba')
+//Creamos una constante URI esta constante tendra el valor de la variable MONGODB_URI que ya esta importada
+const uri = process.env.MONGODB_URI;
 
 //Realizamos la conexion a la base de datos y sacamos tanto mensaje para caso de error como en caso de conexion satisfactoria
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(uri)
 .then(() => console.log('La base de datos ha sido conectada'))
 .catch(err => console.error(err));
 
 
-//Exportamos todo esto como un modulo que usaremos en otros archivos
+//Exportamos la informacion de la conexion realizada
 module.exports = mongoose.connection;
