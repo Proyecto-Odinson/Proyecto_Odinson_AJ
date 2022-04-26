@@ -6,18 +6,18 @@ const passport = require('passport');
 const { Strategy } = require('passport-local');
 
 //Crearemos una constante user que tendra importado los datos del archivo user.js que contiene el modelo
-const User = require('../models/Users');
+const { User } = require('../models/Users');
 
 //Con las costantes anteriormente creadas usaremos en passport la estrategia local
 //En esta especificamos que se necesitara del campo username y password que tendremos preparados de un formulario
 passport.use('local', new Strategy({
-    usernameField: 'username',
+    usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
 
     //Se verificara si el campo constraseña y password son correctos buscando el usuario introducido
-}, async (req, username, password, done) => {
-    const user = await User.findOne({ username });
+}, async (req, email, password, done) => {
+    const user = await User.findOne({ email });
 
     // En el caso de que la verificacion no sea correcta se devolvera el siguiente error
     if(!user) return done(null, false, req.flash('error', 'El usuario o la contraseña son incorrectos.'));
