@@ -1,6 +1,6 @@
 require('dotenv').config(); //Importamos la funcion config de dotenv que puede leer archivos .env
 const express = require('express'); //Constante express que le importamos express
-const { create } = require('express-handlebars'); // Configiracion de Handlebars para vistas
+const { create } = require('express-handlebars'); // Configiracion de Handlebars para vistas donde create se le importa el valor de express-handlebars
 /**
  * Path es para manejar rutas, y join es para formatear la ruta en el formato del S.O. en uso
  * Ej join('carpeta_padre', 'carpeta_hija')
@@ -9,23 +9,16 @@ const { create } = require('express-handlebars'); // Configiracion de Handlebars
  */
 // Join une dos rutas poniendo la barra correspondiente al S.O. en uso
 const {join} = require('path'); 
-const flash = require('connect-flash');
-const passport = require('passport');
-const MongoStore = require('connect-mongo');
-const session = require('express-session');
-
-const db = require('./database'); //Variable db que tendra el valor del archivo database
-
+const flash = require('connect-flash'); //Flash lo usaremos para avisos y alertas dependiendo del usuario
+const passport = require('passport'); // Importaremos passport a la variable passport, esto lo usaremos para la autenticacion del usuario
+const MongoStore = require('connect-mongo'); // Crearemos la variable Mongostore que tendra el valor de connect-mongo, su uso sera para poder conectar a la BD Mongo
+const session = require('express-session'); // Crearemos la variable sessions que tendra el valor de express-session,  lo usaremos para las sesiones de los usuarios
+const db = require('./database'); //Variable db que tendra el valor del archivo database 
 const app = express(); //Variable app que sera igual a la funcion express
+require ('./config/passport') // Importaremos el archivo passport, que contiene la autenticacion
+const UserRoutes = require('./routes/user.routes'); // Importaremos a UserRoutes la configuracion del archivo user.routes 
 
-require ('./config/passport')
-
-const UserRoutes = require('./routes/user.routes');
-
-const {isLoggedIn} = require('./middlewares/auth')
 //Config de Handlebars
-
-// Configs
 const hbs = create ({
     partialsDir: join(__dirname, 'views', 'partials'),
     layoutsDir: join(__dirname, 'views', 'layouts'), 
@@ -38,14 +31,23 @@ app.set('view engine', '.hbs')
 app.set ('views', join(__dirname, 'views'))
 app.set('port', process.env.PORT || 3000)
 
+
 // Middlewares 
 
-app.use (express.json()); //Config de Express para POST
+//Config de Express para POST
+
+app.use (express.json()); 
 app.use(express.urlencoded({
 extended: false
 }))
-app.use (express.static(join(__dirname,'public'))) //DEFINICION  DE RUTA PUBLIC
+
+//DEFINICION  DE RUTA PUBLIC
+
+app.use (express.static(join(__dirname,'public'))) 
 app.use(flash());
+
+// CONF SESIONES
+
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
@@ -72,6 +74,22 @@ app.use((req, res, next) => {
     app.locals.warningMsg = req.flash('warning');
     next();
 })
+
+//CONF ROUTES
+
+app.use('/', UserRoutes)
+
+
+// Errores
+app.use('*',(req,res) =>  {
+    res.render('error/404.hbs');
+})
+
+// Iniciar servidor
+app.listen(app.get('port'));
+console.log ('Escuchando el puerto', app.get('port'));
+
+
 
 
 /*
@@ -123,23 +141,3 @@ router.get('/cities/:id', async (req, res) => {
 })
 
 */
-
-//CONF ROUTES
-
-app.use('/', UserRoutes)
-const router = express.Router();
-
-router.get('/', isLoggedIn, (req,res) => {
-    res.render('home')
-})
-
-app.use('/', router);
-
-// Errores
-app.use('*',(req,res) =>  {
-    res.render('error/404.hbs');
-})
-
-// Iniciar servidor
-app.listen(app.get('port'));
-console.log ('Escuchando el puerto', app.get('port'));

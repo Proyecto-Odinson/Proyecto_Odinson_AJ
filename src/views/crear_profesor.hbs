@@ -1,0 +1,137 @@
+<!-- Content pagina -->
+<div class="container-fluid">
+	<div class="page-header">
+		<h1 class="text-titles"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i> Registro <small>Profesor</small></h1>
+	</div>
+	<p class="lead">Rellenando este formulario podremos añadir al sistema a un nuevo profesor.Este proceso solo podrá realizarlo el administrador y profesores del centro.</p>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-12">
+			<ul class="nav nav-tabs" style="margin-bottom: 15px;">
+				<li class="active"><a href="#new" data-toggle="tab">Nuevo</a></li>
+				<li><a href="#list" data-toggle="tab">Listado de Profesores</a></li>
+			</ul>
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane fade active in" id="new">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-xs-12 col-md-10 col-md-offset-1">
+								<form method="post" action="/crear_profesor">
+									<div class="form-group label-floating">
+										<label class="control-label">Nombre</label>
+										<input class="form-control" name="firstName" type="text">
+									</div>
+									<div class="form-group label-floating">
+										<label class="control-label">Apellidos</label>
+										<input class="form-control" name="lastname"  type="text">
+									</div>
+									<div class="form-group label-floating">
+										<label class="control-label">Codigo profesor</label>
+										<input class="form-control" name="codigo" type="text">
+										</div>
+									<div class="form-group label-floating">
+										<label class="control-label">email</label>
+										<input class="form-control" name="email" type="email">
+										</div>
+									<div class="form-group label-floating">
+										<label class="control-label">Contraseña</label>
+										<input class="form-control" name="password" type="password">
+										</div>
+									<div class="form-group label-floating">
+										<label class="control-label">Escriba de nuevo su contraseña</label>
+										<input class="form-control" name="password2" type="password">
+										</div>
+									<div class="form-group label-floating">
+										<label class="control-label">telefono</label>
+										<textarea class="form-control" name="phone" ></textarea>
+									</div>
+									<div class="form-group label-floating">
+										<label class="control-label">telefono opcional</label>
+										<textarea class="form-control" name="phone2" ></textarea>
+									</div>
+									<div class="form-group">
+										<label class="control-label">Tutor</label>
+										<select class="form-control" name="tutor"  >
+											<option>Si</option>
+											<option>No</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label class="control-label">Etapa</label>
+										<select class="form-control" name="etapa" >
+											<option>E.S.O</option>
+											<option>Bachillerato</option>
+											<option>FP GRADO MEDIO</option>
+											<option>FP GRADO SUPERIOR</option>
+										</select>
+									<div class="form-group label-floating">
+										<label class="control-label">Nombre curso:</label>
+										<textarea class="form-control" name="nombre_curso" ></textarea>
+										</div>
+									<div class="form-group">
+										<label class="control-label">Curso</label>
+										<select class="form-control" name="curso" >
+											<option>1º</option>
+											<option>2º</option>
+											<option>3º</option>
+											<option>4º</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label  class="control-label">Año</label>
+										<select class="form-control" name="year" >
+											<option>2021-2022</option>
+											<option>2022-2023</option>
+											<option>2024-2025</option>
+											<option>2026-2027</option>
+											<option>2027-2028</option>
+										</select>
+									<!--Direccion-->
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">calle</label>
+										<textarea class="form-control" name="calle" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">tipo_via</label>
+										<textarea class="form-control" name="tipo_via" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">n_via</label>
+										<textarea class="form-control" name="n_via" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">portal</label>
+										<textarea class="form-control" name="portal" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">puerta</label>
+										<textarea class="form-control" name="puerta" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">escalera</label>
+										<textarea class="form-control" name="escalera" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">bloque</label>
+										<textarea class="form-control" name="bloque" ></textarea>
+									</div>
+									
+									<p class="text-center">
+										<button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i> Save</button>
+									</p>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="list">
+					<div class="table-responsive">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
