@@ -1,4 +1,5 @@
 const { User, Profesor, Alumno } = require('../models/Users');
+const Users = require('../models/Users');
 
 const renderLoginForm = (req, res) => {
     res.render('signin', { layout: 'vacio' });
@@ -67,7 +68,7 @@ const crearProfesor = async (req, res) => {
         return res.render('signup', { firstName, lastName, username });
     }
 
-    //const username = firstName.slice(0,2) + lastName.slice(0,2);
+    const username = firstName.slice(0,2) + lastName.slice(0,2);
 
     const newProfesor = Profesor({
         email,

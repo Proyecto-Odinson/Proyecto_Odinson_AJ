@@ -8,6 +8,7 @@ const { isLoggedIn, role} = require('../middlewares/auth');
 
 router.get('/', isLoggedIn, (req,res) => {
     res.render('home')
+    console.log(req.user);
 });
 router.get('/signin', renderLoginForm);
 router.post('/signin', passport.authenticate('local', {

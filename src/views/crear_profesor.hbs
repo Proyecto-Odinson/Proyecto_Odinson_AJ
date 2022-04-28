@@ -117,7 +117,18 @@
 										<label class="control-label">bloque</label>
 										<textarea class="form-control" name="bloque" ></textarea>
 									</div>
-									
+									<!--PROVINCIA Y LOCALIDAD-->
+									<div class="form-group">
+										<label  class="control-label">Provincia</label>
+										<select class="form-control" name="province" id="province">
+											<option disabled selected>Seleccione una provincia</option>
+										</select>
+
+									<div class="form-group">
+										<label  class="control-label">Provincia</label>
+										<select class="form-control" name="city" id="city" >
+											<option selected disabled>---</option>
+										</select>
 									<p class="text-center">
 										<button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i> Save</button>
 									</p>
@@ -135,3 +146,41 @@
 		</div>
 	</div>
 </div>
+
+<script>
+
+	(async () => {
+            const province = document.querySelector("#province");
+            const city = document.querySelector("#city");
+            const responseProvinces = await fetch('/select_province');
+            const provinces = await responseProvinces.json();
+            provinces.map(p => {
+                let opt = document.createElement('option');
+                opt.value = p._id;
+                opt.innerText = p.showName;
+                province.appendChild(opt);
+            })
+            province.addEventListener("change", async () => {
+                const currentProvince = province.value;
+                let responseCities = await fetch(`http://localhost:3000/cities/${currentProvince}`);
+                currentCities = await responseCities.json();
+                
+                if(!currentCities) return alert('No existe esa provincia!');
+                
+                city.removeAttribute('disabled');
+                city.innerHTML = '';
+                let disabledOptCity = document.createElement('option');
+                disabledOptCity.innerHTML = '---';
+                disabledOptCity.setAttribute('disabled', true);
+                disabledOptCity.setAttribute('selected', true);
+                city.appendChild(disabledOptCity);
+                currentCities.map( c => {
+                    let opt = document.createElement('option');
+                    opt.value = c._id;
+                    opt.innerText = c.name;
+                    console.log(c);
+                    city.appendChild(opt);
+                })
+            })
+        })()
+</script>

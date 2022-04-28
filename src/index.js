@@ -17,6 +17,7 @@ const db = require('./database'); //Variable db que tendra el valor del archivo 
 const app = express(); //Variable app que sera igual a la funcion express
 require ('./config/passport') // Importaremos el archivo passport, que contiene la autenticacion
 const UserRoutes = require('./routes/user.routes'); // Importaremos a UserRoutes la configuracion del archivo user.routes 
+const ProvincesRoutes = require('./routes/province.routes');
 
 //Config de Handlebars
 const hbs = create ({
@@ -77,8 +78,8 @@ app.use((req, res, next) => {
 
 //CONF ROUTES
 
-app.use('/', UserRoutes)
-
+app.use('/', UserRoutes);
+app.use('/', ProvincesRoutes);
 
 // Errores
 app.use('*',(req,res) =>  {
@@ -91,20 +92,12 @@ console.log ('Escuchando el puerto', app.get('port'));
 
 
 
-
 /*
-
 
 const Province = require('./models/provinces');
 const City = require('./models/cities');
 const req = require('express/lib/request');
 const res = require('express/lib/response');
-
-
-
-//ROUTES POST
-
-
 
 
 //ROUTES GET PARA INDEX
