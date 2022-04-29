@@ -54,34 +54,61 @@ const renderCreateAlumno = (req, res) => {
 }
 
 const crearProfesor = async (req, res) => {
-    const {firstName, lastName, email, password, password2 } = req.body;
+    const { password, password2,  firstName,  lastName, email, email2, phone, phone2, calle, tipo_via,
+             nombre_via, n_via, portal, puerta, escalera, bloque, province, city , jefe_departamento, codigo, tutor} = req.body;
 
-    const user = await User.findOne({ email });
+    const profesor = await Profesor.findOne({ email });
 
-    if(user) {
+    if(profesor) {
         req.flash('error', 'El nombre de usuario ya está en uso.');
         return res.render('signup', { firstName, lastName });
     }
 
     if(password !== password2) {
         req.flash('error', 'Las contraseñas no coinciden.');
-        return res.render('signup', { firstName, lastName, username });
+        return res.redirect('/crear_profesor');
     }
 
-    const username = firstName.slice(0,2) + lastName.slice(0,2);
+    const username = (firstName.slice(0,2) + lastName.slice(0,2)).toLowerCase();
 
     const newProfesor = Profesor({
         email,
+        password, 
+        firstName,
+        lastName,
+        username,
+        email, 
+        email2, 
+        phone, 
+        phone2, 
+        calle, 
+        tipo_via,    
+        nombre_via,
+        n_via, 
+        portal,
+        puerta,
+        escalera,
+        bloque,
+        province,
+        city,
+        jefe_departamento: Boolean(jefe_departamento),
+        codigo, 
+        tutor: Boolean(tutor)
     });
 
     await newProfesor.save();
 
     req.flash('success', 'Se ha creado correctamente su cuenta.');
-    res.redirect('/signin');
+    res.redirect('/profesores');
+}
+
+const getAllProfesores = async (req, res) => {
+
+    const profesores = await Profesor.find().lean();
+
+    res.render('profesores', { profesores });
 }
     
-
-
 module.exports = {
     renderLoginForm,
     renderSignupForm,
@@ -89,6 +116,7 @@ module.exports = {
     signup,
     renderCreateProfesor,
     renderCreateAlumno,
-    crearProfesor
+    crearProfesor,
+    getAllProfesores
 }
 

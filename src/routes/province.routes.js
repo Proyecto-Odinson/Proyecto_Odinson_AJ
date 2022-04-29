@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { findAllProvinceAsync, findCitiesFromProvince } = require('../controllers/province.controllers');
+const {findAllProvinceAsync, findCitiesFromProvince } = require('../controllers/province.controllers');
 const Provinces = require('../models/Provinces');
 
 router.get('/select_province', findAllProvinceAsync)
