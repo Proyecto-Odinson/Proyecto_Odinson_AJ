@@ -16,8 +16,12 @@ const session = require('express-session'); // Crearemos la variable sessions qu
 const db = require('./database'); //Variable db que tendra el valor del archivo database 
 const app = express(); //Variable app que sera igual a la funcion express
 require ('./config/passport') // Importaremos el archivo passport, que contiene la autenticacion
+const morgan = require('morgan');
+
 const UserRoutes = require('./routes/user.routes'); // Importaremos a UserRoutes la configuracion del archivo user.routes 
 const ProvincesRoutes = require('./routes/province.routes');
+const CiclosRoutes = require('./routes/ciclos.routes');
+const AsignaturasRoutes = require('./routes/asignaturas.routes');
 
 //Config de Handlebars
 const hbs = create ({
@@ -37,6 +41,7 @@ app.set('port', process.env.PORT || 3000)
 
 //Config de Express para POST
 
+app.use(morgan('dev'));
 app.use (express.json()); 
 app.use(express.urlencoded({
 extended: false
@@ -80,6 +85,8 @@ app.use((req, res, next) => {
 
 app.use('/', UserRoutes);
 app.use('/', ProvincesRoutes);
+app.use('/', CiclosRoutes);
+app.use('/', AsignaturasRoutes);
 
 // Errores
 app.use('*',(req,res) =>  {

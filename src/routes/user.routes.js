@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const { renderLoginForm, renderSignupForm, logout, crearProfesor, signup, renderCreateProfesor, renderCreateAlumno, getAllProfesores } = require('../controllers/users.controllers');
+const { renderLoginForm, renderSignupForm, logout, crearProfesor, signup, renderCreateProfesor, renderCreateAlumno, getAllProfesores, crearAlumnno, getAllAlumnos } = require('../controllers/users.controllers');
 
 const { isLoggedIn, role} = require('../middlewares/auth');
 
@@ -18,15 +18,16 @@ router.post('/signin', passport.authenticate('local', {
 }));
 router.get('/signup', renderSignupForm);
 router.post('/signup', signup);
-
 router.get('/logout', logout);
+
+
 router.get('/crear_profesor', isLoggedIn, role(), renderCreateProfesor);
 router.get('/crear_alumno', isLoggedIn, role(), renderCreateAlumno  )
 
 router.post('/crear_profesor', isLoggedIn, role(), crearProfesor )
-
-// CREACION PROFESORES
-
 router.get('/profesores',  isLoggedIn, role() , getAllProfesores)
+
+router.post('/crear_alumno', isLoggedIn, role(), crearAlumnno )
+router.get('/alumnos',  isLoggedIn, role() , getAllAlumnos)
 
 module.exports = router;
