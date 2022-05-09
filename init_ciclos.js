@@ -49,7 +49,7 @@ async function initData() {
         await newfp.save();
     })
     
-    const GradosSuperioresFP = ['ASIR','DAW','DAW'];
+    const GradosSuperioresFP = ['ASIR','DAW','DAM'];
     GradosSuperioresFP.map(async c => {
         const newfp = new fp({
             etapa: GRADO_SUPERIOR._id,

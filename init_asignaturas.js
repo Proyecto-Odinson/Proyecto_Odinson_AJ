@@ -13,22 +13,22 @@ async function initData() {
     const findProfesorAndrea = await Profesor.findOne({ firstName: "Andrea" })
     const findProfesorJose = await Profesor.findOne({ firstName: "Jose" })
 
-    const findFPASIR = await fp.findOne({ falsembre_fp: "ASIR"})
-    const findFDAW = await fp.findOne({ falsembre_fp: "DAW"})
-    const findFDAM = await fp.findOne({ falsembre_fp: "DAM"})
-    const findFPSMR = await fp.findOne({ falsembre_fp: "SMR"})
+    const findFPASIR = await fp.findOne({ nombre_fp: "ASIR"})
+    const findFDAW = await fp.findOne({ nombre_fp: "DAW"})
+    const findFDAM = await fp.findOne({ nombre_fp: "DAM"})
+    const findFPSMR = await fp.findOne({ nombre_fp: "SMR"})
 
 
-    const findEtapaSuperior = await etapa.findOne({ falsembre_etapa: "GRADO_SUPERIOR"})
-    const findEtapaMedio = await etapa.findOne({ falsembre_etapa: "GRADO_MEDIO"})
-    const findEtapaESO = await etapa.findOne({ falsembre_etapa: "ESO"})
-    const findEtapaBachiller = await etapa.findOne({ falsembre_etapa: "BACHILLER"})
+    const findEtapaSuperior = await etapa.findOne({ nombre_etapa: "GRADO_SUPERIOR"})
+    const findEtapaMedio = await etapa.findOne({ nombre_etapa: "GRADO_MEDIO"})
+    const findEtapaESO = await etapa.findOne({ nombre_etapa: "ESO"})
+    const findEtapaBachiller = await etapa.findOne({ nombre_etapa: "BACHILLER"})
 
     //ASIGNATURAS SMR GRADO MEDIO 1ºAÑO
 
     const SistemasSMR1 = new asignaturas({
 
-        nombre_asignatura: 'Sistemas Operativos Mofalsepuesto',
+        nombre_asignatura: 'Sistemas Operativos Monopuesto',
         siglas: 'SOM',
         curso: 1,
         horario: [
@@ -256,7 +256,7 @@ async function initData() {
 
     const SeguridadSMR2 = new asignaturas({
 
-        nombre_asignatura: 'Montajes y Mantenimientos de Equipos',
+        nombre_asignatura: 'Seguridad',
         siglas: 'SAD',
         curso: 2,
         horario: [
@@ -648,7 +648,7 @@ async function initData() {
 
     const Entorfalse_Desarollo_DAM1 = new asignaturas({
 
-        nombre_asignatura: 'Entorfalse de Desarollo',
+        nombre_asignatura: 'Entornos de Desarollo',
         siglas: 'ED',
         curso: 1,
         horario: [
@@ -860,7 +860,7 @@ async function initData() {
 
     const Entorfalses_Desarollo_DAW1 = new asignaturas({
 
-        nombre_asignatura: 'Entorfalses de Desarollo',
+        nombre_asignatura: 'Entornos  de Desarollo',
         siglas: 'ED',
         curso: 1,
         horario: [
@@ -1002,7 +1002,7 @@ async function initData() {
 
     const Desarollo_web_DAW2 = new asignaturas({
 
-        nombre_asignatura: 'Desarollo web en entorfalse cliente',
+        nombre_asignatura: 'Desarollo web en entornos cliente',
         siglas: 'DWEC',
         curso: 2,
         horario: [
@@ -1037,7 +1037,7 @@ async function initData() {
 
     const Desarollo_web_servidor_DAW2 = new asignaturas({
 
-        nombre_asignatura: 'Desarollo web en entorfalse servidor',
+        nombre_asignatura: 'Desarollo web en entornos de servidor',
         siglas: 'DWES',
         curso: 2,
         horario: [
@@ -1120,7 +1120,7 @@ async function initData() {
 
     const TIC_ESO1 = new asignaturas({
 
-        nombre_asignatura: 'Tecfalselogias de la informacion y Comunicacion',
+        nombre_asignatura: 'Tecnologias de la informacion y Comunicacion ESO1 ',
         siglas: 'TIC',
         curso: 1,
         horario: [
@@ -1145,7 +1145,7 @@ async function initData() {
 
     const TIC_ESO2 = new asignaturas({
 
-        nombre_asignatura: 'Tecfalselogias de la informacion y Comunicacion',
+        nombre_asignatura: 'Tecnologias de la informacion y Comunicacion ESO2',
         siglas: 'TIC',
         curso: 2,
         horario: [
@@ -1170,7 +1170,7 @@ async function initData() {
 
     const TIC_ESO3 = new asignaturas({
 
-        nombre_asignatura: 'Tecfalselogias de la informacion y Comunicacion',
+        nombre_asignatura: 'Tecnologias de la informacion y Comunicacion ESO3',
         siglas: 'TIC',
         curso: 3,
         horario: [
@@ -1195,7 +1195,7 @@ async function initData() {
 
     const TIC_ESO4 = new asignaturas({
 
-        nombre_asignatura: 'Tecfalselogias de la informacion y Comunicacion',
+        nombre_asignatura: 'Tecnologias de la informacion y Comunicacion ESO4 ',
         siglas: 'TIC',
         curso: 4,
         horario: [
@@ -1223,7 +1223,7 @@ async function initData() {
 
     const BACHILLER_TIC_1 = new asignaturas({
 
-        nombre_asignatura: 'Tecfalselogias de la informacion y Comunicacion',
+        nombre_asignatura: 'Tecnologias de la informacion y Comunicacion BACH1',
         siglas: 'TIC',
         curso: 1,
         horario: [
@@ -1248,7 +1248,7 @@ async function initData() {
     
     const BACHILLER_TIC_2 = new asignaturas({
 
-        nombre_asignatura: 'Tecfalselogias de la informacion y Comunicacion',
+        nombre_asignatura: 'Tecnologias de la informacion y Comunicacion BACH2 ',
         siglas: 'TIC',
         curso: 2,
         horario: [

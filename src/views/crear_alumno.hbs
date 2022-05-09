@@ -65,15 +65,15 @@
                     <label class="control-label">telefono opcional</label>
                     <input class="form-control" name="phone2" type="text" />
                   </div>
-                  <!-- asignaturaS -->
+                  <!-- ASIGNATURAS -->
                 <div class="form-group">
 										<label  class="control-label">Etapa</label>
 										<select class="form-control" name="nombre_etapa" id="nombre_etapa">
 											<option disabled selected>Seleccione una de las etapas</option>
 										</select>
 									<div class="form-group">
-										<label  class="control-label">Indique el nombre del asignatura</label>
-										<select class="form-control" name="nombre_fp" id="nombre_fp">
+										<label  class="control-label">Indique el FP al cual se quiere matrricular</label>
+										<select class="form-control" name="nombre_fp" id="nombre_fp" disabled>
 											<option selected disabled>---</option>
 										</select>
                   <div class="form-group">
@@ -84,11 +84,11 @@
                   </div>
                    <div class="form-group">
                     <label class="control-label">Asigne las asignaturas a las cuales se va a matricular</label>
-                    <select class="form-control" name="asignaturas" id="asignaturas">
+                    <select class="form-control" name="asignaturas" id="asignaturas" multiple>
 	                      <option selected disabled>---</option> 
                       </select>
                   </div>
-                  
+
                   <div class="zmdi zmdi-calendar-check">
                     <label class="zmdi zmdi-calendar-check">Seleccione su año academico</label>
 
@@ -102,6 +102,7 @@
                   </div> 
 
                   <!--DIRECCION-->
+                  
 										<div class="form-group label-floating">
 										<label class="control-label">calle</label>
 										<textarea class="form-control" name="calle" ></textarea>
@@ -163,6 +164,7 @@
             const province = document.querySelector("#province");
             const city = document.querySelector("#city");
             const responseProvinces = await fetch('/select_province');
+
             const provinces = await responseProvinces.json();
             provinces.map(p => {
                 let opt = document.createElement('option');
@@ -196,11 +198,12 @@
 </script> 
 
 
-<!--SCRIPT PARA asignaturaS -->
+<!--SCRIPT PARA FP   -->
 
 <script>
 
 	(async () => {
+
             const etapaEl = document.querySelector("#nombre_etapa");
             const n_cursosEl = document.querySelector("#n_cursos");
             const fp = document.querySelector("#nombre_fp");
@@ -217,8 +220,20 @@
             etapaEl.addEventListener("change", async (event) => {
               const currentEtapa = etapaEl.value;
               const n_cursos_etapa = event.target.options[event.target.selectedIndex].dataset.cursos;
+
+
               let responseFP = await fetch(`/select_fp/${currentEtapa}`);
               currentFP = await responseFP.json();
+
+              console.log(currentFP.length > 0)
+
+              if(currentFP.length > 0) {
+                console.log('Enabled')
+                fp.disabled = false;
+              } else {
+                console.log('Disabled')
+                fp.disabled = true
+              }
 
               n_cursosEl.innerHTML = '';
 
@@ -237,7 +252,6 @@
               
               if(!currentFP) return alert('No existe ese FP!');
               
-              fp.removeAttribute('disabled');
               fp.innerHTML = '';
               let disabledOptFP = document.createElement('option');
               disabledOptFP.innerHTML = '---';
@@ -281,13 +295,14 @@
 </script> 
 
 
-<!--SCRIPT PARA ASIGNATURAS -->
+<!--SCRIPT PARA ASIGNATURAS  -->
 
 <script>
 
 	(async () => {
             const asignaturas_el = document.querySelector("#asignaturas");
             const ciclo_el = document.querySelector("#nombre_fp");
+            const etapa_el = document.querySelector('#nombre_etapa')
             const cursos_el = document.querySelector("#n_cursos")
 
             const responseAsignaturas = await fetch('/select_asignaturas');
@@ -300,8 +315,13 @@
             })
 
             cursos_el.addEventListener("change", async () => {
-                const currentciclos = ciclo_el.value;
-                const url = `/select_asignaturas/${currentciclos}`;
+                const selectedCurso = cursos_el.value;
+                let currentCurso = ciclo_el.value;
+                let url = `/select_asignaturas/${currentCurso}/${selectedCurso}`;
+                if(currentCurso === '---') {
+                  currentCurso = etapa_el.value;
+                  url = `/select_asignaturas_nofp/${currentCurso}/${selectedCurso}`;
+                }
                 let responseasignatura = await fetch(url);
                 responseasignatura = await responseasignatura.json();
 
@@ -323,13 +343,9 @@
 
             })
 
-            /*currentasignatura.addEventListener("change", async() => {
-
-                      const currentCurso = cursos_el.value;
-                      let responseCurso = awai
-
-                  })*/
-
-
         })()
 </script> 
+
+
+  
+

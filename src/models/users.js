@@ -62,8 +62,8 @@ const AlumnoSchema = new Schema({
         {
             asignatura: { type: Schema.Types.ObjectId, ref: 'Asignatura', required: true },
             trimestre:{ type: Number},
-            a_escolar: { type: String},
-            nota: {type: Number},
+            a_escolar: { type: String },
+            nota: {type: Number}
         }
     ],
     asignaturas: [{ type: Schema.Types.ObjectId, ref: 'Asignatura', required: false }],

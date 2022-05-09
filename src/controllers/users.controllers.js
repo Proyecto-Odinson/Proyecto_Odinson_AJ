@@ -1,7 +1,5 @@
 const { User, Profesor, Alumno } = require('../models/Users');
 
-const asignaturas = require ('../models/asignaturas')
-
 const renderLoginForm = (req, res) => {
     res.render('signin', { layout: 'vacio' });
 }
@@ -109,7 +107,7 @@ const crearProfesor = async (req, res) => {
 
 const crearAlumnno = async (req, res) => {
     const { password, password2,  firstName,  lastName, email, email2, phone, phone2, calle, tipo_via,
-            n_via, portal, puerta, escalera, bloque, province, city, n_expediente, DNI, autorizacion_datos, fecha_nac, asignaturas } = req.body;
+            n_via, portal, puerta, escalera, bloque, province, city, n_expediente, DNI, autorizacion_datos, fecha_nac, asignaturas, nombre_etapa, nombre_fp, n_cursos} = req.body;
 
     const alumno = await Alumno.findOne({ email });
 
@@ -148,19 +146,26 @@ const crearAlumnno = async (req, res) => {
         DNI,
         autorizacion_datos, 
         fecha_nac,
-        asignaturas: [asignaturas]
+        etapa: nombre_etapa,
+        fp: nombre_fp,
+        asignaturas: asignaturas,
 
     });
 
+    
     try {
         await newAlumno.save();
         req.flash('success', 'Se ha creado correctamente su cuenta.');
+        console.log(newAlumno)
         return res.redirect('/alumnos');
     } catch (error) {
         req.flash('error', 'No se ha podido crear el usuario');
+        console.log(error)
         return res.redirect('/crear_alumno');
     }
 }
+
+
 
 // LISTADO DE PROFESORES Y ALUMNOS
 

@@ -22,6 +22,7 @@ const UserRoutes = require('./routes/user.routes'); // Importaremos a UserRoutes
 const ProvincesRoutes = require('./routes/province.routes');
 const CiclosRoutes = require('./routes/ciclos.routes');
 const AsignaturasRoutes = require('./routes/asignaturas.routes');
+const nofpRoutes = require('./routes/nofp.routes')
 
 //Config de Handlebars
 const hbs = create ({
@@ -87,6 +88,7 @@ app.use('/', UserRoutes);
 app.use('/', ProvincesRoutes);
 app.use('/', CiclosRoutes);
 app.use('/', AsignaturasRoutes);
+app.use('/', nofpRoutes);
 
 // Errores
 app.use('*',(req,res) =>  {
