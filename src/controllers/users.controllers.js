@@ -95,6 +95,7 @@ const crearProfesor = async (req, res) => {
         jefe_departamento: Boolean(jefe_departamento),
         codigo, 
         tutor: Boolean(tutor)
+        
     });
 
     await newProfesor.save();
@@ -166,8 +167,6 @@ const crearAlumnno = async (req, res) => {
     }
 }
 
-
-
 // LISTADO DE PROFESORES Y ALUMNOS
 
 const getAllProfesores = async (req, res) => {
@@ -185,7 +184,6 @@ const getAllAlumnos = async (req, res) => {
     res.render('alumnos', { alumno });
    
 }
-
 
 module.exports = {
     renderLoginForm,

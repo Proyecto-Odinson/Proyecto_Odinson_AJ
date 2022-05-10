@@ -1,0 +1,163 @@
+<!-- Content pagina -->
+<div class="container-fluid">
+  <div class="page-header">
+    <h1 class="text-titles"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i>Registro<small>FCT</small></h1>
+  </div>
+  <p class="lead">Rellenando el siguiente formulario podremos crear una FCT para un alumno de 2º. 
+   Este proceso solo podrá realizarlo el administrador.</p>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+        <li class="active"><a href="/registrar_FCT" data-toggle="tab">Nuevo</a></li>
+        <li><a href="/alumnos_FCT">Listado de Alumnos en FCT</a></li>
+      </ul>
+      <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active in" id="new">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xs-12 col-md-10 col-md-offset-1">
+                <form method="post">
+                  <div class="form-group">
+					<label  class="control-label">Eliga su empresa</label>
+					  <select class="form-control" name="empresa" id="empresa" >
+                          {{#each empresas as | Empresas |}}
+                          <option value="{{Empresas.name}}"> {{Empresas.name}} </option>
+                          {{/each}}
+                     </select>
+                     </div>
+                  <div class="form-group label-floating">
+                    <label class="control-label">Familia Profesional</label>
+                    <input class="form-control" name="familia_profesional" id="familia_profesional" type="text" />
+                  </div>
+                  <div class="form-group label-floating">
+                    <label class="control-label">NIF</label>
+                    <input class="form-control" name="NIF" id="NIF" type="text" />
+                  </div>
+				       <div class="form-group label-floating">
+					          <label class="control-label">email</label>
+				          	<input class="form-control" name="email" id="email" type="email">
+					    </div>
+  
+                  <div class="form-group label-floating">
+                    <label class="control-label">telefono</label>
+                    <input class="form-control" name="phone" id="phone" type="text" />
+                  </div>
+                   <div class="form-group label-floating">
+                    <label class="control-label">telefono opcional</label>
+                    <input class="form-control" name="phone2" id="phone2" type="text" />
+                  </div>
+                    <div class="form-group label-floating">
+                    <label class="control-label">FAX</label>
+                    <input class="form-control" name="FAX" id="FAX" type="text" />
+                  </div>
+                    <div class="form-group label-floating">
+                    <label class="control-label">Actividad</label>
+                    <input class="form-control" name="actividad" id="actividad" type="text" />
+                  </div>
+                    <div class="form-group label-floating">
+                    <label class="control-label">Representante de certificado digital</label>
+                    <input class="form-control" name="Representante_certificado_digital" id="Representante_certificado_digital" type="text" />
+                  </div>
+
+                  <!--DIRECCION-->
+                  
+										<div class="form-group label-floating">
+										<label class="control-label">calle</label>
+										<textarea class="form-control" name="calle" id="calle" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">tipo_via</label>
+										<textarea class="form-control" name="tipo_via" id="tipo_via"></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">n_via</label>
+										<textarea class="form-control" name="n_via" id="n_via" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">portal</label>
+										<textarea class="form-control" name="portal" id="portal"></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">puerta</label>
+										<textarea class="form-control" name="puerta" id="puerta"></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">escalera</label>
+										<textarea class="form-control" name="escalera" id="escalera"></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">bloque</label>
+										<textarea class="form-control" name="bloque" id="bloque" ></textarea>
+									</div>
+                  	                <div class="form-group label-floating">
+										<label class="control-label">Codigo Postal</label>
+										<textarea class="form-control" name="codigo_postal" id="codigo postal"></textarea>
+									</div>
+                  
+									<!--PROVINCIA Y LOCALIDAD-->
+									<div class="form-group">
+										<label  class="control-label">Provincia</label>
+										<select class="form-control" name="province" id="province">
+											<option disabled selected>Seleccione una provincia</option>
+										</select>
+
+									<div class="form-group">
+										<label  class="control-label">Localidad</label>
+										<select class="form-control" name="city" id="city" >
+											<option selected disabled>---</option>
+										</select>
+                  <p class="text-center">
+                    <button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i>Save</button>
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--SCRIPT PARA LOCALIDAD Y PROVINCIA-->
+
+<script>
+
+	(async () => {
+            const province = document.querySelector("#province");
+            const city = document.querySelector("#city");
+            const responseProvinces = await fetch('/select_province');
+
+            const provinces = await responseProvinces.json();
+            provinces.map(p => {
+                let opt = document.createElement('option');
+                opt.value = p._id;
+                opt.innerText = p.showName;
+                province.appendChild(opt);
+            })
+            province.addEventListener("change", async () => {
+                const currentProvince = province.value;
+                let responseCities = await fetch(`/select_city/${currentProvince}`);
+                currentCities = await responseCities.json();
+                
+                if(!currentCities) return alert('No existe esa provincia!');
+                
+                city.removeAttribute('disabled');
+                city.innerHTML = '';
+                let disabledOptCity = document.createElement('option');
+                disabledOptCity.innerHTML = '---';
+                disabledOptCity.setAttribute('disabled', true);
+                disabledOptCity.setAttribute('selected', true);
+                city.appendChild(disabledOptCity);
+                currentCities.map( c => {
+                    let opt = document.createElement('option');
+                    opt.value = c._id;
+                    opt.innerText = c.name;
+                    console.log(c);
+                    city.appendChild(opt);
+                })
+            })
+        })()
+</script> 

@@ -52,11 +52,31 @@
 									</div>
 									<div class="form-group">
 										<label class="control-label">Tutor</label>
-										<select class="form-control" name="tutor"  >
-											<option value="true">Si</option>
-											<option value="false">No</option>
+										<select class="form-control" name="tutor" id="tutor"  >
+										   <option value="si">si</option>
+										   <option value="no">no</option>
+										</select>
+
+									<div class="form-group">
+										<label class="control-label">Etapa del tutor</label>
+										<select class="form-control" name="tutor_etapa" id="tutor_etapa"  >
+										   <option disabled selected>-----</option>>
+										</select>
+
+									<div class="form-group">
+										<label class="control-label">Ciclo o curso del tutor</label>
+										<select class="form-control" name="tutor_ciclo" id="tutor_ciclo"  >
+										   <option disabled selected>-----</option>
 										</select>
 									</div>
+									
+									<div class="form-group">
+										<label class="control-label"> Numero del curso tutor </label>
+										<select class="form-control" name="tutor_curso" id="tutor_curso"  >
+										   <option disabled selected>-----</option>
+										</select>
+									</div>
+
 									<div class="form-group">
 										<label class="control-label">Jefe de departamento</label>
 										<select class="form-control" name="jefe_departamento">
@@ -162,4 +182,103 @@
                 })
             })
         })()
+</script> 
+
+
+<!-- SCRIPT PARA TUTOR -->
+
+<script>
+
+(async () => {
+
+            const tutor_el = document.querySelector("#tutor");
+            const tutor_etapa_el = document.querySelector("#tutor_etapa");
+			const tutor_ciclo_el = document.querySelector("#tutor_ciclo");
+            const tutor_curso_el = document.querySelector("#tutor_curso");
+
+            const responseEtapa  = await fetch('/select_etapa');
+            const etapa = await responseEtapa.json();
+            etapa.map(e => {
+                let opt = document.createElement('option');
+                opt.value = e._id;
+                opt.dataset.cursos = e.n_cursos;
+                opt.innerText = e.nombre_etapa;
+                tutor_etapa_el.appendChild(opt);
+            })
+
+            etapaEl.addEventListener("change", async (event) => {
+              const currentEtapa = etapaEl.value;
+              const n_cursos_etapa = event.target.options[event.target.selectedIndex].dataset.cursos;
+
+
+              let responseFP = await fetch(`/select_fp/${currentEtapa}`);
+              currentFP = await responseFP.json();
+
+              console.log(currentFP.length > 0)
+
+              if(currentFP.length > 0) {
+                console.log('Enabled')
+                fp.disabled = false;
+              } else {
+                console.log('Disabled')
+                fp.disabled = true
+              }
+
+              n_cursosEl.innerHTML = '';
+
+              let disabledCurso = document.createElement('option');
+              disabledCurso.innerText = '---';
+              disabledCurso.setAttribute('disabled', true);
+              disabledCurso.setAttribute('selected', true);
+              n_cursosEl.appendChild(disabledCurso);
+
+              for(let i = 1; i <= parseInt(n_cursos_etapa); i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.innerText = `${i}º`;
+                n_cursosEl.appendChild(opt);
+              }
+              
+              if(!currentFP) return alert('No existe ese FP!');
+              
+              fp.innerHTML = '';
+              let disabledOptFP = document.createElement('option');
+              disabledOptFP.innerHTML = '---';
+              disabledOptFP.setAttribute('disabled', true);
+              disabledOptFP.setAttribute('selected', true);
+              fp.appendChild(disabledOptFP);
+              currentFP.map( f => {
+                  let opt = document.createElement('option');
+                  opt.value = f._id;
+                  opt.innerText = f.nombre_fp;
+                  fp.appendChild(opt);
+              })
+            })
+
+            etapaEl.addEventListener("change", async () => {
+                const currentEtapa = etapaEl.value;
+                let responseCursos = await fetch(`/select_cursos/${currentEtapa}`);
+                responseCursos = await responseCursos.json();
+                
+                if(!responseCursos) return alert('No existe ese Curso');
+                
+                fp.removeAttribute('disabled');
+                fp.innerHTML = '';
+                let disabledOptFP = document.createElement('option');
+                disabledOptFP.innerHTML = '---';
+                disabledOptFP.setAttribute('disabled', true);
+                disabledOptFP.setAttribute('selected', true);
+                fp.appendChild(disabledOptFP);
+                responseCursos.map( f => {
+                    let opt = document.createElement('option');
+                    opt.value = f._id;
+                    opt.innerText = f.nombre_fp;
+                    console.log(f);
+                    fp.appendChild(opt);
+                })
+            })
+            
+
+        })
+  ()
 </script> 

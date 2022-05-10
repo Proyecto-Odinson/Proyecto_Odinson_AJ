@@ -24,6 +24,7 @@ const CiclosRoutes = require('./routes/ciclos.routes');
 const AsignaturasRoutes = require('./routes/asignaturas.routes');
 const nofpRoutes = require('./routes/nofp.routes')
 const EmpresaRoutes = require ('./routes/empresa.routes');
+const FCTRoutes = require ('./routes/FCT.routes');
 
 //Config de Handlebars
 const hbs = create ({
@@ -91,6 +92,7 @@ app.use('/', CiclosRoutes);
 app.use('/', AsignaturasRoutes);
 app.use('/', nofpRoutes);
 app.use('/', EmpresaRoutes);
+app.use('/', FCTRoutes);
 
 // Errores
 app.use('*',(req,res) =>  {

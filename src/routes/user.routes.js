@@ -31,4 +31,6 @@ router.post('/crear_alumno', isLoggedIn, role(), crearAlumnno )
 router.get('/profesores',  isLoggedIn, role() , getAllProfesores)
 router.get('/alumnos',  isLoggedIn, role() , getAllAlumnos)
 
+
+
 module.exports = router;
