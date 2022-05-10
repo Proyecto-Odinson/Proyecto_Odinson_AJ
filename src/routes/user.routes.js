@@ -22,12 +22,13 @@ router.get('/logout', logout);
 
 
 router.get('/crear_profesor', isLoggedIn, role(), renderCreateProfesor);
-router.get('/crear_alumno', isLoggedIn, role(), renderCreateAlumno  )
-
 router.post('/crear_profesor', isLoggedIn, role(), crearProfesor )
-router.get('/profesores',  isLoggedIn, role() , getAllProfesores)
 
+router.get('/crear_alumno', isLoggedIn, role(), renderCreateAlumno);
 router.post('/crear_alumno', isLoggedIn, role(), crearAlumnno )
+
+
+router.get('/profesores',  isLoggedIn, role() , getAllProfesores)
 router.get('/alumnos',  isLoggedIn, role() , getAllAlumnos)
 
 module.exports = router;

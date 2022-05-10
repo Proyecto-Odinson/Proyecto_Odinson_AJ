@@ -113,7 +113,7 @@ const crearAlumnno = async (req, res) => {
 
     if(alumno) {
         req.flash('error', 'El nombre de usuario ya está en uso.');
-        return res.render('signup', { firstName, lastName });
+        return res.redirect('signup', { firstName, lastName });
     }
 
     if(password !== password2) {
@@ -158,6 +158,7 @@ const crearAlumnno = async (req, res) => {
         req.flash('success', 'Se ha creado correctamente su cuenta.');
         console.log(newAlumno)
         return res.redirect('/alumnos');
+
     } catch (error) {
         req.flash('error', 'No se ha podido crear el usuario');
         console.log(error)
@@ -182,6 +183,7 @@ const getAllAlumnos = async (req, res) => {
     const alumno = await Alumno.find().lean();
 
     res.render('alumnos', { alumno });
+   
 }
 
 
