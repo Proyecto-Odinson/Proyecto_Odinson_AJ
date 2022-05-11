@@ -207,13 +207,14 @@
             const etapaEl = document.querySelector("#nombre_etapa");
             const n_cursosEl = document.querySelector("#n_cursos");
             const fp = document.querySelector("#nombre_fp");
+            
             const responseEtapa  = await fetch('/select_etapa');
             const etapa = await responseEtapa.json();
             etapa.map(e => {
                 let opt = document.createElement('option');
                 opt.value = e._id;
                 opt.dataset.cursos = e.n_cursos;
-                opt.innerText = e.nombre_etapa;
+                opt.innerText = e.nombre;
                 etapaEl.appendChild(opt);
             })
 
@@ -261,7 +262,7 @@
               currentFP.map( f => {
                   let opt = document.createElement('option');
                   opt.value = f._id;
-                  opt.innerText = f.nombre_fp;
+                  opt.innerText = f.nombre;
                   fp.appendChild(opt);
               })
             })
@@ -283,7 +284,7 @@
                 responseCursos.map( f => {
                     let opt = document.createElement('option');
                     opt.value = f._id;
-                    opt.innerText = f.nombre_fp;
+                    opt.innerText = f.nombre;
                     console.log(f);
                     fp.appendChild(opt);
                 })
@@ -310,7 +311,7 @@
             asignaturas.map(a => {
                 let opt = document.createElement('option');
                 opt.value = a._id;
-                opt.innerText = a.nombre_asignatura;
+                opt.innerText = a.nombre;
                 asignaturas_el.appendChild(opt);
             })
 

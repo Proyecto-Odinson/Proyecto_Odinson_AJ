@@ -56,7 +56,7 @@ const renderCreateAlumno = (req, res) => {
 
 const crearProfesor = async (req, res) => {
     const { password, password2,  firstName,  lastName, email, email2, phone, phone2, calle, tipo_via,
-             nombre_via, n_via, portal, puerta, escalera, bloque, province, city , jefe_departamento, codigo, tutor} = req.body;
+             nombre_via, n_via, portal, puerta, escalera, bloque, province, city , jefe_departamento, codigo, tutor, tutor_ciclo, tutor_etapa, tutor_curso, tipo_etapa} = req.body;
 
     const profesor = await Profesor.findOne({ email });
 
@@ -92,10 +92,15 @@ const crearProfesor = async (req, res) => {
         bloque,
         province,
         city,
-        jefe_departamento: Boolean(jefe_departamento),
+        jefe_departamento,
         codigo, 
-        tutor: Boolean(tutor)
-        
+        tutor: {
+            clase: tutor_ciclo,
+            curso: tutor_curso ,
+
+        },
+
+        tipoClase: tipo_etapa ,
     });
 
     await newProfesor.save();
@@ -172,6 +177,14 @@ const crearAlumnno = async (req, res) => {
 const getAllProfesores = async (req, res) => {
 
     const profesores = await Profesor.find().lean();
+
+    const profesor = await Profesor.findOne({firstName: 'Alfonso'}).populate('tutor.clase').populate({
+        path: 'tutor.clase',
+        populate: {
+            path: 'etapa'
+        }
+    });
+    console.log(`${profesor.firstName} es tutor de ${profesor.tutor.curso} de ${profesor.tutor.clase.etapa.nombre} ${profesor.tutor.clase.nombre}`)
 
     res.render('profesores', { profesores });
 }

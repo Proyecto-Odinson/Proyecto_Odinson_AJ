@@ -45,14 +45,14 @@ UserSchema.methods.checkPassword = async function(password) {
 
 
 const ProfeSorSchema = new Schema({
-    jefe_departamento: { type:Boolean, default: false, unique: true},
+    jefe_departamento: { type:Boolean, default: false},
     codigo: {type: String , required: true, unique: true},
     tutor: {
         clase: { type: Schema.Types.ObjectId , refPath:'tipoClase'},
         curso: { type: Number }
 
     },
-    tipoClase: { type: String, enum:['FP', 'Etapa'] },
+    tipoClase: { type: String, enum: ['FP', 'Etapa'] },
     asignaturas: [{ type: Schema.Types.ObjectId, ref: 'Asignatura' }],
     
     
