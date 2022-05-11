@@ -17,38 +17,19 @@ const City = require('../models/cities');
         res.json(findCity);
     }
     
+
+    const FestivosForProvinceAndCity = async (req, res) => {
+
+
+    }
+
     
     module.exports = {
         findAllProvinceAsync,
         findCitiesFromProvince,
+        FestivosForProvinceAndCity,
     }
     
 
-    /*
-
-
-    const prueba = async (req,res) => {
-
-        const buscar = await City.find(
-            Province.populate  ( 
-                    City, { path: "province"}
-                )
-        )
         
-        res.json(buscar);
-
-    }
-
-    const findCitiesFromProvince = async (req, res) => {
-        const provinceId = req.params.id;
-
-        console.log(await City.find({ province: "624bfd31221f4cd131d70bb1" }));
-
-        console.log(provinceId);
-
-        res.redirect('/crear_profesor')
-    }
-
-    */
-
  

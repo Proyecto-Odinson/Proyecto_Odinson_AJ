@@ -25,6 +25,7 @@ const AsignaturasRoutes = require('./routes/asignaturas.routes');
 const nofpRoutes = require('./routes/nofp.routes')
 const EmpresaRoutes = require ('./routes/empresa.routes');
 const FCTRoutes = require ('./routes/FCT.routes');
+const FestivosRouter = require ('./routes/festivos.routes')
 
 //Config de Handlebars
 const hbs = create ({
@@ -84,6 +85,7 @@ app.use((req, res, next) => {
     next();
 })
 
+
 //CONF ROUTES
 
 app.use('/', UserRoutes);
@@ -93,6 +95,7 @@ app.use('/', AsignaturasRoutes);
 app.use('/', nofpRoutes);
 app.use('/', EmpresaRoutes);
 app.use('/', FCTRoutes);
+app.use('/', FestivosRouter);
 
 // Errores
 app.use('*',(req,res) =>  {
@@ -103,47 +106,3 @@ app.use('*',(req,res) =>  {
 app.listen(app.get('port'));
 console.log ('Escuchando el puerto', app.get('port'));
 
-
-
-/*
-
-const Province = require('./models/provinces');
-const City = require('./models/cities');
-const req = require('express/lib/request');
-const res = require('express/lib/response');
-
-
-//ROUTES GET PARA INDEX
-
-router.get ('/', (req,res) => {
-
-    res.render ('index', {
-
-        layout: 'vacio'
-    })
-
-}) 
-
-
-router.get('/provinces', async (req, res) => {
-
-    const provinces = await Province.find();
-
-    res.json(provinces);
-})
-
-router.get('/cities', async (req, res) => {
-    const cities = await City.find();
-
-    res.json(cities);
-})
-
-router.get('/cities/:id', async (req, res) => {
-
-    const provinceId=req.params.id;
-    const cities = await City.find({ province: provinceId });
-
-    res.json(cities);
-})
-
-*/

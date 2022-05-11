@@ -13,6 +13,7 @@ const EmpresaSchema = new Schema ({
     phone2: { type: Number, required: false},
     actividad:  { type: String , require: true},
     representante_certificado_digital :  { type: String , require: true},
+    contacto: { type: String },
 
 
     calle: { type: String , required: true },

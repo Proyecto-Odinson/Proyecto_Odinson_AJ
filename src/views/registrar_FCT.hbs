@@ -19,6 +19,10 @@
             <div class="row">
               <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <form method="post">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Alumno de 2º que realizara la FCT</label>
+                    <input class="form-control" name="alumno" id="alumno" type="text" />
+                  </div>
                   <div class="form-group">
 					<label  class="control-label">Eliga su empresa</label>
 					  <select class="form-control" name="empresa" id="empresa" >
@@ -28,86 +32,44 @@
                      </select>
                      </div>
                   <div class="form-group label-floating">
-                    <label class="control-label">Familia Profesional</label>
-                    <input class="form-control" name="familia_profesional" id="familia_profesional" type="text" />
+                    <label class="control-label">Tutor laboral en la empresa</label>
+                    <input class="form-control" name="tutor_practicas" id="tutor_practicas" type="text" />
                   </div>
                   <div class="form-group label-floating">
-                    <label class="control-label">NIF</label>
-                    <input class="form-control" name="NIF" id="NIF" type="text" />
+                    <label class="control-label">Tutor profesor </label>
+                    <input class="form-control" name="tutor_profesor" id="tutor_profesor" type="text" />
                   </div>
 				       <div class="form-group label-floating">
-					          <label class="control-label">email</label>
-				          	<input class="form-control" name="email" id="email" type="email">
+					          <label class="control-label">Trimestre en el que se realizaran las practicas</label>
+				          <select class="form-control" name="trimestre" id="trimestre">
+											<option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+										</select>
 					    </div>
-  
+
+              <div class="form-group label-floating">
+					          <label class="control-label">Numero de horas diaras</label>
+				          <select class="form-control" name="horas" id="horas">
+											<option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+										</select>
+					    </div>
+
+              <div class="form-group label-floating">
+                    <label class="control-label">Cargo que tendra en la empresa</label>
+                    <input class="form-control" name="cargo" id="cargo" type="text" />
+              </div>
+
                   <div class="form-group label-floating">
-                    <label class="control-label">telefono</label>
-                    <input class="form-control" name="phone" id="phone" type="text" />
+                    <label>Inicio de las practicas</label>
+                    <input class="form-control" name="inicio_FCT" type="date" />
                   </div>
-                   <div class="form-group label-floating">
-                    <label class="control-label">telefono opcional</label>
-                    <input class="form-control" name="phone2" id="phone2" type="text" />
+                  <div class="form-group label-floating">
+                    <label>Final de las practicas</label>
+                    <input class="form-control" name="final_FCT" type="date" />
                   </div>
-                    <div class="form-group label-floating">
-                    <label class="control-label">FAX</label>
-                    <input class="form-control" name="FAX" id="FAX" type="text" />
-                  </div>
-                    <div class="form-group label-floating">
-                    <label class="control-label">Actividad</label>
-                    <input class="form-control" name="actividad" id="actividad" type="text" />
-                  </div>
-                    <div class="form-group label-floating">
-                    <label class="control-label">Representante de certificado digital</label>
-                    <input class="form-control" name="Representante_certificado_digital" id="Representante_certificado_digital" type="text" />
-                  </div>
-
-                  <!--DIRECCION-->
-                  
-										<div class="form-group label-floating">
-										<label class="control-label">calle</label>
-										<textarea class="form-control" name="calle" id="calle" ></textarea>
-									</div>
-										<div class="form-group label-floating">
-										<label class="control-label">tipo_via</label>
-										<textarea class="form-control" name="tipo_via" id="tipo_via"></textarea>
-									</div>
-										<div class="form-group label-floating">
-										<label class="control-label">n_via</label>
-										<textarea class="form-control" name="n_via" id="n_via" ></textarea>
-									</div>
-										<div class="form-group label-floating">
-										<label class="control-label">portal</label>
-										<textarea class="form-control" name="portal" id="portal"></textarea>
-									</div>
-										<div class="form-group label-floating">
-										<label class="control-label">puerta</label>
-										<textarea class="form-control" name="puerta" id="puerta"></textarea>
-									</div>
-										<div class="form-group label-floating">
-										<label class="control-label">escalera</label>
-										<textarea class="form-control" name="escalera" id="escalera"></textarea>
-									</div>
-										<div class="form-group label-floating">
-										<label class="control-label">bloque</label>
-										<textarea class="form-control" name="bloque" id="bloque" ></textarea>
-									</div>
-                  	                <div class="form-group label-floating">
-										<label class="control-label">Codigo Postal</label>
-										<textarea class="form-control" name="codigo_postal" id="codigo postal"></textarea>
-									</div>
-                  
-									<!--PROVINCIA Y LOCALIDAD-->
-									<div class="form-group">
-										<label  class="control-label">Provincia</label>
-										<select class="form-control" name="province" id="province">
-											<option disabled selected>Seleccione una provincia</option>
-										</select>
-
-									<div class="form-group">
-										<label  class="control-label">Localidad</label>
-										<select class="form-control" name="city" id="city" >
-											<option selected disabled>---</option>
-										</select>
                   <p class="text-center">
                     <button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i>Save</button>
                   </p>
