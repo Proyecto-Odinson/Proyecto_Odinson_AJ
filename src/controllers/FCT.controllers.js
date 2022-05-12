@@ -4,20 +4,21 @@ const Empresa = require ('../models/empresa');
 
 const renderCreateFCT =  async (req, res) => {
     const empresas = await Empresa.find().lean();
-    res.render('registrar_FCT' , {empresas} );
+    const alumno = await Alumno.find().lean();
+    res.render('registrar_FCT' , {empresas} , {alumno} );
 }
 
-//CREACION DE EMPRESAS
+//CREACION DE FCT
 
 const crearFCT = async (req, res) => {
-    const {    } = req.body;
+    const { alumno, empresa , tutor_laboral, tutor_profesor, trimestre, horas, cargo, fecha_inicio, fecha_final   } = req.body;
 
-    const fct = await Alumno.findOne({ username });
+    const fct = await FCT.findOne({ alumno });
     console.log(fct)
 
     if(fct) {
         req.flash('error', 'La FCT ya fue registrada');
-        return res.redirect('registrar_empresa');
+        return res.redirect('registrar_FCT');
     }
 
     const newFCT = FCT ({
@@ -27,14 +28,14 @@ const crearFCT = async (req, res) => {
 
     try {
         await newFCT.save();
-        req.flash('success', 'Se ha guardado la empresa correctamente.');
+        req.flash('success', 'Se ha guardado la FCT correctamente.');
         console.log(newFCT)
-        return res.redirect('/empresas');
+        return res.redirect('/alumnos_FCT ');
         
     } catch (error) {
-        req.flash('error', 'No se ha podido guardar la empresa');
+        req.flash('error', 'No se ha podido guardar la FCT');
         console.log(error)
-        return res.redirect('/registrar_empresa');
+        return res.redirect('/registrar_FCT');
     }
 
 
@@ -47,7 +48,7 @@ const findFCT = async (req, res) => {
 
     const fct = await FCT.find().lean();
 
-    res.render('fct', { fct });
+    res.render('alumnos_FCT', { fct });
 }
 
 

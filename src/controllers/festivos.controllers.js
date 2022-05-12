@@ -1,35 +1,60 @@
-const Province = require('../models/Provinces');
-const City = require('../models/cities');
+
 const festivos = require('../models/festivos');
 
     
 const renderCreateFestivo =  async (req, res) => {
-    const festivo = await festivos.find().lean();
-    res.render('registrar_festivo' , {festivo} );
+   res.render('registrar_festivo');
 }
 
-//CREACION DE EMPRESAS
+//CREACION DE FESTIVOS
 
 const crearFestivo = async (req, res) => {
-    const {    } = req.body;
+    const { nombre, dia, mes, nacional, province, city } = req.body;
 
-    const festivos = await festivos.findOne({ nombre });
-    console.log(festivos)
+    const festivo = await festivos.findOne({ nombre });
+    console.log(festivo)
 
-    if(festivos) {
+    if(festivo) {
         req.flash('error', 'La Festividad ya fue registrada');
-        return res.redirect('registrar_festivo');
+        return res.redirect('registrar_festivo', { nombre });
     }
 
-    const newFestivo = FCT ({
+    const newFestivo = festivos ({
 
+        nombre, dia, mes, nacional, province, city
         
     });
+
+    try {
+        await newFestivo.save();
+        req.flash('success', 'Se ha guardado el festivo correctamente.');
+        console.log(newFestivo)
+        return res.redirect('/festivos');
+        
+    } catch (error) {
+        req.flash('error', 'No se ha podido guardar el festivo');
+        console.log(error)
+        return res.redirect('/registrar_festivo');
+    }
+
 }
+
+
+// FUNCIONES
+
+const findFestivos = async (req, res) => {
+
+    const festivo = await festivos.find().lean();
+
+    res.render('festivos', { festivo });
+}
+
 
 module.exports = {
     
     crearFestivo,
-    renderCreateFestivo,    
+    renderCreateFestivo, 
+    findFestivos,  
+     
 }
 

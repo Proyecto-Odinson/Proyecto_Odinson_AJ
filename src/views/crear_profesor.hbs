@@ -292,8 +292,6 @@
                 let responseCursos = await fetch(`/select_cursos/${currentEtapa}`);
                 responseCursos = await responseCursos.json();
                 
-                if(!responseCursos) return alert('No existe ese Curso');
-                
                 tutor_ciclo.removeAttribute('disabled');
                 tutor_ciclo.innerHTML = '';
                 let disabledOptFP = document.createElement('option');

@@ -10,12 +10,7 @@ const FCTSchema = new Schema ({
     horas: {type: Number, required: true},
     trimestre: {type: Number , required: true},
     cargo: { type: String , required: false},
-
-    tutor_laboral: {
-        nombre_tutor: {type: String, required: false },
-        phone_tutor: {type: String, required: false },
-        email_tutor: {type: String, required: false },
-    }
+    tutor_laboral: { type: String , required: true},
 
 });
 
