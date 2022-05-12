@@ -1,11 +1,10 @@
 const FCT = require("../models/FCT");
-const { User, Profesor, Alumno } = require('../models/Users');
+const { Profesor, Alumno } = require('../models/Users');
 const Empresa = require ('../models/empresa');
 
 const renderCreateFCT =  async (req, res) => {
     const empresas = await Empresa.find().lean();
-    const alumno = await Alumno.find().lean();
-    res.render('registrar_FCT' , {empresas} , {alumno} );
+    res.render('registrar_FCT' , {empresas} );
 }
 
 //CREACION DE FCT
@@ -23,7 +22,15 @@ const crearFCT = async (req, res) => {
 
     const newFCT = FCT ({
 
-        
+        alumno,
+        empresa ,
+        tutor_laboral,
+        tutor_profesor,
+        trimestre,
+        horas,
+        cargo, 
+        fecha_inicio,
+        fecha_final,
     });
 
     try {
@@ -51,11 +58,26 @@ const findFCT = async (req, res) => {
     res.render('alumnos_FCT', { fct });
 }
 
+const findProfesFP = async (req, res) => {
+
+    const findProfes = await Profesor.find({tipo_clase: 'FP' })
+    res.json(findProfes);
+}
+
+const findAlumnos2ºFP = async (req, res ) => {
+
+    const findAlumnos2ºFP = await Alumno.find({ etapa: idETAPA , curso })
+    
+    res.json(findAlumnos2ºFP)
+}
+
 
 module.exports = {
     
     findFCT,
     crearFCT,
     renderCreateFCT,
+    findProfesFP,
+    findAlumnos2ºFP,
     
 }

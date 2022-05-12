@@ -22,26 +22,26 @@
                    <div class="form-group">
 					      <label class="control-label">Seleccione un Alumno de 2ºFP</label>
 					      <select class="form-control" name="alumno" id="alumno" >
-                          {{#each alumnos as | Alumnos |}}
-                          <option value="{{Alumnos.name}}">{{Alumnos.name}} </option>
-                          {{/each}}
+                    <option selected disabled>---</option>
                      </select>
                   </div>
                   <div class="form-group">
-					      <label  class="control-label">Eliga su empresa</label>
+					      <label  class="control-label">Elija su empresa</label>
 					      <select class="form-control" name="empresa" id="empresa" >
                           {{#each empresas as | Empresas |}}
                           <option value="{{Empresas.name}}"> {{Empresas.name}} </option>
                           {{/each}}
                      </select>
                   </div>
-                  <div class="form-group label-floating">
-                    <label class="control-label">Tutor laboral en la empresa</label>
-                    <input class="form-control" name="tutor_practicas" id="tutor_practicas" type="text" />
+                  <div class="form-group">
+					      <label class="control-label">Elija el profesor que hara de tutor</label>
+					      <select class="form-control" name="tutor" id="tutor" >
+                    <option selected disabled>---</option>
+                     </select>
                   </div>
                   <div class="form-group label-floating">
-                    <label class="control-label">Tutor profesor </label>
-                    <input class="form-control" name="tutor_profesor" id="tutor_profesor" type="text" />
+                    <label class="control-label">Tutor laboral en la empresa</label>
+                    <input class="form-control" name="tutor_laboral" id="tutor_laboral" type="text" />
                   </div>
 				       <div class="form-group label-floating">
 					          <label class="control-label">Trimestre en el que se realizaran las practicas</label>
@@ -51,7 +51,6 @@
                       <option value="3">3</option>
 										</select>
 					    </div>
-
               <div class="form-group label-floating">
 					          <label class="control-label">Numero de horas diaras</label>
 				          <select class="form-control" name="horas" id="horas">
@@ -87,43 +86,46 @@
   </div>
 </div>
 
-<!--SCRIPT PARA LOCALIDAD Y PROVINCIA-->
+
+<!-- SCRIPT PARA PROFES FP -->
 
 <script>
 
-	(async () => {
-            const province = document.querySelector("#province");
-            const city = document.querySelector("#city");
-            const responseProvinces = await fetch('/select_province');
+  (async () => {
+    const profesFP = document.querySelector("#tutor");
+    const responseProfesFP = await fetch('/profesFP');
 
-            const provinces = await responseProvinces.json();
-            provinces.map(p => {
+            const profes_etapa_FP = await responseProfesFP.json();
+            profes_etapa_FP.map(p => {
                 let opt = document.createElement('option');
                 opt.value = p._id;
-                opt.innerText = p.showName;
-                province.appendChild(opt);
+                opt.innerText = p.firstName;
+                profesFP.appendChild(opt);
             })
-            province.addEventListener("change", async () => {
-                const currentProvince = province.value;
-                let responseCities = await fetch(`/select_city/${currentProvince}`);
-                currentCities = await responseCities.json();
-                
-                if(!currentCities) return alert('No existe esa provincia!');
-                
-                city.removeAttribute('disabled');
-                city.innerHTML = '';
-                let disabledOptCity = document.createElement('option');
-                disabledOptCity.innerHTML = '---';
-                disabledOptCity.setAttribute('disabled', true);
-                disabledOptCity.setAttribute('selected', true);
-                city.appendChild(disabledOptCity);
-                currentCities.map( c => {
-                    let opt = document.createElement('option');
-                    opt.value = c._id;
-                    opt.innerText = c.name;
-                    console.log(c);
-                    city.appendChild(opt);
-                })
+
+      console.log(profesFP);
+  })()
+
+</script>
+
+
+<!-- SCRIPT PARA PROFES ALUMNOS FP 2º -->
+
+<script>
+
+  (async () => {
+    const alumnos2ºFP = document.querySelector("#alumno");
+    const responseAlumnos2ºFP = await fetch('/alumnos2FP');
+
+            const alumnos = await responseAlumnos2ºFP.json();
+            alumnos.map(p => {
+                let opt = document.createElement('option');
+                opt.value = p._id;
+                opt.innerText = p.firstName;
+                alumnos2ºFP.appendChild(opt);
             })
-        })()
-</script> 
+
+      console.log(profesFP);
+  })()
+
+</script>
