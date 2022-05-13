@@ -1,9 +1,9 @@
 const { Schema, model } = require('mongoose');
 
 const FCTSchema = new Schema ({
-    tutor: [{ type: Schema.Types.ObjectId, ref: 'Profesor' }],
-    alumno: [{ type: Schema.Types.ObjectId, ref: 'Alumno' }],
-    empresa : [{ type: Schema.Types.ObjectId, ref: 'Empresa' }],
+    tutor: { type: Schema.Types.ObjectId, ref: 'Profesor' },
+    alumno: { type: Schema.Types.ObjectId, ref: 'Alumno' },
+    empresa : { type: Schema.Types.ObjectId, ref: 'Empresa' },
 
     fecha_inicio: {type: String , required: true},
     fecha_final: {type: String , required: false},

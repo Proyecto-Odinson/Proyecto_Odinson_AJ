@@ -1,8 +1,8 @@
 <h1>Listado de FCTs</h1>
 <ul>
-{{#each fct as | FCT  |}}
+{{#each fct as | FCT |}}
 <li>
-    {{FCT.alumno}} {{FCT.empresa}}
+   El alumno {{FCT.alumno.firstName}} esta en la empresa {{FCT.empresa.name}}
 </li>
 {{/each}}
 </ul>

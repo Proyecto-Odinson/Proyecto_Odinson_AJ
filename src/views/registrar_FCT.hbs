@@ -29,7 +29,7 @@
 					      <label  class="control-label">Elija su empresa</label>
 					      <select class="form-control" name="empresa" id="empresa" >
                           {{#each empresas as | Empresas |}}
-                          <option value="{{Empresas.name}}"> {{Empresas.name}} </option>
+                          <option value="{{Empresas._id}}"> {{Empresas.name}} </option>
                           {{/each}}
                      </select>
                   </div>
@@ -67,11 +67,11 @@
 
                   <div class="form-group label-floating">
                     <label>Inicio de las practicas</label>
-                    <input class="form-control" name="inicio_FCT" type="date" />
+                    <input class="form-control" name="fecha_inicio" type="date" />
                   </div>
                   <div class="form-group label-floating">
                     <label>Final de las practicas</label>
-                    <input class="form-control" name="final_FCT" type="date" />
+                    <input class="form-control" name="fecha_final" type="date" />
                   </div>
                   <p class="text-center">
                     <button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i>Save</button>
