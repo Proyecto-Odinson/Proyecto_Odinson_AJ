@@ -52,6 +52,14 @@ const renderCreateAlumno = (req, res) => {
     res.render('crear_alumno');
 }
 
+const renderModificarAlumno = async (req, res) => {
+    const alumnoId = req.params.id;
+
+    const alumno = await Alumno.findById(alumnoId).lean();
+
+    res.render('mod_estudiantes', { alumno });
+}
+
 //CREACION PROFESOR
 
 const crearProfesor = async (req, res) => {
@@ -97,7 +105,6 @@ const crearProfesor = async (req, res) => {
         tutor: {
             clase: tutor_ciclo,
             curso: tutor_curso ,
-
         },
 
         tipoClase: tipo_etapa ,
@@ -172,19 +179,22 @@ const crearAlumnno = async (req, res) => {
     }
 }
 
+//MODIFICAR ALUMNO EXISTENTE
+
+const updateAlumno = async (req, res) => {
+    const userId = req.params.id;
+
+    const updatedAlumno = await Alumno.updateOne({ _id: userId}, req.body);
+
+    res.redirect('/alumnos')
+}
+
+
 // LISTADO DE PROFESORES Y ALUMNOS
 
 const getAllProfesores = async (req, res) => {
 
     const profesores = await Profesor.find().lean();
-
-    const profesor = await Profesor.findOne({firstName: 'Alfonso'}).populate('tutor.clase').populate({
-        path: 'tutor.clase',
-        populate: {
-            path: 'etapa'
-        }
-    });
-    console.log(`${profesor.firstName} es tutor de ${profesor.tutor.curso} de ${profesor.tutor.clase.etapa.nombre} ${profesor.tutor.clase.nombre}`)
 
     res.render('profesores', { profesores });
 }
@@ -198,6 +208,22 @@ const getAllAlumnos = async (req, res) => {
    
 }
 
+// ELIMINAR Y ACTUALIZAR PROFES Y ALUMNOS
+
+const deleteAlumno = async ( req, res ) => {
+
+    try {
+        const deleteAlumno = await Alumno.deleteOne ( { _id: req.body.alumno } )
+        req.flash('success', 'Se ha borrado el alumno.');
+        console.log(deleteAlumno)
+        return res.redirect('/alumnos');
+    } catch (error) {
+        req.flash('error', 'No se ha podido borrar el alumno');
+        console.log(error)
+        return res.redirect('/alumnos');
+    }
+}
+
 module.exports = {
     renderLoginForm,
     renderSignupForm,
@@ -205,9 +231,12 @@ module.exports = {
     signup,
     renderCreateProfesor,
     renderCreateAlumno,
+    renderModificarAlumno,
     crearProfesor,
     crearAlumnno,
     getAllProfesores,
     getAllAlumnos,
+    deleteAlumno,
+    updateAlumno,
 }
 

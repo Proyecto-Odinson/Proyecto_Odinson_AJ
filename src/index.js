@@ -17,6 +17,7 @@ const db = require('./database'); //Variable db que tendra el valor del archivo 
 const app = express(); //Variable app que sera igual a la funcion express
 require ('./config/passport') // Importaremos el archivo passport, que contiene la autenticacion
 const morgan = require('morgan');
+var methodOverride = require('method-override')
 
 const UserRoutes = require('./routes/user.routes'); // Importaremos a UserRoutes la configuracion del archivo user.routes 
 const ProvincesRoutes = require('./routes/province.routes');
@@ -49,6 +50,16 @@ app.use(morgan('dev'));
 app.use (express.json()); 
 app.use(express.urlencoded({
 extended: false
+}))
+
+//CONFIG PARA DELETE
+
+app.use(methodOverride(function (req, res) {
+    if(req.body && typeof req.body === 'object' && '_method' in req.body) {
+        const method = req.body._method;
+        delete req.body._method;
+        return method;
+    }
 }))
 
 //DEFINICION  DE RUTA PUBLIC

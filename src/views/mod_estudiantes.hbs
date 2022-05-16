@@ -1,0 +1,353 @@
+<!-- Content pagina -->
+<div class="container-fluid">
+  <div class="page-header">
+    <h1 class="text-titles"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i>Modificar<small>Estudiantes</small></h1>
+  </div>
+  <p class="lead">Rellenando el siguiente formulario podremos añadir al sistema un nuevo Alumno. 
+   Este proceso solo podrá realizarlo el administrador.</p>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+        <li class="active"><a href="#new" data-toggle="tab">Nuevo</a></li>
+        <li><a href="/alumnos">Listado de Alumnos</a></li>
+      </ul>
+      <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active in" id="new">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xs-12 col-md-10 col-md-offset-1">
+                <form method="post">
+                    <input type="hidden" name="_method" value="PUT">
+                  <div class="form-group label-floating">
+                    <label class="control-label">Nombre</label>
+                    <input class="form-control" name="firstName" type="text" value="{{alumno.firstName}}" />
+                  </div>
+                  <div class="form-group label-floating">
+                    <label class="control-label">Apellidos</label>
+                    <input class="form-control" name="lastName" type="text" value="{{alumno.lastName}}" />
+                  </div>
+                  <div class="form-group label-floating">
+                    <label class="control-label">DNI</label>
+                    <input class="form-control" name="DNI" type="text" />
+                  </div>
+                  <div class="form-group label-floating">
+                    <label class="control-label">n_expediente</label>
+                    <input class="form-control" name="n_expediente" type="text"/>
+                  </div>
+				       <div class="form-group label-floating">
+					          <label class="control-label">email</label>
+				          	<input class="form-control" name="email" type="email">
+					    </div>
+              <div class="form-group label-floating">
+										<label class="control-label">password</label>
+										<input class="form-control" name="password" type="password">
+							</div>
+              <div class="form-group label-floating">
+										<label class="control-label">Escriba de nuevo su contraseña</label>
+										<input class="form-control" name="password2" type="password">
+										</div>
+                  <div class="form-group label-floating">
+                    <label>Fecha nacimiento</label>
+                    <input class="form-control" name="fecha_nac" type="date" />
+                  </div>
+                  <div class="form-group">
+										<label class="control-label">Autorizacion de datos</label>
+										<select class="form-control" name="autorizacion_datos"  >
+											<option value="true">Si</option>
+											<option value="false">No</option>
+										</select>
+                  <div class="form-group label-floating">
+                    <label class="control-label">telefono</label>
+                    <input class="form-control" name="phone" type="text" />
+                  </div>
+                   <div class="form-group label-floating">
+                    <label class="control-label">telefono opcional</label>
+                    <input class="form-control" name="phone2" type="text" />
+                  </div>
+                  <!-- ASIGNATURAS -->
+                <div class="form-group">
+										<label  class="control-label">Etapa</label>
+										<select class="form-control" name="nombre_etapa" id="nombre_etapa">
+											<option disabled selected>Seleccione una de las etapas</option>
+										</select>
+									<div class="form-group">
+										<label  class="control-label">Indique el FP al cual se quiere matrricular</label>
+										<select class="form-control" name="nombre_fp" id="nombre_fp" disabled>
+											<option selected disabled>---</option>
+										</select>
+                  <div class="form-group">
+                    <label class="control-label">Proporcione el Curso</label>
+                    <select class="form-control" name="n_cursos" id="n_cursos">
+	                      <option selected disabled>---</option> 
+                      </select>
+                  </div>
+                   <div class="form-group">
+                    <label class="control-label">Asigne las asignaturas a las cuales se va a matricular</label>
+                    <select class="form-control" name="asignaturas" id="asignaturas" multiple>
+	                      <option selected disabled>---</option> 
+                      </select>
+                  </div>
+
+                  <div class="zmdi zmdi-calendar-check">
+                    <label class="zmdi zmdi-calendar-check">Seleccione su año academico</label>
+
+                    <select class="form-control" name="a_escolar" id="a_escolar">
+                      <option>2021-2022</option>
+                      <option>2022-2023</option>
+                      <option>2024-2025</option>
+                      <option>2026-2027</option>
+                      <option>2027-2028</option>
+                    </select>
+                  </div> 
+
+                  <!--DIRECCION-->
+                  
+										<div class="form-group label-floating">
+										<label class="control-label">calle</label>
+										<textarea class="form-control" name="calle" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">tipo_via</label>
+										<textarea class="form-control" name="tipo_via" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">n_via</label>
+										<textarea class="form-control" name="n_via" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">portal</label>
+										<textarea class="form-control" name="portal" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">puerta</label>
+										<textarea class="form-control" name="puerta" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">escalera</label>
+										<textarea class="form-control" name="escalera" ></textarea>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">bloque</label>
+										<textarea class="form-control" name="bloque" ></textarea>
+									</div>
+									<!--PROVINCIA Y LOCALIDAD-->
+									<div class="form-group">
+										<label  class="control-label">Provincia</label>
+										<select class="form-control" name="province" id="province">
+											<option disabled selected>Seleccione una provincia</option>
+										</select>
+
+									<div class="form-group">
+										<label  class="control-label">Localidad</label>
+										<select class="form-control" name="city" id="city" >
+											<option selected disabled>---</option>
+										</select>
+                  <p class="text-center">
+                    <button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i>Save</button>
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--SCRIPT PARA LOCALIDAD Y PROVINCIA-->
+
+<script>
+
+	(async () => {
+            const province = document.querySelector("#province");
+            const city = document.querySelector("#city");
+            const responseProvinces = await fetch('/select_province');
+
+            const provinces = await responseProvinces.json();
+            provinces.map(p => {
+                let opt = document.createElement('option');
+                opt.value = p._id;
+                opt.innerText = p.showName;
+                province.appendChild(opt);
+            })
+            province.addEventListener("change", async () => {
+                const currentProvince = province.value;
+                let responseCities = await fetch(`/select_city/${currentProvince}`);
+                currentCities = await responseCities.json();
+                
+                if(!currentCities) return alert('No existe esa provincia!');
+                
+                city.removeAttribute('disabled');
+                city.innerHTML = '';
+                let disabledOptCity = document.createElement('option');
+                disabledOptCity.innerHTML = '---';
+                disabledOptCity.setAttribute('disabled', true);
+                disabledOptCity.setAttribute('selected', true);
+                city.appendChild(disabledOptCity);
+                currentCities.map( c => {
+                    let opt = document.createElement('option');
+                    opt.value = c._id;
+                    opt.innerText = c.name;
+                    console.log(c);
+                    city.appendChild(opt);
+                })
+            })
+        })()
+</script> 
+
+
+<!--SCRIPT PARA FP   -->
+
+<script>
+
+	(async () => {
+
+            const etapaEl = document.querySelector("#nombre_etapa");
+            const n_cursosEl = document.querySelector("#n_cursos");
+            const fp = document.querySelector("#nombre_fp");
+            
+            const responseEtapa  = await fetch('/select_etapa');
+            const etapa = await responseEtapa.json();
+            etapa.map(e => {
+                let opt = document.createElement('option');
+                opt.value = e._id;
+                opt.dataset.cursos = e.n_cursos;
+                opt.innerText = e.nombre;
+                etapaEl.appendChild(opt);
+            })
+
+            etapaEl.addEventListener("change", async (event) => {
+              const currentEtapa = etapaEl.value;
+              const n_cursos_etapa = event.target.options[event.target.selectedIndex].dataset.cursos;
+
+
+              let responseFP = await fetch(`/select_fp/${currentEtapa}`);
+              currentFP = await responseFP.json();
+
+              console.log(currentFP.length > 0)
+
+              if(currentFP.length > 0) {
+                console.log('Enabled')
+                fp.disabled = false;
+              } else {
+                console.log('Disabled')
+                fp.disabled = true
+              }
+
+              n_cursosEl.innerHTML = '';
+
+              let disabledCurso = document.createElement('option');
+              disabledCurso.innerText = '---';
+              disabledCurso.setAttribute('disabled', true);
+              disabledCurso.setAttribute('selected', true);
+              n_cursosEl.appendChild(disabledCurso);
+
+              for(let i = 1; i <= parseInt(n_cursos_etapa); i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.innerText = `${i}º`;
+                n_cursosEl.appendChild(opt);
+              }
+              
+              if(!currentFP) return alert('No existe ese FP!');
+              
+              fp.innerHTML = '';
+              let disabledOptFP = document.createElement('option');
+              disabledOptFP.innerHTML = '---';
+              disabledOptFP.setAttribute('disabled', true);
+              disabledOptFP.setAttribute('selected', true);
+              fp.appendChild(disabledOptFP);
+              currentFP.map( f => {
+                  let opt = document.createElement('option');
+                  opt.value = f._id;
+                  opt.innerText = f.nombre;
+                  fp.appendChild(opt);
+              })
+            })
+
+            etapaEl.addEventListener("change", async () => {
+                const currentEtapa = etapaEl.value;
+                let responseCursos = await fetch(`/select_cursos/${currentEtapa}`);
+                responseCursos = await responseCursos.json();
+                
+                if(!responseCursos) return alert('No existe ese Curso');
+                
+                fp.removeAttribute('disabled');
+                fp.innerHTML = '';
+                let disabledOptFP = document.createElement('option');
+                disabledOptFP.innerHTML = '---';
+                disabledOptFP.setAttribute('disabled', true);
+                disabledOptFP.setAttribute('selected', true);
+                fp.appendChild(disabledOptFP);
+                responseCursos.map( f => {
+                    let opt = document.createElement('option');
+                    opt.value = f._id;
+                    opt.innerText = f.nombre;
+                    console.log(f);
+                    fp.appendChild(opt);
+                })
+            })
+            
+
+        })
+  ()
+</script> 
+
+
+<!--SCRIPT PARA ASIGNATURAS  -->
+
+<script>
+
+	(async () => {
+            const asignaturas_el = document.querySelector("#asignaturas");
+            const ciclo_el = document.querySelector("#nombre_fp");
+            const etapa_el = document.querySelector('#nombre_etapa')
+            const cursos_el = document.querySelector("#n_cursos")
+
+            const responseAsignaturas = await fetch('/select_asignaturas');
+            const asignaturas = await responseAsignaturas.json();
+            asignaturas.map(a => {
+                let opt = document.createElement('option');
+                opt.value = a._id;
+                opt.innerText = a.nombre;
+                asignaturas_el.appendChild(opt);
+            })
+
+            cursos_el.addEventListener("change", async () => {
+                const selectedCurso = cursos_el.value;
+                let currentCurso = ciclo_el.value;
+                let url = `/select_asignaturas/${currentCurso}/${selectedCurso}`;
+                if(currentCurso === '---') {
+                  currentCurso = etapa_el.value;
+                  url = `/select_asignaturas_nofp/${currentCurso}/${selectedCurso}`;
+                }
+                let responseasignatura = await fetch(url);
+                responseasignatura = await responseasignatura.json();
+
+                console.log(responseAsignaturas)
+            
+                asignaturas_el.innerHTML = '';
+                let disabledOptasignatura = document.createElement('option');
+                disabledOptasignatura.innerHTML = '---';
+                disabledOptasignatura.setAttribute('disabled', true);
+                disabledOptasignatura.setAttribute('selected', true);
+                asignaturas_el.appendChild(disabledOptasignatura);
+                responseasignatura.map( c => {
+                    let opt = document.createElement('option');
+                    opt.value = c._id;
+                    opt.innerText = c.nombre_asignatura;
+                    console.log(c);
+                    asignaturas_el.appendChild(opt);
+                })
+
+            })
+
+        })()
+</script> 
+
+
+  
+
