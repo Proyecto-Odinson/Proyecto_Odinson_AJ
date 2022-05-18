@@ -26,7 +26,6 @@ const EmpresaSchema = new Schema ({
     codigo_postal:  { type: Number , require: true},
    
 
-  
     province: { type: Schema.Types.ObjectId, ref: 'Province', required: true },
     city: { type: Schema.Types.ObjectId, ref: 'City', required: true },
     

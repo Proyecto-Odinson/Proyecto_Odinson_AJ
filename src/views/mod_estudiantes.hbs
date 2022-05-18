@@ -10,7 +10,7 @@
   <div class="row">
     <div class="col-xs-12">
       <ul class="nav nav-tabs" style="margin-bottom: 15px;">
-        <li class="active"><a href="#new" data-toggle="tab">Nuevo</a></li>
+        <li class="active"><a href="/crear_alumno">Nuevo Estudiante</a></li>
         <li><a href="/alumnos">Listado de Alumnos</a></li>
       </ul>
       <div id="myTabContent" class="tab-content">
@@ -30,15 +30,15 @@
                   </div>
                   <div class="form-group label-floating">
                     <label class="control-label">DNI</label>
-                    <input class="form-control" name="DNI" type="text" />
+                    <input class="form-control" name="DNI" type="text" value="{{alumno.DNI}}"/>
                   </div>
                   <div class="form-group label-floating">
                     <label class="control-label">n_expediente</label>
-                    <input class="form-control" name="n_expediente" type="text"/>
+                    <input class="form-control" name="n_expediente" type="text" value="{{alumno.n_expediente}}"//>
                   </div>
 				       <div class="form-group label-floating">
 					          <label class="control-label">email</label>
-				          	<input class="form-control" name="email" type="email">
+				          	<input class="form-control" name="email" type="email" value="{{alumno.email}}"/>
 					    </div>
               <div class="form-group label-floating">
 										<label class="control-label">password</label>
@@ -50,7 +50,7 @@
 										</div>
                   <div class="form-group label-floating">
                     <label>Fecha nacimiento</label>
-                    <input class="form-control" name="fecha_nac" type="date" />
+                    <input class="form-control" name="fecha_nac" type="date" value="{{alumno.fecha_nac}}"//>
                   </div>
                   <div class="form-group">
 										<label class="control-label">Autorizacion de datos</label>
@@ -60,21 +60,21 @@
 										</select>
                   <div class="form-group label-floating">
                     <label class="control-label">telefono</label>
-                    <input class="form-control" name="phone" type="text" />
+                    <input class="form-control" name="phone" type="text" value="{{alumno.phone}}"//>
                   </div>
                    <div class="form-group label-floating">
                     <label class="control-label">telefono opcional</label>
-                    <input class="form-control" name="phone2" type="text" />
+                    <input class="form-control" name="phone2" type="text" value="{{alumno.phone2}}"/ />
                   </div>
                   <!-- ASIGNATURAS -->
                 <div class="form-group">
 										<label  class="control-label">Etapa</label>
-										<select class="form-control" name="nombre_etapa" id="nombre_etapa">
+										<select class="form-control" name="etapa" id="nombre_etapa">
 											<option disabled selected>Seleccione una de las etapas</option>
 										</select>
 									<div class="form-group">
-										<label  class="control-label">Indique el FP al cual se quiere matrricular</label>
-										<select class="form-control" name="nombre_fp" id="nombre_fp" disabled>
+										<label  class="control-label">Indique el FP al cual se quiere matricular</label>
+										<select class="form-control" name="fp" id="nombre_fp" disabled>
 											<option selected disabled>---</option>
 										</select>
                   <div class="form-group">
@@ -106,31 +106,31 @@
                   
 										<div class="form-group label-floating">
 										<label class="control-label">calle</label>
-										<textarea class="form-control" name="calle" ></textarea>
+										<input class="form-control" name="calle" value="{{alumno.calle}}"/></input>
 									</div>
 										<div class="form-group label-floating">
 										<label class="control-label">tipo_via</label>
-										<textarea class="form-control" name="tipo_via" ></textarea>
+										<input class="form-control" name="tipo_via" value="{{alumno.tipo_via}}"/ ></input>
 									</div>
 										<div class="form-group label-floating">
 										<label class="control-label">n_via</label>
-										<textarea class="form-control" name="n_via" ></textarea>
+										<input class="form-control" name="n_via" value="{{alumno.n_via}}"/></input>
 									</div>
 										<div class="form-group label-floating">
 										<label class="control-label">portal</label>
-										<textarea class="form-control" name="portal" ></textarea>
+										<input class="form-control" name="portal" value="{{alumno.portal}}"/ ></input>
 									</div>
 										<div class="form-group label-floating">
 										<label class="control-label">puerta</label>
-										<textarea class="form-control" name="puerta" ></textarea>
+										<input class="form-control" name="puerta" value="{{alumno.puerta}}"/ ></input>
 									</div>
 										<div class="form-group label-floating">
 										<label class="control-label">escalera</label>
-										<textarea class="form-control" name="escalera" ></textarea>
+										<input class="form-control" name="escalera" value="{{alumno.escalera}}"/ ></input>
 									</div>
 										<div class="form-group label-floating">
 										<label class="control-label">bloque</label>
-										<textarea class="form-control" name="bloque" ></textarea>
+										<input class="form-control" name="bloque" value="{{alumno.bloque}}"/ ></input>
 									</div>
 									<!--PROVINCIA Y LOCALIDAD-->
 									<div class="form-group">

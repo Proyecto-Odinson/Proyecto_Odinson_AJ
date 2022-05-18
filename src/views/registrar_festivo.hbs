@@ -80,8 +80,6 @@
     			province.removeAttribute('disabled');
   			}
 		})
-				
-
             const responseProvinces = await fetch('/select_province');
             const provinces = await responseProvinces.json();
             provinces.map(p => {

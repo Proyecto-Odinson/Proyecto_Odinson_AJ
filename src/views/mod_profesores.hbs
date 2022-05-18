@@ -1,0 +1,324 @@
+<!-- Content pagina -->
+<div class="container-fluid">
+	<div class="page-header">
+		<h1 class="text-titles"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i> Modificar <small>Profesor</small></h1>
+	</div>
+	<p class="lead">Rellenando el siguiente formulario podremos añadir al sistema un nuevo profesor.Este proceso solo podrá realizarlo el administrador</p>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-12">
+			<ul class="nav nav-tabs" style="margin-bottom: 15px;">
+				<li class="active"><a href="/crear_profesor" data-toggle="tab">Nuevo Profesor</a></li>
+				<li><a href="/profesores">Listado de Profesores</a></li>
+			</ul>
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane fade active in" id="new">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-xs-12 col-md-10 col-md-offset-1">
+								<form method="post">
+									<input type="hidden" name="_method" value="PUT">
+									<div class="form-group label-floating">
+										<label class="control-label">Nombre</label>
+										<input class="form-control" name="firstName" type="text" value="{{profesor.firstName}}">
+									</div>
+									<div class="form-group label-floating">
+										<label class="control-label">Apellidos</label>
+										<input class="form-control" name="lastName" type="text" value="{{profesor.lastName}}">
+									</div>
+									<div class="form-group label-floating">
+										<label class="control-label">Codigo profesor</label>
+										<input class="form-control" name="codigo" type="text"  value="{{profesor.codigo}}">
+										</div>
+									<div class="form-group label-floating">
+										<label class="control-label">email</label>
+										<input class="form-control" name="email" type="email"  value="{{profesor.email}}">
+										</div>
+									<div class="form-group label-floating">
+										<label class="control-label">Contraseña</label>
+										<input class="form-control" name="password" type="password">
+										</div>
+									<div class="form-group label-floating">
+										<label class="control-label">Escriba de nuevo su contraseña</label>
+										<input class="form-control" name="password2" type="password">
+										</div>
+									<div class="form-group label-floating">
+										<label class="control-label">telefono</label>
+										<input class="form-control" name="phone" type="text" value="{{profesor.phone}}" ></input>
+									</div>
+									<div class="form-group label-floating">
+										<label class="control-label">telefono opcional</label>
+										<input class="form-control" name="phone2" type="text" value="{{profesor.phone2}}"></input>
+									</div>
+									<div class="form-group">
+										<label class="control-label">¿ Este profesor es tutor ?</label>
+										<input name="tutor" id="tutor" type="checkbox" value="false"> No
+										<input name="tutor" id="tutor" type="checkbox" value="true" checked > Si
+									</div>
+									<div class="form-group">
+										<label class="control-label">¿De que tipo de etapa es tutor?</label>
+										<select class="form-control" name="tipo_etapa" id="tipo_etapa">
+										   <option disabled selected>-----</option>
+										   <option value="FP">FP</option>
+										   <option value="Etapa">ESO o Bachiller</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label class="control-label">¿De que tipo de grado o curso eres tutor?</label>
+										<select class="form-control" name="tutor_etapa" id="tutor_etapa" >
+										   <option disabled selected>-----</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label class="control-label">¿ De que ciclo de FP eres tutor ?</label>
+										<select class="form-control" name="tutor_ciclo" id="tutor_ciclo"  >
+										   <option disabled selected>-----</option>
+										</select>
+									</div>
+									
+									<div class="form-group">
+										<label class="control-label"> Indica el numero de curso de cual eres tutor </label>
+										<select class="form-control" name="tutor_curso" id="tutor_curso"  >
+										   <option disabled selected>-----</option>
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label">Jefe de departamento</label>
+										<select class="form-control" name="jefe_departamento">
+											<option disabled selected>-----</option>
+											<option value="true">Si</option>
+											<option value="false">No</option>
+										</select>
+									</div>
+									<!--DIRECCION-->
+										<div class="form-group label-floating">
+										<label class="control-label">calle</label>
+										<input class="form-control" name="calle" value="{{profesor.calle}}"></input>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">tipo_via</label>
+										<input class="form-control" name="tipo_via" value="{{profesor.tipo_via}}"></input>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">n_via</label>
+										<input class="form-control" name="n_via"  value="{{profesor.n_via}}" ></input>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">portal</label>
+										<input class="form-control" name="portal" value="{{profesor.portal}}" ></input>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">puerta</label>
+										<input class="form-control" name="puerta" value="{{profesor.puerta}}" ></input>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">escalera</label>
+										<input class="form-control" name="escalera"  value="{{profesor.escalera}}" ></input>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">bloque</label>
+										<input class="form-control" name="bloque"  value="{{profesor.bloque}}"></input>
+									</div>
+									<!--PROVINCIA Y LOCALIDAD-->
+									<div class="form-group">
+										<label  class="control-label">Provincia</label>
+										<select class="form-control" name="province" id="province">
+											<option disabled selected>Seleccione una provincia</option>
+										</select>
+
+									<div class="form-group">
+										<label  class="control-label">Localidad</label>
+										<select class="form-control" name="city" id="city" >
+											<option selected disabled>---</option>
+										</select>
+									<p class="text-center">
+										<button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i> Save</button>
+									</p>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="list">
+					<div class="table-responsive">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--SCRIPT PARA LOCALIDAD Y PROVINCIA-->
+
+<script>
+
+	(async () => {
+            const province = document.querySelector("#province");
+            const city = document.querySelector("#city");
+            const responseProvinces = await fetch('/select_province');
+            const provinces = await responseProvinces.json();
+            provinces.map(p => {
+                let opt = document.createElement('option');
+                opt.value = p._id;
+                opt.innerText = p.showName;
+                province.appendChild(opt);
+            })
+            province.addEventListener("change", async () => {
+                const currentProvince = province.value;
+                let responseCities = await fetch(`/select_city/${currentProvince}`);
+                currentCities = await responseCities.json();
+                
+                if(!currentCities) return alert('No existe esa provincia!');
+                
+                city.removeAttribute('disabled');
+                city.innerHTML = '';
+                let disabledOptCity = document.createElement('option');
+                disabledOptCity.innerHTML = '---';
+                disabledOptCity.setAttribute('disabled', true);
+                disabledOptCity.setAttribute('selected', true);
+                city.appendChild(disabledOptCity);
+                currentCities.map( c => {
+                    let opt = document.createElement('option');
+                    opt.value = c._id;
+                    opt.innerText = c.name;
+                    console.log(c);
+                    city.appendChild(opt);
+                })
+            })
+        })()
+</script> 
+
+
+<!-- SCRIPT PARA TUTOR -->
+
+<script>
+
+(async () => {
+
+			const tutor_el = document.querySelector("#tutor")
+			const tipo_etapa_el = document.querySelector("#tipo_etapa");
+            const tutor_etapa_el = document.querySelector("#tutor_etapa");
+            const tutor_curso_el = document.querySelector("#tutor_curso");
+			const tutor_ciclo = document.querySelector("#tutor_ciclo");
+
+			tutor_el.addEventListener("change", () => {
+  			if(tutor_el.checked === true) {
+    			tipo_etapa_el.setAttribute('disabled', '');
+				tutor_etapa_el.setAttribute('disabled', '')
+  			} else {
+    			tipo_etapa_el.removeAttribute('disabled');
+				tutor_etapa_el.removeAttribute('disabled');
+  			}  
+		})
+
+            const responseEtapa  = await fetch('/select_etapa');
+            const etapa = await responseEtapa.json();
+			let etapaFilter = etapa.filter(e => e.nombre === 'GRADO_MEDIO' || e.nombre === 'GRADO_SUPERIOR');
+
+			tipo_etapa_el.addEventListener('change', function() {
+				if(tipo_etapa_el.value === 'FP') {
+					etapaFilter = etapa.filter(e => e.nombre === 'GRADO_MEDIO' || e.nombre === 'GRADO_SUPERIOR');
+				}else {
+					etapaFilter = etapa.filter(e => e.nombre !== 'GRADO_MEDIO' && e.nombre !== 'GRADO_SUPERIOR');
+				}
+
+				tutor_etapa_el.innerHTML = '';
+				disabledOptionTutorEtapa = document.createElement('option');
+				disabledOptionTutorEtapa.setAttribute('disabled', '');
+				disabledOptionTutorEtapa.setAttribute('selected', '');
+				disabledOptionTutorEtapa.innerText = '---';
+				tutor_etapa_el.appendChild(disabledOptionTutorEtapa);
+				etapaFilter.map(e => {
+					let opt = document.createElement('option');
+					opt.value = e._id;
+					opt.dataset.cursos = e.n_cursos;
+					opt.innerText = e.nombre;
+					tutor_etapa_el.appendChild(opt);
+				})
+			})
+
+            etapaFilter.map(e => {
+                let opt = document.createElement('option');
+                opt.value = e._id;
+                opt.dataset.cursos = e.n_cursos;
+                opt.innerText = e.nombre;
+                tutor_etapa_el.appendChild(opt);
+            })
+
+            tutor_etapa_el.addEventListener("change", async (event) => {
+              const currentEtapa = tutor_etapa_el.value;
+              const n_cursos_etapa = event.target.options[event.target.selectedIndex].dataset.cursos;
+
+
+              let responseFP = await fetch(`/select_fp/${currentEtapa}`);
+              currentFP = await responseFP.json();
+
+              console.log(currentFP.length > 0)
+
+              if(currentFP.length > 0) {
+                console.log('Enabled')
+                tutor_ciclo.disabled = false;
+              } else {
+                console.log('Disabled')
+                tutor_ciclo.disabled = true
+              }
+
+              tutor_curso_el.innerHTML = '';
+
+              let disabledCurso = document.createElement('option');
+              disabledCurso.innerText = '---';
+              disabledCurso.setAttribute('disabled', true);
+              disabledCurso.setAttribute('selected', true);
+              tutor_curso_el.appendChild(disabledCurso);
+
+              for(let i = 1; i <= parseInt(n_cursos_etapa); i++) {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.innerText = `${i}º`;
+                tutor_curso_el.appendChild(opt);
+              }
+              
+              if(!currentFP) return alert('No existe ese FP!');
+              
+              tutor_ciclo.innerHTML = '';
+              let disabledOptFP = document.createElement('option');
+              disabledOptFP.innerHTML = '---';
+              disabledOptFP.setAttribute('disabled', true);
+              disabledOptFP.setAttribute('selected', true);
+              tutor_ciclo.appendChild(disabledOptFP);
+              currentFP.map( f => {
+                  let opt = document.createElement('option');
+                  opt.value = f._id;
+                  opt.innerText = f.nombre;
+                  tutor_ciclo.appendChild(opt);
+              })
+            })
+
+            tutor_etapa_el.addEventListener("change", async () => {
+                const currentEtapa = tutor_etapa_el.value;
+                let responseCursos = await fetch(`/select_cursos/${currentEtapa}`);
+                responseCursos = await responseCursos.json();
+                
+                tutor_ciclo.removeAttribute('disabled');
+                tutor_ciclo.innerHTML = '';
+                let disabledOptFP = document.createElement('option');
+                disabledOptFP.innerHTML = '---';
+                disabledOptFP.setAttribute('disabled', true);
+                disabledOptFP.setAttribute('selected', true);
+                tutor_ciclo.appendChild(disabledOptFP);
+                responseCursos.map( f => {
+                    let opt = document.createElement('option');
+                    opt.value = f._id;
+                    opt.innerText = f.nombre;
+                    console.log(f);
+                    tutor_ciclo.appendChild(opt);
+                })
+            })
+            
+
+        })
+  ()
+</script> 

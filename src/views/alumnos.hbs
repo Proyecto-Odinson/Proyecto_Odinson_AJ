@@ -2,20 +2,12 @@
 <ul>
 {{#each alumno as | Alumno |}}
 <li>
-    {{Alumno.firstName}} {{Alumno.lastName}} <a href="/mod_alumno/{{Alumno._id}}">Modificar</a> <form method="post"><input type="hidden" name="_method" value="DELETE"><input type="hidden" name="alumno" value="{{Alumno._id}}"><input type="submit" value="borrar"></form>
+    {{Alumno.firstName}} {{Alumno.lastName}} 
+    <a href="/mod_alumno/{{Alumno._id}}">Modificar</a> 
+        <form method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="alumno" value="{{Alumno._id}}">
+            <input type="submit" value="borrar"></form>
 </li>
 {{/each}}
 </ul>
-
-<form method="post">
-    <input type="hidden" name="_method" value="DELETE">
-    <div class="form-group">
-	 <label  class="control-label">¿Que alumno quiere borrar?</label>
-		 <select class="form-control" name="alumno" id="alumno " >
-            {{#each alumno  as | alumno |}}
-                <option value="{{alumno._id}}"> {{alumno.firstName}} </option>
-            {{/each}}
-         </select>
-    </div>
-    <input type="submit" value="borrar">
-</form>

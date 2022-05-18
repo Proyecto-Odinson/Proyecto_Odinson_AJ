@@ -14,9 +14,9 @@ const AsignaturasSchema = new Schema ({
         }
     ],
 
-    fp: [{ type: Schema.Types.ObjectId, ref: 'FP' }],
-    profesor: [{ type: Schema.Types.ObjectId, ref: 'Profesor' }],
-    etapa: [{ type: Schema.Types.ObjectId, ref: 'Etapa' }],
+    fp: { type: Schema.Types.ObjectId, ref: 'FP' },
+    profesor: { type: Schema.Types.ObjectId, ref: 'Profesor' },
+    etapa: { type: Schema.Types.ObjectId, ref: 'Etapa' },
 
 })
 

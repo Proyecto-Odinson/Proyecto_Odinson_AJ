@@ -3,7 +3,12 @@
 <ul>
 {{#each profesores as | profesor |}}
 <li>
-    {{profesor.firstName}} {{profesor.lastName}}
+    {{profesor.firstName}} {{profesor.lastName}} <a href="/mod_prof/{{profesor._id}}">Modificar</a> 
+    <form method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="hidden" name="profesor" value="{{profesor._id}}">
+        <input type="submit" value="borrar">
+    </form>
 </li>
 {{/each}}
 </ul>

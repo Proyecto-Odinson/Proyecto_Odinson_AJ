@@ -52,6 +52,9 @@ const renderCreateAlumno = (req, res) => {
     res.render('crear_alumno');
 }
 
+
+// MODIFICACION DE ALUMMNO Y PROFESOR RENDER
+
 const renderModificarAlumno = async (req, res) => {
     const alumnoId = req.params.id;
 
@@ -59,6 +62,16 @@ const renderModificarAlumno = async (req, res) => {
 
     res.render('mod_estudiantes', { alumno });
 }
+
+
+const renderModificarProfesor = async (req, res) => {
+    const profesorId = req.params.id;
+
+    const profesor = await Profesor.findById(profesorId).lean();
+
+    res.render('mod_profesores', { profesor });
+}
+
 
 //CREACION PROFESOR
 
@@ -80,6 +93,8 @@ const crearProfesor = async (req, res) => {
 
     const username = (firstName.slice(0,3) + lastName.slice(0,3)).toLowerCase();
 
+    const etapa_o_ciclo = tipo_etapa === 'FP' ? tutor_ciclo : tutor_etapa;
+    // const constante = condicional ? valor si verdadero : valor si falso;
     const newProfesor = Profesor({
         email,
         password, 
@@ -103,7 +118,7 @@ const crearProfesor = async (req, res) => {
         jefe_departamento,
         codigo, 
         tutor: {
-            clase: tutor_ciclo,
+            clase: etapa_o_ciclo,
             curso: tutor_curso ,
         },
 
@@ -179,16 +194,24 @@ const crearAlumnno = async (req, res) => {
     }
 }
 
-//MODIFICAR ALUMNO EXISTENTE
+//MODIFICAR ALUMNO Y PROFESOR EXISTENTE
 
 const updateAlumno = async (req, res) => {
-    const userId = req.params.id;
 
+    const userId = req.params.id;
     const updatedAlumno = await Alumno.updateOne({ _id: userId}, req.body);
 
     res.redirect('/alumnos')
 }
 
+const updateProfesor = async (req, res) => {
+
+    const userId = req.params.id;
+    const updatedProfesor = await Profesor.updateOne({ _id: userId}, req.body);
+
+    res.redirect('/profesores')
+
+}
 
 // LISTADO DE PROFESORES Y ALUMNOS
 
@@ -208,7 +231,7 @@ const getAllAlumnos = async (req, res) => {
    
 }
 
-// ELIMINAR Y ACTUALIZAR PROFES Y ALUMNOS
+// ELIMINAR  PROFES Y ALUMNOS
 
 const deleteAlumno = async ( req, res ) => {
 
@@ -224,6 +247,20 @@ const deleteAlumno = async ( req, res ) => {
     }
 }
 
+const deleteProfesor = async ( req, res ) => {
+
+    try {
+        const deleteProfesor = await Profesor.deleteOne ( { _id: req.body.profesor } )
+        req.flash('success', 'Se ha borrado el profesor.');
+        console.log(deleteProfesor)
+        return res.redirect('/profesores');
+    } catch (error) {
+        req.flash('error', 'No se ha podido borrar el profesor');
+        console.log(error)
+        return res.redirect('/profesores');
+    }
+}
+
 module.exports = {
     renderLoginForm,
     renderSignupForm,
@@ -232,11 +269,14 @@ module.exports = {
     renderCreateProfesor,
     renderCreateAlumno,
     renderModificarAlumno,
+    renderModificarProfesor,
     crearProfesor,
     crearAlumnno,
     getAllProfesores,
     getAllAlumnos,
     deleteAlumno,
+    deleteProfesor,
     updateAlumno,
+    updateProfesor,
 }
 

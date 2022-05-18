@@ -53,7 +53,7 @@ const ProfeSorSchema = new Schema({
 
     },
     tipoClase: { type: String, enum: ['FP', 'Etapa'] },
-    asignaturas: [{ type: Schema.Types.ObjectId, ref: 'Asignatura' }],
+    asignaturas: { type: Schema.Types.ObjectId, ref: 'Asignatura' },
     
     
 });

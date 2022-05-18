@@ -9,9 +9,6 @@ const FestivosSchema = new Schema({
 
     province: { type: Schema.Types.ObjectId, ref: 'Province' },
     city: { type: Schema.Types.ObjectId, ref: 'City' },
-
-
-
 })
 
 
