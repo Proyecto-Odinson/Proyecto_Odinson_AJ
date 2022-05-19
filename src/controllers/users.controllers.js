@@ -1,4 +1,5 @@
 const { User, Profesor, Alumno } = require('../models/Users');
+const { formatDate } = require('../lib/date')
 
 const renderLoginForm = (req, res) => {
     res.render('signin', { layout: 'vacio' });
@@ -60,7 +61,9 @@ const renderModificarAlumno = async (req, res) => {
 
     const alumno = await Alumno.findById(alumnoId).lean();
 
-    res.render('mod_estudiantes', { alumno });
+    const fecha_nac = formatDate(new Date(alumno.fecha_nac));
+
+    res.render('mod_estudiantes', { alumno, fecha_nac });
 }
 
 
@@ -77,7 +80,7 @@ const renderModificarProfesor = async (req, res) => {
 
 const crearProfesor = async (req, res) => {
     const { password, password2,  firstName,  lastName, email, email2, phone, phone2, calle, tipo_via,
-             nombre_via, n_via, portal, puerta, escalera, bloque, province, city , jefe_departamento, codigo, tutor, tutor_ciclo, tutor_etapa, tutor_curso, tipo_etapa} = req.body;
+             nombre_via, n_via, portal, puerta, escalera, bloque, province, city , jefe_departamento, codigo,  tutor_ciclo, tutor_etapa, tutor_curso, tipo_etapa} = req.body;
 
     const profesor = await Profesor.findOne({ email });
 
@@ -94,7 +97,9 @@ const crearProfesor = async (req, res) => {
     const username = (firstName.slice(0,3) + lastName.slice(0,3)).toLowerCase();
 
     const etapa_o_ciclo = tipo_etapa === 'FP' ? tutor_ciclo : tutor_etapa;
-    // const constante = condicional ? valor si verdadero : valor si falso;
+
+    //const constante = condicional ? valor si verdadero : valor si falso;
+    
     const newProfesor = Profesor({
         email,
         password, 
@@ -125,17 +130,24 @@ const crearProfesor = async (req, res) => {
         tipoClase: tipo_etapa ,
     });
 
-    await newProfesor.save();
+    try {
+        await newProfesor.save();
+        req.flash('success', 'Se ha creado correctamente su cuenta.');
+        console.log(newProfesor)
+        return res.redirect('/profesores');
 
-    req.flash('success', 'Se ha creado correctamente su cuenta.');
-    res.redirect('/profesores');
+    } catch (error) {
+        req.flash('error', 'No se ha podido crear el usuario');
+        console.log(error)
+        return res.redirect('/crear_profesor');
+    }
 }
 
 //CREACION ALUMNOS
 
 const crearAlumnno = async (req, res) => {
     const { password, password2,  firstName,  lastName, email, email2, phone, phone2, calle, tipo_via,
-            n_via, portal, puerta, escalera, bloque, province, city, n_expediente, DNI, autorizacion_datos, fecha_nac, asignaturas, nombre_etapa, nombre_fp, n_cursos} = req.body;
+            n_via, portal, puerta, escalera, bloque, province, city, n_expediente, DNI, autorizacion_datos, fecha_nac, asignaturas, nombre_etapa, nombre_fp, } = req.body;
 
     const alumno = await Alumno.findOne({ email });
 
@@ -207,7 +219,34 @@ const updateAlumno = async (req, res) => {
 const updateProfesor = async (req, res) => {
 
     const userId = req.params.id;
-    const updatedProfesor = await Profesor.updateOne({ _id: userId}, req.body);
+    const updatedProfesor = await Profesor.findById(userId);
+
+    const properties = Object.keys(req.body);
+    
+    for(let property of properties) {
+
+        let value = req.body[property];
+
+        if(value || typeof value === 'boolean') {
+            if(property !== 'tutor') {
+                updatedProfesor[property] = value;
+            }
+            
+        }
+    }
+    
+    if(Boolean(req.body.tutor)) {
+
+        const etapa_o_ciclo = req.body.tipo_etapa === 'FP' ? req.body.tutor_ciclo : req.body.tutor_etapa;
+        const tutor = {
+            clase: etapa_o_ciclo,
+            curso: req.body.tutor_curso ,
+        }
+
+        updatedProfesor.tutor = tutor;
+    }
+
+    await updatedProfesor.save();
 
     res.redirect('/profesores')
 
@@ -230,6 +269,7 @@ const getAllAlumnos = async (req, res) => {
     res.render('alumnos', { alumno });
    
 }
+
 
 // ELIMINAR  PROFES Y ALUMNOS
 

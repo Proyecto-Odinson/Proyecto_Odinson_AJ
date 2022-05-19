@@ -10,7 +10,7 @@
   <div class="row">
     <div class="col-xs-12">
       <ul class="nav nav-tabs" style="margin-bottom: 15px;">
-        <li class="active"><a href="#new" data-toggle="tab">Nuevo</a></li>
+        <li class="active"><a href="/crear_alumno">Nuevo</a></li>
         <li><a href="/alumnos">Listado de Alumnos</a></li>
       </ul>
       <div id="myTabContent" class="tab-content">
@@ -19,6 +19,9 @@
             <div class="row">
               <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <form method="post">
+              <!--DATOS PERSONALES -->
+							<div id="datos_personales" style="display:block;">
+								<h1>DATOS PERSONALES</h1>
                   <div class="form-group label-floating">
                     <label class="control-label">Nombre</label>
                     <input class="form-control" name="firstName" type="text" />
@@ -35,18 +38,18 @@
                     <label class="control-label">n_expediente</label>
                     <input class="form-control" name="n_expediente" type="text"/>
                   </div>
-				       <div class="form-group label-floating">
-					          <label class="control-label">email</label>
-				          	<input class="form-control" name="email" type="email">
-					    </div>
-              <div class="form-group label-floating">
-										<label class="control-label">password</label>
-										<input class="form-control" name="password" type="password">
-							</div>
-              <div class="form-group label-floating">
-										<label class="control-label">Escriba de nuevo su contraseña</label>
-										<input class="form-control" name="password2" type="password">
-										</div>
+                <div class="form-group label-floating">
+                      <label class="control-label">email</label>
+                      <input class="form-control" name="email" type="email">
+                </div>
+                <div class="form-group label-floating">
+                      <label class="control-label">password</label>
+                      <input class="form-control" name="password" type="password">
+                </div>
+                  <div class="form-group label-floating">
+                        <label class="control-label">Escriba de nuevo su contraseña</label>
+                        <input class="form-control" name="password2" type="password">
+                  </div>
                   <div class="form-group label-floating">
                     <label>Fecha nacimiento</label>
                     <input class="form-control" name="fecha_nac" type="date" />
@@ -57,52 +60,55 @@
 											<option value="true">Si</option>
 											<option value="false">No</option>
 										</select>
+                  </div>
                   <div class="form-group label-floating">
                     <label class="control-label">telefono</label>
                     <input class="form-control" name="phone" type="text" />
                   </div>
                    <div class="form-group label-floating">
                     <label class="control-label">telefono opcional</label>
-                    <input class="form-control" name="phone2" type="text" />
+                    <input class="form-control" name="phone2" type="text"/>
+                    	<button type="button" id="button_1">Siguiente</button>
                   </div>
-                  <!-- ASIGNATURAS -->
-                <div class="form-group">
-										<label  class="control-label">Etapa</label>
-										<select class="form-control" name="nombre_etapa" id="nombre_etapa">
-											<option disabled selected>Seleccione una de las etapas</option>
-										</select>
+              </div>
+
+                <!-- ASIGNATURAS -->
+              <div id="datos_asignaturas" style="display:none;">
+								  <h1>ASIGNATURAS</h1>
+                    <div class="form-group">
+                        <label  class="control-label">Etapa</label>
+                      <select class="form-control" name="nombre_etapa" id="nombre_etapa">
+                        <option disabled selected>Seleccione una de las etapas</option>
+                      </select>
+                  </div>
+
 									<div class="form-group">
 										<label  class="control-label">Indique el FP al cual se quiere matrricular</label>
 										<select class="form-control" name="nombre_fp" id="nombre_fp" disabled>
 											<option selected disabled>---</option>
 										</select>
+                  </div>
+
                   <div class="form-group">
                     <label class="control-label">Proporcione el Curso</label>
                     <select class="form-control" name="n_cursos" id="n_cursos">
 	                      <option selected disabled>---</option> 
                       </select>
                   </div>
+
                    <div class="form-group">
                     <label class="control-label">Asigne las asignaturas a las cuales se va a matricular</label>
                     <select class="form-control" name="asignaturas" id="asignaturas" multiple>
 	                      <option selected disabled>---</option> 
                       </select>
-                  </div>
-
-                  <div class="zmdi zmdi-calendar-check">
-                    <label class="zmdi zmdi-calendar-check">Seleccione su año academico</label>
-
-                    <select class="form-control" name="a_escolar" id="a_escolar">
-                      <option>2021-2022</option>
-                      <option>2022-2023</option>
-                      <option>2024-2025</option>
-                      <option>2026-2027</option>
-                      <option>2027-2028</option>
-                    </select>
                   </div> 
+                	 <button type="button" id="button_2">Siguiente</button>
+								   <button type="button" id="button_4">Atras</button>
+						</div>
 
-                  <!--DIRECCION-->
-                  
+              <!--DIRECCION-->
+              <div id="datos_direccion" style="display:none;">
+								<h1>DATOS DIRECCION</h1>
 										<div class="form-group label-floating">
 										<label class="control-label">calle</label>
 										<textarea class="form-control" name="calle" ></textarea>
@@ -131,22 +137,32 @@
 										<label class="control-label">bloque</label>
 										<textarea class="form-control" name="bloque" ></textarea>
 									</div>
-									<!--PROVINCIA Y LOCALIDAD-->
+                    <button type="button" id="button_3">Siguiente</button>
+								    <button type="button" id="button_5">Atras</button>
+							</div>
+
+								<!--PROVINCIA Y LOCALIDAD-->
+                <div id="provincia_localidad"  style="display:none;">
+								  <h1>DATOS PROVINCIA Y LOCALIDAD</h1>
 									<div class="form-group">
 										<label  class="control-label">Provincia</label>
 										<select class="form-control" name="province" id="province">
 											<option disabled selected>Seleccione una provincia</option>
 										</select>
-
+                  </div>
 									<div class="form-group">
 										<label  class="control-label">Localidad</label>
 										<select class="form-control" name="city" id="city" >
 											<option selected disabled>---</option>
 										</select>
+                  </div>
+                  <button type="button" id="button_6">Atras</button>
                   <p class="text-center">
                     <button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i>Save</button>
                   </p>
-                </form>
+                </div> 
+              </form>
+
               </div>
             </div>
           </div>
@@ -155,6 +171,78 @@
     </div>
   </div>
 </div>
+
+
+<!-- SCRIPT PARA ILUSION -->
+
+<script>
+
+	const button_1 = document.querySelector("#button_1");
+	const button_2 = document.querySelector("#button_2");
+	const button_3 = document.querySelector("#button_3");
+	
+	const button_4 = document.querySelector('#button_4');
+	const button_5 = document.querySelector('#button_5');
+	const button_6 = document.querySelector('#button_6');
+	
+
+	const form_datos_personales = document.querySelector("#datos_personales");
+	const form_datos_asignaturas = document.querySelector("#datos_asignaturas");
+	const form_direccion = document.querySelector("#datos_direccion");
+	const form_provincia_localidad = document.querySelector("#provincia_localidad");
+
+	button_1.addEventListener('click' , () => {
+
+		form_datos_personales.style.display = 'none';
+		form_datos_asignaturas.style.display = '';
+		button_2.style.display = '';
+		
+
+	})
+
+		button_2.addEventListener('click' , () => {
+
+		form_datos_asignaturas.style.display = 'none';
+		form_direccion.style.display = '';
+		button_2.style.display = 'none';
+		button_3.style.display = '';
+
+	})
+
+		button_3.addEventListener('click' , () => {
+
+		form_direccion.style.display = 'none';
+		form_provincia_localidad.style.display = '';
+		button_3.style.display = 'none';
+
+	})
+
+// PARA ATRAS 
+
+	button_4.addEventListener('click' , () => {
+
+		form_datos_personales.style.display = '';
+		form_datos_asignaturas.style.display = 'none';
+		button_1.style.display = ''
+	})
+
+	button_5.addEventListener('click' , () => {
+
+		form_datos_asignaturas.style.display = '';
+		form_direccion.style.display = 'none';
+		button_2.style.display = ''
+	
+	})
+
+	button_6.addEventListener('click' , () => {
+
+		form_direccion.style.display = '';
+		form_provincia_localidad.style.display = 'none';
+		button_3.style.display = ''
+	})
+
+</script>
+
 
 <!--SCRIPT PARA LOCALIDAD Y PROVINCIA-->
 

@@ -9,7 +9,7 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<ul class="nav nav-tabs" style="margin-bottom: 15px;">
-				<li class="active"><a href="/crear_profesor" data-toggle="tab">Nuevo Profesor</a></li>
+				<li class="active"><a href="/crear_profesor">Nuevo Profesor</a></li>
 				<li><a href="/profesores">Listado de Profesores</a></li>
 			</ul>
 			<div id="myTabContent" class="tab-content">
@@ -17,8 +17,11 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-xs-12 col-md-10 col-md-offset-1">
-								<form method="post">
-									<input type="hidden" name="_method" value="PUT">
+							<form method="post">
+								<input type="hidden" name="_method" value="PUT">
+							<!--DATOS PERSONALES -->
+							<div id="datos_personales" style="display:block;">
+								<h1>DATOS PERSONALES</h1>
 									<div class="form-group label-floating">
 										<label class="control-label">Nombre</label>
 										<input class="form-control" name="firstName" type="text" value="{{profesor.firstName}}">
@@ -51,6 +54,12 @@
 										<label class="control-label">telefono opcional</label>
 										<input class="form-control" name="phone2" type="text" value="{{profesor.phone2}}"></input>
 									</div>
+								<button type="button" id="button_1">Siguiente</button>
+							</div>
+
+							<!--DATOS TUTOR -->
+							<div id="datos_tutor" style="display:none;">
+								<h1>DATOS TUTOR: Rellene solo si va a ser tutor</h1>
 									<div class="form-group">
 										<label class="control-label">¿ Este profesor es tutor ?</label>
 										<input name="tutor" id="tutor" type="checkbox" value="false"> No
@@ -92,7 +101,13 @@
 											<option value="false">No</option>
 										</select>
 									</div>
-									<!--DIRECCION-->
+								<button type="button" id="button_2">Siguiente</button>
+								<button type="button" id="button_4">Atras</button>
+							</div>
+
+							<!--DATOS_DIRECCION-->
+							<div id="datos_direccion" style="display:none;">
+								<h1>DATOS DIRECCION</h1>
 										<div class="form-group label-floating">
 										<label class="control-label">calle</label>
 										<input class="form-control" name="calle" value="{{profesor.calle}}"></input>
@@ -120,36 +135,112 @@
 										<div class="form-group label-floating">
 										<label class="control-label">bloque</label>
 										<input class="form-control" name="bloque"  value="{{profesor.bloque}}"></input>
-									</div>
-									<!--PROVINCIA Y LOCALIDAD-->
+									<button type="button" id="button_3">Siguiente</button>
+									<button type="button" id="button_5">Atras</button>
+									
+								</div>
+							</div>
+									
+							<!--PROVINCIA Y LOCALIDAD-->
+							<div id="provincia_localidad"  style="display:none;">
+								<h1>DATOS PROVINCIA Y LOCALIDAD</h1>
 									<div class="form-group">
 										<label  class="control-label">Provincia</label>
 										<select class="form-control" name="province" id="province">
 											<option disabled selected>Seleccione una provincia</option>
 										</select>
-
+									</div>
 									<div class="form-group">
 										<label  class="control-label">Localidad</label>
 										<select class="form-control" name="city" id="city" >
 											<option selected disabled>---</option>
 										</select>
-									<p class="text-center">
-										<button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i> Save</button>
-									</p>
-								</form>
+									</div>
+								<button type="button" id="button_6">Atras</button>
+								<p class="text-center">
+									<button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i> Save</button>
+								</p>
+						    </div>
+						</form>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="tab-pane fade" id="list">
-					<div class="table-responsive">
-						
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<!-- SCRIPT PARA ILUSION -->
+
+<script>
+
+	const button_1 = document.querySelector("#button_1");
+	const button_2 = document.querySelector("#button_2");
+	const button_3 = document.querySelector("#button_3");
+	
+	const button_4 = document.querySelector('#button_4');
+	const button_5 = document.querySelector('#button_5');
+	const button_6 = document.querySelector('#button_6');
+	
+
+	const form_datos_personales = document.querySelector("#datos_personales");
+	const form_datos_tutor = document.querySelector("#datos_tutor");
+	const form_direccion = document.querySelector("#datos_direccion");
+	const form_provincia_localidad = document.querySelector("#provincia_localidad");
+
+	button_1.addEventListener('click' , () => {
+
+		form_datos_personales.style.display = 'none';
+		form_datos_tutor.style.display = '';
+		button_2.style.display = '';
+		
+
+	})
+
+	button_2.addEventListener('click' , () => {
+
+		form_datos_tutor.style.display = 'none';
+		form_direccion.style.display = '';
+		button_2.style.display = 'none';
+		button_3.style.display = '';
+
+	})
+
+	button_3.addEventListener('click' , () => {
+
+		form_direccion.style.display = 'none';
+		form_provincia_localidad.style.display = '';
+		button_3.style.display = 'none';
+
+	})
+
+// PARA ATRAS 
+
+	button_4.addEventListener('click' , () => {
+
+		form_datos_personales.style.display = '';
+		form_datos_tutor.style.display = 'none';
+		button_1.style.display = ''
+	})
+
+	button_5.addEventListener('click' , () => {
+
+		form_datos_tutor.style.display = '';
+		form_direccion.style.display = 'none';
+		button_2.style.display = ''
+	
+	})
+
+	button_6.addEventListener('click' , () => {
+
+		form_direccion.style.display = '';
+		form_provincia_localidad.style.display = 'none';
+		button_3.style.display = ''
+	})
+</script>
 
 <!--SCRIPT PARA LOCALIDAD Y PROVINCIA-->
 

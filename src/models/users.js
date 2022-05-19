@@ -24,10 +24,11 @@ const UserSchema = new Schema({
     city: { type: Schema.Types.ObjectId, ref: 'City', required: true },
 })
 
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function (next) {
+
     const user = this;
 
-    if(!user.isModified('password')) next();
+    if(!user.isModified('password')) return next();
 
     try {
         const salt = await bcrypt.genSalt(12);
@@ -37,7 +38,7 @@ UserSchema.pre('save', async function(next) {
     } catch (error) {
         next(error);
     }
-})
+});
 
 UserSchema.methods.checkPassword = async function(password) {
     return await bcrypt.compare(password, this.password);
@@ -71,7 +72,7 @@ const AlumnoSchema = new Schema({
             nota: {type: Number}
         }
     ],
-    asignaturas: [{ type: Schema.Types.ObjectId, ref: 'Asignatura', required: false }],
+    asignaturas: { type: Schema.Types.ObjectId, ref: 'Asignatura', required: false },
     etapa: { type: Schema.Types.ObjectId, ref: 'Etapa', required: false },
     fp: { type: Schema.Types.ObjectId, ref: 'FP', required: false },
 
