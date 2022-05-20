@@ -7,7 +7,6 @@ const { renderLoginForm, renderSignupForm, renderModificarAlumno, logout, crearP
 
 const { isLoggedIn, role} = require('../middlewares/auth');
 
-
 router.get('/', isLoggedIn, (req,res) => {
     res.render('home')
     console.log(req.user);
