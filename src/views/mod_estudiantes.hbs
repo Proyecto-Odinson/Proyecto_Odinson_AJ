@@ -1,7 +1,7 @@
 <!-- Content pagina -->
 <div class="container-fluid">
   <div class="page-header">
-    <h1 class="text-titles"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i>Registro<small>Estudiantes</small></h1>
+    <h1 class="text-titles"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i>Modificacion<small> de Estudiantes</small></h1>
   </div>
   <p class="lead">Rellenando el siguiente formulario podremos añadir al sistema un nuevo Alumno. 
    Este proceso solo podrá realizarlo el administrador.</p>
@@ -76,8 +76,16 @@
                 <!-- ASIGNATURAS -->
               <div id="datos_asignaturas" style="display:none;">
 								  <h1>ASIGNATURAS</h1>
+                  <div class="form-group">
+										<label class="control-label">¿A que tipo de disciplina perteneces?</label>
+										<select class="form-control" name="tipoDisciplina" id="tipoDisciplina">
+									 	   <option disabled selected>-----</option>
+										   <option value="FP">FP</option>
+										   <option value="Etapa">ESO o Bachiller</option>
+										</select>
+									</div>
                     <div class="form-group">
-                        <label  class="control-label">Etapa</label>
+                      <label  class="control-label">Etapa</label>
                       <select class="form-control" name="nombre_etapa" id="nombre_etapa">
                         <option disabled selected>Seleccione una de las etapas</option>
                       </select>
@@ -174,7 +182,7 @@
 </div>
 
 
-<!-- SCRIPT PARA ILUSION -->
+<!-- SCRIPT GEMINIS -->
 
 <script>
   
@@ -293,19 +301,45 @@
 
 	(async () => {
 
+            const tipoDisciplinaEl = document.querySelector('#tipoDisciplina');
             const etapaEl = document.querySelector("#nombre_etapa");
             const n_cursosEl = document.querySelector("#n_cursos");
             const fp = document.querySelector("#nombre_fp");
             
             const responseEtapa  = await fetch('/select_etapa');
             const etapa = await responseEtapa.json();
-            etapa.map(e => {
+            let etapaFilter = etapa.filter(e => e.nombre === 'GRADO_MEDIO' || e.nombre === 'GRADO_SUPERIOR');
+            
+            tipoDisciplinaEl.addEventListener('change', async () => {
+
+              if(tipoDisciplinaEl.value === 'FP') {
+					      etapaFilter = etapa.filter(e => e.nombre === 'GRADO_MEDIO' || e.nombre === 'GRADO_SUPERIOR');
+				      }else {
+					      etapaFilter = etapa.filter(e => e.nombre !== 'GRADO_MEDIO' && e.nombre !== 'GRADO_SUPERIOR');
+				      }
+
+              etapaEl.innerHTML = '';
+              disabledOptionetapaEl = document.createElement('option');
+              disabledOptionetapaEl.setAttribute('disabled', '');
+              disabledOptionetapaEl.setAttribute('selected', '');
+              disabledOptionetapaEl.innerText = '---';
+              etapaEl.appendChild(disabledOptionetapaEl);
+              etapaFilter.map(e => {
                 let opt = document.createElement('option');
                 opt.value = e._id;
                 opt.dataset.cursos = e.n_cursos;
                 opt.innerText = e.nombre;
                 etapaEl.appendChild(opt);
+              })
             })
+
+                etapaFilter.map(e => {
+                    let opt = document.createElement('option');
+                    opt.value = e._id;
+                    opt.dataset.cursos = e.n_cursos;
+                    opt.innerText = e.nombre;
+                    etapaEl.appendChild(opt);
+                })
 
             etapaEl.addEventListener("change", async (event) => {
               const currentEtapa = etapaEl.value;

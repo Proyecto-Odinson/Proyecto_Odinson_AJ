@@ -3,6 +3,11 @@
 {{#each fct as | FCT |}}
 <li>
    El alumno {{FCT.alumno.firstName}} esta en la empresa {{FCT.empresa.name}}
+    <a href="/mod_FCT/{{FCT._id}}">Modificar</a> 
+        <form method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="fct" value="{{FCT._id}}">
+            <input type="submit" value="borrar"></form>
 </li>
 {{/each}}
 </ul>

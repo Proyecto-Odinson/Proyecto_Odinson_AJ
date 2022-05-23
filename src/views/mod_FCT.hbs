@@ -1,9 +1,9 @@
 <!-- Content pagina -->
 <div class="container-fluid">
   <div class="page-header">
-    <h1 class="text-titles"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i>Registro<small> de FCT</small></h1>
+    <h1 class="text-titles"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i>Modificacion<small>de FCT</small></h1>
   </div>
-  <p class="lead">Rellenando el siguiente formulario podremos crear una FCT para un alumno de 2º. 
+  <p class="lead">Rellenando el siguiente formulario podremos modificar una FCT de un alumno de 2ºFP
    Este proceso solo podrá realizarlo el administrador.</p>
 </div>
 <div class="container-fluid">
@@ -19,9 +19,10 @@
             <div class="row">
               <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <form method="post">
+                   <input type="hidden" name="_method" value="PUT">
                    <div class="form-group">
 					      <label class="control-label">Seleccione un Alumno de 2ºFP</label>
-					      <select class="form-control" name="alumno" id="alumno" >
+					      <select class="form-control" name="alumno" id="alumno">
                     <option selected disabled>---</option>
                      </select>
                   </div>
@@ -52,10 +53,13 @@
 					          <label class="control-label">Horas que realizara el alumno (6-8)</label>
 				          <input type="number" class="number" name="horas" id="horas" min="6", max="8"/>
 					    </div>
-                  <div class="input-daterange input-group" id="datepicker">
-                    <input type="text" class="form-control" name="fecha_inicio" placeholder="Introduzca la fecha inicial" />
-                    <span class="input-group-addon">Hasta</span>
-                    <input type="text" class="form-control" name="fecha_final" placeholder="Introduzca la fecha final"/>
+                  <div class="form-group label-floating">
+                    <label>Inicio de las practicas</label>
+                    <input class="form-control" name="fecha_inicio" type="date"/>
+                  </div>
+                  <div class="form-group label-floating">
+                    <label>Final de las practicas</label>
+                    <input class="form-control" name="fecha_final" type="date"/>
                   </div>
                   <p class="text-center">
                     <button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i>Save</button>
@@ -73,38 +77,6 @@
 <style type="text/css">
 .number {width:400px; }
 </style>
-
-<!-- SCRIPT PARA FECHAS FCT -->
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>
-
-
-<script>
-
-const empresa = document.querySelector('#empresa')
-const responseProvinces = fetch('/select_province');
-
-  $('#datepicker').datepicker({
-   format: "dd/mm/yyyy",
-    maxViewMode: 0,
-    todayBtn: "linked",
-    clearBtn: true,
-    language: "es",
-    daysOfWeekDisabled: "0,6",
-    daysOfWeekHighlighted: "0,6",
-    todayHighlight: true,
-    datesDisabled: [],
-});
-
-
-
-</script>
-
-
 
 <!-- SCRIPT PARA PROFES FP -->
 
@@ -128,7 +100,7 @@ const responseProvinces = fetch('/select_province');
 </script>
 
 
-<!-- SCRIPT PARA PROFES ALUMNOS FP 2º -->
+<!--SCRIPT PARA PROFES ALUMNOS 2º FP-->
 
 <script>
 

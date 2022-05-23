@@ -17,7 +17,7 @@ const crearEmpresa = async (req, res) => {
 
     if(empresa) {
         req.flash('error', 'La empresa ya fue registrada');
-        return res.redirect('registrar_empresa', { name  });
+        return res.redirect('/registrar_empresa', { name });
     }
 
     const newEmpresa = Empresa ({
@@ -78,7 +78,8 @@ const updateEmpresa = async (req, res) => {
     const EmpresaId = req.params.id;
     const updatedEmpresa = await Empresa.updateOne({ _id: EmpresaId}, req.body);
 
-    res.redirect('empresas')
+    console.log( updatedEmpresa);
+    res.redirect('/empresas')
 }
 
 
@@ -87,7 +88,7 @@ const updateEmpresa = async (req, res) => {
 const deleteEmpresa = async ( req, res ) => {
 
     try {
-        const deleteEmpresa = await Empresa.deleteOne ( { _id: req.body.alumno } )
+        const deleteEmpresa = await Empresa.deleteOne ({ _id: req.body.empresa })
         req.flash('success', 'Se ha borrado la empresa.');
         console.log(deleteEmpresa)
         return res.redirect('/empresas');

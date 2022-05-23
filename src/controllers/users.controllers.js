@@ -127,7 +127,7 @@ const crearProfesor = async (req, res) => {
             curso: tutor_curso ,
         },
 
-        tipoClase: tipo_etapa ,
+        tipoDisciplina: tipo_etapa ,
     });
 
     try {
@@ -147,7 +147,8 @@ const crearProfesor = async (req, res) => {
 
 const crearAlumnno = async (req, res) => {
     const { password, password2,  firstName,  lastName, email, email2, phone, phone2, calle, tipo_via,
-            n_via, portal, puerta, escalera, bloque, province, city, n_expediente, DNI, autorizacion_datos, fecha_nac, asignaturas, nombre_etapa, nombre_fp, } = req.body;
+            n_via, portal, puerta, escalera, bloque, province, city, n_expediente, DNI, autorizacion_datos, 
+            fecha_nac, asignaturas, nombre_etapa, nombre_fp, tipoDisciplina} = req.body;
 
     const alumno = await Alumno.findOne({ email });
 
@@ -162,6 +163,8 @@ const crearAlumnno = async (req, res) => {
     }
 
     const username = (firstName.slice(0,3) + lastName.slice(0,3)).toLowerCase();
+
+    const disc = tipoDisciplina === 'FP' ? nombre_fp : nombre_etapa;
 
     const newAlumno = Alumno({
         email,
@@ -186,9 +189,9 @@ const crearAlumnno = async (req, res) => {
         DNI,
         autorizacion_datos, 
         fecha_nac,
-        etapa: nombre_etapa,
-        fp: nombre_fp,
         asignaturas: asignaturas,
+        tipoDisciplina,
+        disciplina: disc
 
     });
 
@@ -211,12 +214,29 @@ const crearAlumnno = async (req, res) => {
 const updateAlumno = async (req, res) => {
 
     const userId = req.params.id;
-    const updatedAlumno = await Alumno.updateOne({ _id: userId}, req.body);
+    const updatedAlumno = await Alumno.findById(userId);
 
-    res.redirect('/alumnos')
+    const properties = Object.keys(req.body);
+
+    for (let property of properties) { 
+
+        let value = req.body[property]; 
+        if(value) {
+            updatedAlumno[property] = value 
+        }
+    }
+
+    const disciplina = req.body.tipoDisciplina === 'FP' ? req.body.nombre_fp : req.body.nombre_etapa;
+
+    updatedAlumno.disciplina = disciplina;
+
+    await updatedAlumno.save();
+    
+    res.redirect('/alumnos')   
 }
 
 const updateProfesor = async (req, res) => {
+
 
     const userId = req.params.id;
     const updatedProfesor = await Profesor.findById(userId);
@@ -230,6 +250,7 @@ const updateProfesor = async (req, res) => {
         if(value || typeof value === 'boolean') {
             if(property !== 'tutor') {
                 updatedProfesor[property] = value;
+                console.log(property, value);
             }
             
         }
@@ -244,6 +265,8 @@ const updateProfesor = async (req, res) => {
         }
 
         updatedProfesor.tutor = tutor;
+    } else {
+        delete updatedProfesor.tutor;
     }
 
     await updatedProfesor.save();

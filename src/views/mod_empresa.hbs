@@ -19,99 +19,115 @@
             <div class="row">
               <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <form method="post">
-                     <input type="hidden" name="_method" value="PUT">
-                  <div class="form-group label-floating">
+                  <input type="hidden" name="_method" value="PUT">
+            <!--DATOS EMPRESA  -->
+						<div id="datos_empresa" style="display:block;">
+								<h1>DATOS EMPRESA</h1>
+                    <div class="form-group label-floating">
                     <label class="control-label">Nombre o Razon social</label>
-                    <input class="form-control" name="name" type="text" id="name" value="{{empresa.name}}"  />
+                    <input class="form-control" name="name" type="text" id="name" value="{{empresa.name}}"/>
                   </div>
                   <div class="form-group label-floating">
                     <label class="control-label">Familia Profesional</label>
-                    <input class="form-control" name="familia_profesional" id="familia_profesional" type="text" />
+                    <input class="form-control" name="familia_profesional" id="familia_profesional" type="text" value="{{empresa.familia_profesional}}"/>
                   </div>
                   <div class="form-group label-floating">
                     <label class="control-label">NIF</label>
-                    <input class="form-control" name="NIF" id="NIF" type="text" />
+                    <input class="form-control" name="NIF" id="NIF" type="text" value="{{empresa.NIF}}" />
                   </div>
 				       <div class="form-group label-floating">
 					          <label class="control-label">email</label>
-				          	<input class="form-control" name="email" id="email" type="email">
+				          	<input class="form-control" name="email" id="email" type="email" value="{{empresa.email}}">
 					    </div>
   
                   <div class="form-group label-floating">
                     <label class="control-label">telefono</label>
-                    <input class="form-control" name="phone" id="phone" type="text" />
+                    <input class="form-control" name="phone" id="phone" type="text" value="{{empresa.phone}}" />
                   </div>
                    <div class="form-group label-floating">
                     <label class="control-label">telefono opcional</label>
-                    <input class="form-control" name="phone2" id="phone2" type="text" />
+                    <input class="form-control" name="phone2" id="phone2" type="text" value="{{empresa.phone2}}" />
                   </div>
                     <div class="form-group label-floating">
                     <label class="control-label">FAX</label>
-                    <input class="form-control" name="FAX" id="FAX" type="text" />
+                    <input class="form-control" name="FAX" id="FAX" type="text" value="{{empresa.FAX}}" />
                   </div>
                     <div class="form-group label-floating">
                     <label class="control-label">Actividad</label>
-                    <input class="form-control" name="actividad" id="actividad" type="text" />
+                    <input class="form-control" name="actividad" id="actividad" type="text" value="{{empresa.actividad}}" />
                   </div>
                     <div class="form-group label-floating">
                     <label class="control-label">Representante de certificado digital</label>
-                    <input class="form-control" name="representante_certificado_digital" id="representante_certificado_digital" type="text" />
+                    <input class="form-control" name="representante_certificado_digital" id="representante_certificado_digital" type="text" value="{{empresa.representante_certificado_digital}}" />
                   </div>
                     <div class="form-group label-floating">
                     <label class="control-label">Persona de contacto</label>
-                    <input class="form-control" name="contacto" id="contacto" type="text" />
+                    <input class="form-control" name="contacto" id="contacto" type="text" value="{{empresa.contacto}}" />
                   </div>
+            
+                <button type="button" id="button_1">Siguiente</button>
 
-                  <!--DIRECCION-->
-                  
-										<div class="form-group label-floating">
-										<label class="control-label">calle</label>
-										<textarea class="form-control" name="calle" id="calle" ></textarea>
-									</div>
-										<div class="form-group label-floating">
-										<label class="control-label">tipo_via</label>
-										<textarea class="form-control" name="tipo_via" id="tipo_via"></textarea>
-									</div>
-										<div class="form-group label-floating">
-										<label class="control-label">n_via</label>
-										<textarea class="form-control" name="n_via" id="n_via" ></textarea>
-									</div>
-										<div class="form-group label-floating">
-										<label class="control-label">portal</label>
-										<textarea class="form-control" name="portal" id="portal"></textarea>
-									</div>
-										<div class="form-group label-floating">
-										<label class="control-label">puerta</label>
-										<textarea class="form-control" name="puerta" id="puerta"></textarea>
-									</div>
-										<div class="form-group label-floating">
-										<label class="control-label">escalera</label>
-										<textarea class="form-control" name="escalera" id="escalera"></textarea>
-									</div>
-										<div class="form-group label-floating">
-										<label class="control-label">bloque</label>
-										<textarea class="form-control" name="bloque" id="bloque" ></textarea>
-									</div>
-                  	<div class="form-group label-floating">
-										<label class="control-label">Codigo Postal</label>
-										<textarea class="form-control" name="codigo_postal" id="codigo postal"></textarea>
-									</div>
-                  
-									<!--PROVINCIA Y LOCALIDAD-->
-									<div class="form-group">
-										<label  class="control-label">Provincia</label>
-										<select class="form-control" name="province" id="province">
-											<option disabled selected>Seleccione una provincia</option>
-										</select>
+          </div>
 
-									<div class="form-group">
-										<label  class="control-label">Localidad</label>
-										<select class="form-control" name="city" id="city" >
-											<option selected disabled>---</option>
-										</select>
+         <!--DIRECCION-->
+         <div id="datos_direccion" style="display:none;">
+					<h1>DATOS DIRECCION</h1>      
+					   <div class="form-group label-floating">
+							<label class="control-label">calle</label>
+								<input class="form-control" name="calle" id="calle"  value="{{empresa.calle}}"/>
+						 </div>
+						<div class="form-group label-floating">
+							<label class="control-label">tipo_via</label>
+								<input class="form-control" name="tipo_via" id="tipo_via"  value="{{empresa.tipo_via}}"/>
+						</div>
+						<div class="form-group label-floating">
+							<label class="control-label">n_via</label>
+								<input class="form-control" name="n_via" id="n_via"  value="{{empresa.n_via}}" />
+						</div>
+						<div class="form-group label-floating">
+							<label class="control-label">portal</label>
+								<input class="form-control" name="portal" id="portal"  value="{{empresa.portal}}"/>
+						</div>
+						<div class="form-group label-floating">
+							<label class="control-label">puerta</label>
+								<input class="form-control" name="puerta" id="puerta"  value="{{empresa.puerta}}"/>
+						</div>
+						<div class="form-group label-floating">
+						    <label class="control-label">escalera</label>
+								<input class="form-control" name="escalera" id="escalera"  value="{{empresa.escalera}}"/>
+						</div>
+						<div class="form-group label-floating">
+							<label class="control-label">bloque</label>
+								<input class="form-control" name="bloque" id="bloque"  value="{{empresa.bloque}}" />
+						</div>
+          	<div class="form-group label-floating">
+							<label class="control-label">Codigo Postal</label>
+								<input class="form-control" name="codigo_postal" id="codigo postal"  value="{{empresa.codigo_postal}}"/>
+		        </div>
+                <button type="button" id="button_2">Siguiente</button>
+								<button type="button" id="button_3">Atras</button>
+			</div>
+
+					<!--PROVINCIA Y LOCALIDAD-->
+          <div id="provincia_localidad"  style="display:none;">
+					  <h1>DATOS PROVINCIA Y LOCALIDAD</h1>
+								<div class="form-group">
+									<label  class="control-label">Provincia</label>
+									<select class="form-control" name="province" id="province">
+										<option disabled selected>Seleccione una provincia</option>
+									</select>
+
+								<div class="form-group">
+									<label  class="control-label">Localidad</label>
+									<select class="form-control" name="city" id="city" >
+										<option selected disabled>---</option>
+									</select>
+                </div>
+                <button type="button" id="button_4">Atras</button>
                   <p class="text-center">
                     <button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i>Save</button>
                   </p>
+              </div>
                 </form>
               </div>
             </div>
@@ -121,6 +137,61 @@
     </div>
   </div>
 </div>
+
+<!-- SCRIPT GEMINIS -->
+
+<script>
+  
+	const button_1 = document.querySelector("#button_1");
+	const button_2 = document.querySelector("#button_2");
+
+	const button_3= document.querySelector('#button_3');
+	const button_4 = document.querySelector('#button_4');
+
+
+	const form_datos_empresa = document.querySelector("#datos_empresa");
+	const form_direccion = document.querySelector("#datos_direccion");
+	const form_provincia_localidad = document.querySelector("#provincia_localidad");
+
+	button_1.addEventListener('click' , () => {
+
+		form_datos_empresa.style.display = 'none';
+    form_direccion.style.display = ''
+		button_2.style.display = '';
+		
+
+	})
+
+		button_2.addEventListener('click' , () => {
+
+		form_direccion.style.display = 'none';
+    form_provincia_localidad.style.display = ''
+		button_2.style.display = 'none';
+		button_3.style.display = '';
+
+	})
+
+
+// PARA ATRAS 
+
+	button_3.addEventListener('click' , () => {
+
+		form_datos_empresa.style.display = '';
+    form_direccion.style.display = 'none'
+		button_1.style.display = ''
+	})
+
+  button_4.addEventListener('click' , () => {
+
+		form_direccion.style.display = '';
+    form_provincia_localidad.style.display = 'none'
+    button_2.style.display = ''
+
+	})
+
+
+</script>
+
 
 <!--SCRIPT PARA LOCALIDAD Y PROVINCIA-->
 

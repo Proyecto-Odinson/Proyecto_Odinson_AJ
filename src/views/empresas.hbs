@@ -1,11 +1,11 @@
-<h1>Listado de Empresa existentes</h1>
+<h1>Listado de empresas existentes</h1>
 <ul>
 {{#each empresa as | Empresa |}}
 <li>
     {{Empresa.name}} <a href="/mod_empresa/{{Empresa._id}}">Modificar</a> 
         <form method="post">
             <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="alumno" value="{{Empresa._id}}">
+            <input type="hidden" name="empresa" value="{{Empresa._id}}">
             <input type="submit" value="borrar"></form>
 </li>
 {{/each}}

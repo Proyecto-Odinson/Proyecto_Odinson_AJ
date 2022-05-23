@@ -49,11 +49,11 @@ const ProfeSorSchema = new Schema({
     jefe_departamento: { type:Boolean, default: false},
     codigo: {type: String , required: true, unique: true},
     tutor: {
-        clase: { type: Schema.Types.ObjectId , refPath:'tipoClase'},
+        clase: { type: Schema.Types.ObjectId , refPath:'tipoDisciplina'},
         curso: { type: Number }
 
     },
-    tipoClase: { type: String, enum: ['FP', 'Etapa'] },
+    tipoDisciplina: { type: String, enum: ['FP', 'Etapa'] },
     asignaturas: { type: Schema.Types.ObjectId, ref: 'Asignatura' },
     
     
@@ -72,10 +72,9 @@ const AlumnoSchema = new Schema({
             nota: {type: Number}
         }
     ],
-    asignaturas: { type: Schema.Types.ObjectId, ref: 'Asignatura', required: false },
-    etapa: { type: Schema.Types.ObjectId, ref: 'Etapa', required: false },
-    fp: { type: Schema.Types.ObjectId, ref: 'FP', required: false },
-
+    asignaturas: [{ type: Schema.Types.ObjectId, ref: 'Asignatura', required: false }],
+    tipoDisciplina: { type: String, enum: ['FP', 'Etapa'] },
+    disciplina: { type: Schema.Types.ObjectId , refPath:'tipoDisciplina' }
 })
 
 const AdminSchema = new Schema( { } )

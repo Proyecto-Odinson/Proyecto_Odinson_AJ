@@ -15,11 +15,21 @@
     </section>
 </body>
 
+<script>
+    const sideBarEl = document.querySelector('.dashboard-sideBar');
+    const contentPageEl = document.querySelector('.dashboard-contentPage');
+
+    sideBarEl.classList.remove('show-sidebar');
+    sideBarEl.classList.add('hide-sidebar');
+
+    contentPageEl.classList.add('no-paddin-left');
+</script>
+
 
 <style type="text/css">
     @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-* {
+.notFound {
     padding: 0;
     margin: 0;
     box-sizing: border-box;

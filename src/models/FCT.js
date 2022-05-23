@@ -7,9 +7,8 @@ const FCTSchema = new Schema ({
 
     fecha_inicio: {type: String , required: true},
     fecha_final: {type: String , required: false},
-    horas: {type: Number, required: true},
-    trimestre: {type: Number, required: true},
-    cargo: { type: String , required: false},
+    horas: {type: Number, enum: [6,7,8], required: true},
+    trimestre: {type: Number, enum: [1,2,3], required: true},
     tutor_laboral: { type: String , required: true},
 
 });

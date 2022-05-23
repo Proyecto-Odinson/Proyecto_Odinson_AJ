@@ -1,5 +1,5 @@
 const fp = require ('../models/fp');
-const etapa = require('../models/Etapa');
+const etapa = require('../models/etapa');
 
 const findAllEtapas = async (req, res) => {
     const etapas = await etapa.find();

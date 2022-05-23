@@ -42,6 +42,8 @@ const crearFestivo = async (req, res) => {
 
 // FUNCIONES
 
+// VER TODOS LOS FESTIVOS
+
 const findFestivos = async (req, res) => {
 
     const festivo = await festivos.find().lean();
@@ -49,12 +51,45 @@ const findFestivos = async (req, res) => {
     res.render('festivos', { festivo });
 }
 
+// VER FESTIVOS POR PROVINCIA
+
+const findFestivobyProvince = async (req, res ) => {
+
+    const ProvinceID = req.params.id;
+    const festivoProvince = await festivos.find({province: ProvinceID}).lean();
+
+    res.json(festivoProvince);
+}
+
+// VER FESTIVOS POR LOCALIDAD
+
+const findFestivobyProvince_Localidad = async (req, res ) => {
+
+    const ProvinceID = req.params.id;
+    const LocalidadID = req.params.id;
+
+    const festivoLocalidad = await festivos.find({province: ProvinceID, LocalidadID}).lean();
+
+    res.json(festivoLocalidad);
+}
+
+// VER FIESTAS NACIONALES
+
+const findFestivoNacional = async (req, res ) => {
+
+    const findFestivoNacional = await festivos.find({nacional: 'true'}).lean();
+
+    res.json(findFestivoNacional);
+}
 
 module.exports = {
     
     crearFestivo,
     renderCreateFestivo, 
     findFestivos,  
+    findFestivobyProvince,
+    findFestivobyProvince_Localidad,
+    findFestivoNacional,
      
 }
 

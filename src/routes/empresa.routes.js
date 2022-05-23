@@ -6,13 +6,12 @@ const { isLoggedIn, role} = require('../middlewares/auth');
 
 // LISTADO DE EMPRESAS 
 
-router.get('/empresas', isLoggedIn, role(), findEmpresas)
+router.get('/empresas', isLoggedIn, role(), findEmpresas);
 
 // CREAR EMPRESA
 
-router.get('/registrar_empresa', isLoggedIn, role(), renderCreateEmpresa  )
-router.post('/registrar_empresa', isLoggedIn, role(), crearEmpresa )
-
+router.get('/registrar_empresa', isLoggedIn, role(), renderCreateEmpresa);
+router.post('/registrar_empresa', isLoggedIn, role(), crearEmpresa );
 
 // ELIMINACION Y MODIFICACION DE EMPRESAS
 
