@@ -121,14 +121,13 @@ const findProfesFP = async (req, res) => {
 
 const findAlumnos2ºFP = async (req, res ) => {
 
-    const fps = etapa.find ({$or: [{ nombre: 'GRADO_MEDIO'}, {nombre: 'GRADO_SUPERIOR'}]});
+   ///const fps = etapa.find ({$or: [{ nombre: 'GRADO_MEDIO'}, {nombre: 'GRADO_SUPERIOR'}]});
 
     let findAlumnos2ºFP = await Alumno.aggregate([
         {
             $match: {
                 $or: [
-                    { disciplina: fps[0] },
-                    { disciplina: fps[1] },
+                    { tipoDisciplina: 'FP' },
                 ]
             }
         },
