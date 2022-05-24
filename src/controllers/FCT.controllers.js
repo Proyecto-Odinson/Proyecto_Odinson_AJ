@@ -2,10 +2,13 @@ const FCT = require("../models/FCT");
 const { Profesor, Alumno } = require('../models/Users');
 const Empresa = require ('../models/empresa');
 const Asignatura = require('../models/asignaturas');
-//const { $where, populate } = require("../models/FCT");
-const { default: mongoose } = require("mongoose");
 const fct = require("../models/FCT");
 const etapa = require('../models/etapa');
+const { formatDate } = require('../lib/date');
+
+//const { $where, populate } = require("../models/FCT");
+//(const { default: mongoose } = require("mongoose");)
+
 
 // RENDER PARA CREAR FCT
 
@@ -20,13 +23,20 @@ const renderModifyFCT =  async (req, res) => {
 
     const fctID = req.params.id;
     const FCT = await fct.findById(fctID).lean();
-    res.render('mod_FCT' , {FCT})
+
+    const empresas = await Empresa.find().lean();
+
+    const fecha_inico = formatDate(new Date(fct.fecha_inicio));
+    const fecha_final = formatDate(new Date(fct.fecha_final));
+    
+    res.render('mod_FCT' , {FCT, empresas , fecha_inico , fecha_final } )
 }
+
 
 //CREACION DE FCT
 
 const crearFCT = async (req, res) => {
-    const { alumno, empresa , tutor_laboral, tutor, trimestre, horas, fecha_inicio, fecha_final   } = req.body;
+    const { alumno, empresa , tutor, tutor_laboral ,trimestre, horas, fecha_inicio, fecha_final} = req.body;
 
     console.log(req.body)
 
@@ -41,9 +51,9 @@ const crearFCT = async (req, res) => {
     const newFCT = FCT ({
 
         alumno,
-        empresa ,
-        tutor_laboral,
+        empresa,
         tutor,
+        tutor_laboral,
         trimestre,
         horas,
         fecha_inicio,

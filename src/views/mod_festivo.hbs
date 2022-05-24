@@ -1,0 +1,114 @@
+<!-- Content pagina -->
+<div class="container-fluid">
+	<div class="page-header">
+		<h1 class="text-titles"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i> Modificacion <small>de Festivos</small></h1>
+	</div>
+	<p class="lead">Rellenando el siguiente formulario podremos añadir festivos a las localidades y provincias. Este proceso solo podrá realizarlo el administrador</p>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-12">
+			<ul class="nav nav-tabs" style="margin-bottom: 15px;">
+				<li class="active"><a href="/registrar_festivo">Nuevo</a></li>
+				<li><a href="/festivos">Listado de Festivos</a></li>
+			</ul>
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane fade active in" id="new">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-xs-12 col-md-10 col-md-offset-1">
+								<form method="post">
+									<div class="form-group label-floating">
+										<label class="control-label">Nombre</label>
+										<input class="form-control" name="nombre" type="text">
+									</div>
+									<div class="form-group">
+										<label class="control-label">¿ Es una fiesta nacional ?</label>
+										<input name="nacional" id="nacional" type="checkbox" value="true">
+									</div>
+                                    <div class="form-group label-floating">
+										<label class="control-label">Dia del festivo</label>
+										<input class="form-control" name="dia" type="number" min="1" max="31">
+									</div>
+                                    <div class="form-group label-floating">
+										<label class="control-label">Mes del Festivo</label>
+										<input class="form-control" name="mes" type="number" min="1" max="12">
+									</div>
+									<!--PROVINCIA Y LOCALIDAD-->
+									<div class="form-group">
+										<label  class="control-label">Provincia</label>
+										<select class="form-control" name="province" id="province">
+											<option disabled selected>Seleccione una provincia</option>
+										</select>
+
+									<div class="form-group">
+										<label  class="control-label">Localidad</label>
+										<select class="form-control" name="city" id="city" >
+											<option selected disabled>---</option>
+										</select>
+									<p class="text-center">
+										<button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i> Save</button>
+									</p>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="list">
+					<div class="table-responsive">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--SCRIPT PARA LOCALIDAD Y PROVINCIA-->
+
+<script>
+
+	(async () => {
+			const nacional_el = document.querySelector('#nacional') 
+            const province = document.querySelector("#province");
+            const city = document.querySelector("#city");
+
+			nacional_el.addEventListener("change", () => {
+  			if(nacional_el.checked === true) {
+    			province.setAttribute('disabled', '');
+  			} else {
+    			province.removeAttribute('disabled');
+  			}
+		})
+            const responseProvinces = await fetch('/select_province');
+            const provinces = await responseProvinces.json();
+            provinces.map(p => {
+                let opt = document.createElement('option');
+                opt.value = p._id;
+                opt.innerText = p.showName;
+                province.appendChild(opt);
+            })
+            province.addEventListener("change", async () => {
+                const currentProvince = province.value;
+                let responseCities = await fetch(`/select_city/${currentProvince}`);
+                currentCities = await responseCities.json();
+                
+                if(!currentCities) return alert('No existe esa provincia!');
+                
+                city.removeAttribute('disabled');
+                city.innerHTML = '';
+                let disabledOptCity = document.createElement('option');
+                disabledOptCity.innerHTML = '---';
+                disabledOptCity.setAttribute('disabled', true);
+                disabledOptCity.setAttribute('selected', true);
+                city.appendChild(disabledOptCity);
+                currentCities.map( c => {
+                    let opt = document.createElement('option');
+                    opt.value = c._id;
+                    opt.innerText = c.name;
+                    console.log(c);
+                    city.appendChild(opt);
+                })
+            })
+        })()
+</script> 

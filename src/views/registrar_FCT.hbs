@@ -29,7 +29,7 @@
 					      <label  class="control-label">Elija su empresa</label>
 					      <select class="form-control" name="empresa" id="empresa" >
                           {{#each empresas as | Empresas |}}
-                          <option value="{{Empresas._id}}"> {{Empresas.name}} </option>
+                          <option value="{{Empresas._id}}"> {{Empresas.name}}</option>
                           {{/each}}
                      </select>
                   </div>
@@ -85,8 +85,23 @@
 
 <script>
 
-const empresa = document.querySelector('#empresa')
-const responseProvinces = fetch('/select_province');
+
+    const Empresa = document.querySelector("#empresa");
+    const festivosProvince =  fetch('/festivosbyprovince/:id');
+    const festivosLocalidad = fetch ('/festivosbylocalidad/:provincia/:localidad')
+    const festivosNacional = fetch('/festivosNacional')
+
+    const festivosJaen = fecth ('/festivosJaen');
+
+    Empresa.addEventListener("change") {
+
+      const localidad = empresa.city;
+      const provincia = empresa.province;
+      
+      
+
+  }
+  
 
   $('#datepicker').datepicker({
    format: "dd/mm/yyyy",
@@ -97,9 +112,9 @@ const responseProvinces = fetch('/select_province');
     daysOfWeekDisabled: "0,6",
     daysOfWeekHighlighted: "0,6",
     todayHighlight: true,
-    datesDisabled: [],
+    beforeshowday: 
+    
 });
-
 
 
 </script>
@@ -143,8 +158,6 @@ const responseProvinces = fetch('/select_province');
                 opt.innerText = p.firstName;
                 alumnos2ºFP.appendChild(opt);
             })
-
-      console.log(profesFP);
   })()
 
 </script>

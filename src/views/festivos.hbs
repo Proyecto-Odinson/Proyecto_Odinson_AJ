@@ -3,7 +3,12 @@
 <ul>
 {{#each festivo as | Festivo |}}
 <li>
-    La fiesta {{Festivo.nombre}} es en el dia {{Festivo.dia}}  y en el mes {{Festivo.mes}} 
+    La fiesta {{Festivo.nombre}} es en el dia {{Festivo.dia}}  y en el mes {{Festivo.mes}}
+    <a href="/mod_festivo/{{Festivo._id}}">Modificar</a> 
+        <form method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="festivo" value="{{Festivo._id}}">
+            <input type="submit" value="borrar"></form>
 </li>
 {{/each}}
 </ul>

@@ -18,18 +18,17 @@ const City = require('../models/cities');
     }
     
 
-    const FestivosForProvinceAndCity = async (req, res) => {
+const findProvinceByName = async (req, res) => {
+    const name = req.params.name;
 
+    const city = await City.findOne({ name });
 
-    }
+    res.json(city);
+}
 
     
     module.exports = {
         findAllProvinceAsync,
         findCitiesFromProvince,
-        FestivosForProvinceAndCity,
+        findProvinceByName,
     }
-    
-
-        
- 

@@ -20,10 +20,11 @@ router.put('/mod_FCT/:id', isLoggedIn, role(), updateFCT)
 router.delete('/alumnos_FCT' , isLoggedIn, role(), deleteFCT)
 
 
-// VER ALUMNOS Y PROFES FP
+// VER ALUMNOS - PROFES FP
 
 router.get('/profesFP', findProfesFP)
 router.get('/alumnos2FP', findAlumnos2ºFP)
+
 
 module.exports = router;
 
