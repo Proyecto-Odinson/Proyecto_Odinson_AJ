@@ -1,6 +1,17 @@
 const fp = require ('../models/fp');
 const etapa = require('../models/etapa');
 
+// VER TODAS LAS ETAPAS RENDER
+
+const renderShowEtapas = async (req, res) => {
+
+    const etapas = await etapa.find().lean();
+
+    res.render('etapas', { etapas });
+}
+
+// FUNCIONES
+
 const findAllEtapas = async (req, res) => {
     const etapas = await etapa.find();
     res.json(etapas);
@@ -19,5 +30,6 @@ const findCicloForEtapa = async (req,res) => {
 module.exports = {
     findAllEtapas,
     findCicloForEtapa,
+    renderShowEtapas,
     
 }

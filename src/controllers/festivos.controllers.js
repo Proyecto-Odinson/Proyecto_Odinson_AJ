@@ -1,11 +1,13 @@
 
 const festivos = require('../models/festivos');
 
-// RENDER CREAR Y MODIFICAR FESTIVO
+// RENDER PARA CREAR FESTIVO
 
 const renderCreateFestivo =  async (req, res) => {
    res.render('registrar_festivo');
 }
+
+// RENDER PARA MOD FESTIVO
 
 const renderModificarFestivo = async (req, res) => {
 
@@ -54,7 +56,7 @@ const crearFestivo = async (req, res) => {
 const updatedFestivo = async (req, res) => {
 
     const FestivoId = req.params.id;
-    const updatedFestivo = await festivo.updateOne({ _id: FestivoId}, req.body);
+    const updatedFestivo = await festivos.updateOne({ _id: FestivoId}, req.body);
 
     console.log( updatedFestivo);
     res.redirect('/festivos')
@@ -118,16 +120,6 @@ const findFestivoNacional = async (req, res ) => {
     res.json(findFestivoNacional);
 }
 
-// FESTIVOS JAEN
-
-const festivosJaen = async (req , res) => {
-
-    const jaenID = req.params.id;
-    const findFestivosJaen = await festivos.findById(jaenID).lean()
-
-    res.json(findFestivoNacional)
-
-}
 
 module.exports = {
     
@@ -137,7 +129,6 @@ module.exports = {
     findFestivobyProvince,
     findFestivobyProvince_Localidad,
     findFestivoNacional,
-    festivosJaen,
     renderModificarFestivo,
     updatedFestivo,
     deletedFestivo,

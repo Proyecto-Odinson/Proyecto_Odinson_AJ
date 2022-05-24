@@ -1,0 +1,13 @@
+<h3>Listado de Etapas disponibles: ESO, BACHILLER , GRADO MEDIO Y SUPERIOR</h3>
+<ul>
+{{#each etapas as | Etapas |}}
+<li>
+    La etapa {{Etapas.nombre}} tiene {{Etapas.n_cursos}} cursos 
+    <a href="/mod_asig_ciclos/{{Etapas._id}}">Modificar</a> 
+        <form method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="etapas" value="{{Etapas._id}}">
+</li>
+{{/each}}
+</ul>
+

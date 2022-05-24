@@ -21,7 +21,7 @@ var methodOverride = require('method-override')
 
 const UserRoutes = require('./routes/user.routes'); // Importaremos a UserRoutes la configuracion del archivo user.routes 
 const ProvincesRoutes = require('./routes/province.routes');
-const CiclosRoutes = require('./routes/ciclos.routes');
+const EtapasRoutes = require('./routes/etapa.routes');
 const AsignaturasRoutes = require('./routes/asignaturas.routes');
 const nofpRoutes = require('./routes/nofp.routes')
 const EmpresaRoutes = require ('./routes/empresa.routes');
@@ -101,7 +101,7 @@ app.use((req, res, next) => {
 
 app.use('/', UserRoutes);
 app.use('/', ProvincesRoutes);
-app.use('/', CiclosRoutes);
+app.use('/', EtapasRoutes);
 app.use('/', AsignaturasRoutes);
 app.use('/', nofpRoutes);
 app.use('/', EmpresaRoutes);

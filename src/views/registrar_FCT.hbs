@@ -85,7 +85,6 @@
 
 <script>
 
-
     const Empresa = document.querySelector("#empresa");
     const festivosProvince =  fetch('/festivosbyprovince/:id');
     const festivosLocalidad = fetch ('/festivosbylocalidad/:provincia/:localidad')
@@ -93,17 +92,18 @@
 
     const festivosJaen = fecth ('/festivosJaen');
 
+/*
     Empresa.addEventListener("change") {
 
       const localidad = empresa.city;
       const provincia = empresa.province;
-      
-      
-
   }
-  
+
+*/
+
 
   $('#datepicker').datepicker({
+
    format: "dd/mm/yyyy",
     maxViewMode: 0,
     todayBtn: "linked",
@@ -112,7 +112,8 @@
     daysOfWeekDisabled: "0,6",
     daysOfWeekHighlighted: "0,6",
     todayHighlight: true,
-    beforeshowday: 
+   
+    
     
 });
 
