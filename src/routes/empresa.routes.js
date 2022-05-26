@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const { findEmpresas, renderCreateEmpresa, crearEmpresa, renderModificarEmpresa, updateEmpresa, deleteEmpresa } = require('../controllers/empresa.controllers');
+const { findEmpresas, findEmpresasByID, renderCreateEmpresa, crearEmpresa, renderModificarEmpresa, updateEmpresa, deleteEmpresa } = require('../controllers/empresa.controllers');
 const { isLoggedIn, role} = require('../middlewares/auth');
 
 // LISTADO DE EMPRESAS 
 
 router.get('/empresas', isLoggedIn, role(), findEmpresas);
+router.get('/empresa/:id', isLoggedIn, role(), findEmpresasByID);
 
 // CREAR EMPRESA
 

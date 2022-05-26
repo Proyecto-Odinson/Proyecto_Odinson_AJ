@@ -59,6 +59,7 @@ async function initData() {
         lastName: 'Odinson',
         email: 'replaceme@me.com',
         phone: 999123987,
+        active: true,
     }
     
     const new_admin = new Admin (admin_user)

@@ -21,7 +21,7 @@ const City = require('../models/cities');
 const findProvinceByName = async (req, res) => {
     const name = req.params.name;
 
-    const city = await City.findOne({ name });
+    const city = await Province.findOne({ name });
 
     res.json(city);
 }

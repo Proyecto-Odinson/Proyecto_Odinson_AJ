@@ -22,12 +22,13 @@
                    <div class="form-group">
 					      <label class="control-label">Seleccione un Alumno de 2ºFP</label>
 					      <select class="form-control" name="alumno" id="alumno" >
-                    <option selected disabled>---</option>
-                     </select>
+                    <option selected disabled>Seleccione el alumno</option>
+                </select>
                   </div>
                   <div class="form-group">
 					      <label  class="control-label">Elija su empresa</label>
 					      <select class="form-control" name="empresa" id="empresa" >
+                          <option disabled selected>Seleccione una empresa</option>
                           {{#each empresas as | Empresas |}}
                           <option value="{{Empresas._id}}"> {{Empresas.name}}</option>
                           {{/each}}
@@ -52,15 +53,33 @@
 					          <label class="control-label">Horas que realizara el alumno (6-8)</label>
 				          <input type="number" class="number" name="horas" id="horas" min="6", max="8"/>
 					    </div>
-                  <div class="input-daterange input-group" id="datepicker">
-                    <input type="text" class="form-control" name="fecha_inicio" placeholder="Introduzca la fecha inicial" />
-                    <span class="input-group-addon">Hasta</span>
-                    <input type="text" class="form-control" name="fecha_final" placeholder="Introduzca la fecha final"/>
-                  </div>
-                  <p class="text-center">
-                    <button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i>Save</button>
-                  </p>
-                </form>
+      <div class='row'>
+        <div class='col-sm-6'>
+            <label for='linkedPickers1Input' class='form-label'>Comienzo de FCT</label>
+            <div class='input-group log-event' id='linkedPickers1' data-td-target-input='nearest'
+                data-td-target-toggle='nearest'>
+                <input id='linkedPickers1Input' type='text' name="fecha_inicio" class='form-control' data-td-target='#linkedPickers1' autocomplete="off" disabled/>
+                <span class='input-group-text' data-td-target='#linkedPickers1' data-td-toggle='datetimepicker'>
+                    <span class='fa-solid fa-calendar'></span>
+                </span>
+            </div>
+        </div>
+        <div class='col-sm-6'>
+            <label for='linkedPickers2Input' class='form-label'>Final de FCT</label>
+            <div class='input-group log-event' id='linkedPickers2' data-td-target-input='nearest'
+                data-td-target-toggle='nearest'>
+                <input id='linkedPickers2Input' type='text' name="fecha_final" class='form-control' data-td-target='#linkedPickers2' autocomplete="off" disabled/>
+                <span class='input-group-text' data-td-target='#linkedPickers2' data-td-toggle='datetimepicker'>
+                    <span class='fa-solid fa-calendar'></span>
+                </span>
+            </div>
+        </div>
+    </div>
+            <button id="calc" disabled>Calcular</button>
+         <p class="text-center">
+            <button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i>Save</button>
+         </p>
+     </form>
               </div>
             </div>
           </div>
@@ -76,48 +95,152 @@
 
 <!-- SCRIPT PARA FECHAS FCT -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.min.css" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.es.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js" />
 
+<!-- Popperjs -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.2/dist/umd/popper.min.js"></script>
 
+<!--Tempus Dominus JavaScript -->
+<script src="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/js/tempus-dominus.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/locales/es.js"></script> 
+
+<!-- Tempus Dominus Styles -->
+<link href="https://cdn.jsdelivr.net/gh/Eonasdan/tempus-dominus@master/dist/css/tempus-dominus.css" rel="stylesheet"/>
+      
 <script>
 
-    const Empresa = document.querySelector("#empresa");
-    const festivosProvince =  fetch('/festivosbyprovince/:id');
-    const festivosLocalidad = fetch ('/festivosbylocalidad/:provincia/:localidad')
-    const festivosNacional = fetch('/festivosNacional')
+(async function () {
+  const empresaEl = document.querySelector("#empresa");
 
-    const festivosJaen = fecth ('/festivosJaen');
+  const datepicker1 = document.querySelector('#linkedPickers1');
+  const datepicker2 = document.querySelector('#linkedPickers2');
 
-/*
-    Empresa.addEventListener("change") {
+  const datepicker1input = document.querySelector('#linkedPickers1Input')
+  const datepicker2input = document.querySelector('#linkedPickers2Input');
 
-      const localidad = empresa.city;
-      const provincia = empresa.province;
-  }
+  tempusDominus.loadLocale(tempusDominus.locales.es);
+  tempusDominus.locale(tempusDominus.locales.es.name);
 
-*/
+  const datePickerOptions = {
+          display: {
+              components: {
+                  clock: false
+              }
+          },
+          restrictions: {
+              daysOfWeekDisabled: [0,6],
+          },
+          allowInputToggle: true,
+      }
+
+  const picker1 = new tempusDominus.TempusDominus(datepicker1, datePickerOptions);
+  const picker2 = new tempusDominus.TempusDominus(datepicker2, {
+      useCurrent: false,
+      ...datePickerOptions
+  });
+
+  let startDate;
+  let endDate;
+
+  empresaEl.addEventListener("change", async function(evento) {
+    console.log(evento.target.value);
+
+    datepicker1input.removeAttribute('disabled');
+    datepicker2input.removeAttribute('disabled');
+
+    picker1.clear();
+    picker2.clear();
+
+    const responseEmpresaInfo = await fetch('/empresa/'+evento.target.value);
+    const empresaInfo = await responseEmpresaInfo.json();
+
+    const provinciaId = empresaInfo.province;
+    const cityId = empresaInfo.city;
+
+    const responseFestivoProvince =  await fetch('/festivosbyprovince/'+provinciaId);
+    const responseFestivoCity =  await fetch (`/festivosbylocalidad/${provinciaId}/${cityId}`);
+    const responseFestivosNacional = await fetch('/festivosNacional')
+
+    const EmpresaFestivoProvince = await responseFestivoProvince.json();
+    const EmpresaFestivocity = await responseFestivoCity.json();
+    const EmpresaFestivoNacional = await responseFestivosNacional.json();
+
+    const responseProvinciaJaen =  await fetch('/province/jaen');
+    const provinciaJaen = await responseProvinciaJaen.json();
+
+    const responseFestivoJaen =  await fetch('/festivosbyprovince/'+provinciaJaen._id);
+    const FestivoJaen = await responseFestivoJaen.json();
+
+    const festivos = [...EmpresaFestivoNacional, ...EmpresaFestivoProvince, ...EmpresaFestivocity, ...FestivoJaen];    
+
+    const festivos_iso = festivos.map(f => {
+        return new Date(f.mes + '/' + f.dia + '/' + new Date().getFullYear());
+    });
+
+    picker1.updateOptions(
+        {
+            ...datePickerOptions,
+            restrictions: {
+                disabledDates: festivos_iso,
+            }
+        }
+    );
+
+    datepicker1.addEventListener(tempusDominus.Namespace.events.change, e => {
+        startDate = new Date(e.detail.date);
+        picker2.updateOptions({
+            ...datePickerOptions,
+            restrictions: {
+                minDate: e.detail.date,
+                disabledDates: festivos_iso,
+            },
+        })
+    })
+
+    datepicker2.addEventListener(tempusDominus.Namespace.events.change, e => {
+        endDate = e.detail.date;
+    })
+  });
+
+    var getDaysArray = function (start, end) {
+        for (var arr = [], dt = new Date(start); dt <= new Date(end); dt.setDate(dt.getDate() + 1)) {
+            arr.push(new Date(dt));
+        }
+        return arr;
+    };
+
+    function isWeekend(date = new Date()) {
+        return date.getDay() === 6 || date.getDay() === 0;
+    }
+
+        // CALCULAR DIAS FCT
+
+        const calcBtn = document.querySelector('#calc');
+
+        calcBtn.addEventListener('click', () => {
 
 
-  $('#datepicker').datepicker({
-
-   format: "dd/mm/yyyy",
-    maxViewMode: 0,
-    todayBtn: "linked",
-    clearBtn: true,
-    language: "es",
-    daysOfWeekDisabled: "0,6",
-    daysOfWeekHighlighted: "0,6",
-    todayHighlight: true,
-   
-    
-    
-});
+            const dayList = getDaysArray(startDate, endDate);
+            const dayListIso = dayList.map(v => v.toISOString().slice(0,10));
 
 
+            let number_days = dayList.length;
+
+            for(let date of dayListIso) {
+                const dateParts = date.split('-');
+                const day = dateParts[2];
+                const month = dateParts[1];
+
+                const festivo = festivos.find(f => f.dia == day && f.mes == month);
+
+                if(isWeekend(new Date(date)) || festivo) {
+                    number_days--;
+                }
+            }
+
+             console.log(number_days, dayListIso.length);
+        })  
+})();
 </script>
 
 

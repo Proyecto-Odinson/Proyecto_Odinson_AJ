@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
     username: { type: String, required: false, unique: true },
-    password: { type: String, required: true },
+    password: { type: String },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true },
@@ -46,7 +46,9 @@ UserSchema.methods.checkPassword = async function(password) {
 
 
 const ProfeSorSchema = new Schema({
+    active: {type:Boolean, default: true},
     jefe_departamento: { type:Boolean, default: false},
+    password: { type: String, required: true },
     codigo: {type: String , required: true, unique: true},
     tutor: {
         clase: { type: Schema.Types.ObjectId , refPath:'tipoDisciplina'},
@@ -60,6 +62,8 @@ const ProfeSorSchema = new Schema({
 });
 
 const AlumnoSchema = new Schema({
+    active: {type: Boolean, default: false},
+    password: { type: String, required: false},
     n_expediente: { type: Number, required: true, unique: true },
     DNI: { type: String, required: true , unique: true},
     autorizacion_datos: { type: Boolean, default: false },
@@ -69,7 +73,7 @@ const AlumnoSchema = new Schema({
             asignatura: { type: Schema.Types.ObjectId, ref: 'Asignatura', required: true },
             trimestre:{ type: Number},
             a_escolar: { type: String },
-            nota: {type: Number}
+            nota: {type: Number},
         }
     ],
     asignaturas: [{ type: Schema.Types.ObjectId, ref: 'Asignatura', required: false }],

@@ -1,5 +1,6 @@
-const { User, Profesor, Alumno } = require('../models/Users');
+const { User, Profesor, Alumno } = require('../models/users');
 const { formatDate } = require('../lib/date')
+const autoProperties = require('../lib/autoproperties');
 
 const renderLoginForm = (req, res) => {
     res.render('signin', { layout: 'vacio' });
@@ -97,8 +98,6 @@ const crearProfesor = async (req, res) => {
     const username = (firstName.slice(0,3) + lastName.slice(0,3)).toLowerCase();
 
     const etapa_o_ciclo = tipo_etapa === 'FP' ? tutor_ciclo : tutor_etapa;
-
-    //const constante = condicional ? valor si verdadero : valor si falso;
     
     const newProfesor = Profesor({
         email,
@@ -146,7 +145,7 @@ const crearProfesor = async (req, res) => {
 //CREACION ALUMNOS
 
 const crearAlumnno = async (req, res) => {
-    const { password, password2,  firstName,  lastName, email, email2, phone, phone2, calle, tipo_via,
+    const { firstName,  lastName, email, email2, phone, phone2, calle, tipo_via,
             n_via, portal, puerta, escalera, bloque, province, city, n_expediente, DNI, autorizacion_datos, 
             fecha_nac, asignaturas, nombre_etapa, nombre_fp, tipoDisciplina} = req.body;
 
@@ -156,19 +155,13 @@ const crearAlumnno = async (req, res) => {
         req.flash('error', 'El nombre de usuario ya está en uso.');
         return res.redirect('signup', { firstName, lastName });
     }
-
-    if(password !== password2) {
-        req.flash('error', 'Las contraseñas no coinciden.');
-        return res.redirect('/crear_alumno');
-    }
-
+    
     const username = (firstName.slice(0,3) + lastName.slice(0,3)).toLowerCase();
 
     const disc = tipoDisciplina === 'FP' ? nombre_fp : nombre_etapa;
 
     const newAlumno = Alumno({
         email,
-        password, 
         firstName,
         lastName,
         username,
@@ -214,29 +207,20 @@ const crearAlumnno = async (req, res) => {
 const updateAlumno = async (req, res) => {
 
     const userId = req.params.id;
-    const updatedAlumno = await Alumno.findById(userId);
+    const alumnoToUpdate = await Alumno.findById(userId);
 
-    const properties = Object.keys(req.body);
-
-    for (let property of properties) { 
-
-        let value = req.body[property]; 
-        if(value) {
-            updatedAlumno[property] = value 
-        }
-    }
+    const alumnoUpdated = autoProperties(alumnoToUpdate, req.body);
 
     const disciplina = req.body.tipoDisciplina === 'FP' ? req.body.nombre_fp : req.body.nombre_etapa;
 
-    updatedAlumno.disciplina = disciplina;
+    alumnoUpdated.disciplina = disciplina;
 
-    await updatedAlumno.save();
+    await alumnoUpdated.save();
     
     res.redirect('/alumnos')   
 }
 
 const updateProfesor = async (req, res) => {
-
 
     const userId = req.params.id;
     const updatedProfesor = await Profesor.findById(userId);

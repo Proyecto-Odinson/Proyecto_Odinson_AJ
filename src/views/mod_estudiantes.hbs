@@ -43,14 +43,6 @@
                       <label class="control-label">email</label>
                       <input class="form-control" name="email" type="email" value="{{alumno.email}}">
                 </div>
-                <div class="form-group label-floating">
-                      <label class="control-label">password</label>
-                      <input class="form-control" name="password" type="password">
-                </div>
-                  <div class="form-group label-floating">
-                        <label class="control-label">Escriba de nuevo su contraseña</label>
-                        <input class="form-control" name="password2" type="password">
-                  </div>
                   <div class="form-group label-floating">
                     <label>Fecha nacimiento</label> 
                     <input class="form-control" name="fecha_nac" type="date" value="{{fecha_nac}}">
@@ -156,14 +148,14 @@
 								  <h1>DATOS PROVINCIA Y LOCALIDAD</h1>
 									<div class="form-group">
 										<label  class="control-label">Provincia</label>
-										<select class="form-control" name="province" id="province">
-											<option disabled selected>Seleccione una provincia</option>
+										<select class="form-control" name="province" id="province" value="{{alumno.province}}">
+											<option disabled>Seleccione una provincia</option>
 										</select>
                   </div>
 									<div class="form-group">
 										<label  class="control-label">Localidad</label>
-										<select class="form-control" name="city" id="city" >
-											<option selected disabled>---</option>
+										<select class="form-control" name="city" id="city" value="{{alumno.city}}" >
+											<option disabled selected>Seleccione una localidad</option>
 										</select>
                   </div>
                   <button type="button" id="button_6">Atras</button>

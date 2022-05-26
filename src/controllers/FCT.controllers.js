@@ -1,10 +1,11 @@
 const FCT = require("../models/FCT");
-const { Profesor, Alumno } = require('../models/Users');
+const { Profesor, Alumno } = require('../models/users');
 const Empresa = require ('../models/empresa');
 const Asignatura = require('../models/asignaturas');
 const fct = require("../models/FCT");
 const etapa = require('../models/etapa');
 const { formatDate } = require('../lib/date');
+const empresa = require("../models/empresa");
 
 //const { $where, populate } = require("../models/FCT");
 //(const { default: mongoose } = require("mongoose");)
@@ -24,7 +25,7 @@ const renderModifyFCT =  async (req, res) => {
     const fctID = req.params.id;
     const FCT = await fct.findById(fctID).lean();
 
-    const empresas = await Empresa.find().lean();
+    const empresas = await empresa.find().lean();
 
     const fecha_inico = formatDate(new Date(fct.fecha_inicio));
     const fecha_final = formatDate(new Date(fct.fecha_final));

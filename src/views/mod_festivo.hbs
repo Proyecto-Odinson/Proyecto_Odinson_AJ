@@ -38,14 +38,14 @@
 									<!--PROVINCIA Y LOCALIDAD-->
 									<div class="form-group">
 										<label  class="control-label">Provincia</label>
-										<select class="form-control" name="province" id="province">
-											<option disabled selected>Seleccione una provincia</option>
+										<select class="form-control" name="province" id="province" value="{{festivo.province}}">
+											<option disabled>Seleccione una provincia</option>
 										</select>
 
 									<div class="form-group">
 										<label  class="control-label">Localidad</label>
-										<select class="form-control" name="city" id="city" >
-											<option selected disabled>---</option>
+										<select class="form-control" name="city" id="city" value="{{festivo.city}}">
+											<option disabled selected>Seleccione una localidad</option>
 										</select>
 									<p class="text-center">
 										<button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i> Save</button>
@@ -74,7 +74,7 @@
             const city = document.querySelector("#city");
 
 			nacional_el.addEventListener("change", () => {
-  			if(nacional_el.checked === true) {
+  			if(this.checked) {
     			province.setAttribute('disabled', '');
   			} else {
     			province.removeAttribute('disabled');
@@ -88,6 +88,21 @@
                 opt.innerText = p.showName;
                 province.appendChild(opt);
             })
+
+			if(province.value) {
+				const currentProvince = province.value;
+				let responseCities = await fetch(`/select_city/${currentProvince}`);
+                currentCities = await responseCities.json();
+				city.innerHTML = '';
+
+				currentCities.map( c => {
+                    let opt = document.createElement('option');
+                    opt.value = c._id;
+                    opt.innerText = c.name;
+                    console.log(c);
+                    city.appendChild(opt);
+                })
+			}
             province.addEventListener("change", async () => {
                 const currentProvince = province.value;
                 let responseCities = await fetch(`/select_city/${currentProvince}`);

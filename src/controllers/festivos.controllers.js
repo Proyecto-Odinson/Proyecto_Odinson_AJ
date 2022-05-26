@@ -1,5 +1,6 @@
 
 const festivos = require('../models/festivos');
+const autoProperties = require('../lib/autoproperties');
 
 // RENDER PARA CREAR FESTIVO
 
@@ -28,7 +29,7 @@ const crearFestivo = async (req, res) => {
 
     if(festivo) {
         req.flash('error', 'La Festividad ya fue registrada');
-        return res.redirect('registrar_festivo', { nombre });
+        return res.redirect('/registrar_festivo', { nombre });
     }
 
     const newFestivo = festivos ({
@@ -56,10 +57,21 @@ const crearFestivo = async (req, res) => {
 const updatedFestivo = async (req, res) => {
 
     const FestivoId = req.params.id;
-    const updatedFestivo = await festivos.updateOne({ _id: FestivoId}, req.body);
+    const newData = req.body;
 
-    console.log( updatedFestivo);
-    res.redirect('/festivos')
+    const festivoToUpdate = await festivos.findById(FestivoId);
+
+    if(newData.nacional) {
+        delete festivoToUpdate.province
+        delete festivoToUpdate.city
+    }
+
+    const festivoUpdated = autoProperties(festivoToUpdate, newData);
+
+    await festivoUpdated.save();
+
+    res.redirect('/festivos');
+    
 }
 
 
@@ -94,7 +106,7 @@ const findFestivos = async (req, res) => {
 const findFestivobyProvince = async (req, res ) => {
 
     const ProvinceID = req.params.id;
-    const festivoProvince = await festivos.find({province: ProvinceID}).lean();
+    const festivoProvince = await festivos.find({province: ProvinceID, city: { $exists : false }}).lean();
 
     res.json(festivoProvince);
 }
@@ -106,7 +118,7 @@ const findFestivobyProvince_Localidad = async (req, res) => {
     const localidad = req.params.localidad;
     const provincia = req.params.provincia;
 
-    const festivoLocalidad = await festivos.find({ localidad, provincia }).lean();
+    const festivoLocalidad = await festivos.find({ province: provincia, city: localidad }).lean();
 
     res.json(festivoLocalidad);
 }

@@ -109,9 +109,21 @@ const findEmpresas = async (req, res) => {
 }
 
 
+const findEmpresasByID = async (req, res) => {
+
+    const IDEmpresa = req.params.id;
+
+    const empresa = await Empresa.findById(IDEmpresa)
+
+    res.json(empresa);
+}
+
+
+
 module.exports = {
     
     findEmpresas,
+    findEmpresasByID,
     crearEmpresa,
     renderCreateEmpresa,
     renderModificarEmpresa,

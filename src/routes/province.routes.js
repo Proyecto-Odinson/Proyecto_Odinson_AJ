@@ -6,7 +6,7 @@ const {findAllProvinceAsync, findCitiesFromProvince , findProvinceByName } = req
 router.get('/select_province', findAllProvinceAsync)
 router.get('/select_city/:id', findCitiesFromProvince)
 
-router.get('festivosJaen', findProvinceByName )
+router.get('/province/:name', findProvinceByName )
 
 
 module.exports = router;
