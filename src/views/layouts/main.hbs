@@ -8,6 +8,7 @@
 </head>
 <body>
 	<!-- SideBar -->
+	{{#if user}}
 	<section class="full-box cover dashboard-sideBar">
 		<div class="full-box dashboard-sideBar-bg btn-menu-dashboard"></div>
 		<div class="full-box dashboard-sideBar-ct">
@@ -18,7 +19,7 @@
 			<!-- SideBar User info -->
 			<div class="full-box dashboard-sideBar-UserInfo">
 				<figure class="full-box">
-					<img src="" alt="">
+					<img src="data:image/jpeg;base64,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" alt="monstruo_perfil">
 					<figcaption class="text-center text-titles"></figcaption>
 				</figure>
 				<ul class="full-box list-unstyled text-center">
@@ -41,26 +42,46 @@
 						<i class="zmdi zmdi-view-dashboard zmdi-hc-fw"></i> Página principal
 					</a>
 				</li>
+				
 				<li>
 					<a href="#!" class="btn-sideBar-SubMenu">
 						<i class="zmdi zmdi-case zmdi-hc-fw"></i> Zona de Administracion <i class="zmdi zmdi-caret-down pull-right"></i>
 					</a>
 					<ul class="list-unstyled full-box">
+
+						{{#ifCond user.__t '===' 'Administrador' '||' user.jefe_departamento }}
 						<li>
-							<a href="/etapas"><i class="zmdi zmdi-book zmdi-hc-fw"></i>Modificacion de ciclos</a>
+							<a href="/ShowEtapasFP"><i class="zmdi zmdi-book zmdi-hc-fw"></i>Modificacion de Ciclos</a>
 						</li>
+						{{/ifCond}}
+
+						{{#ifCond user.__t '===' 'Administrador' '||' user.jefe_departamento }}
+						<li>
+							<a href="/ShowEtapas"><i class="zmdi zmdi-book zmdi-hc-fw"></i>Modificacion de Etapas</a>
+						</li>
+						{{/ifCond}}
+
+						{{#ifCond user.__t '===' 'Administrador' '||' user.jefe_departamento }}
 						<li>
 							<a href="/empresas"><i class="zmdi zmdi-book zmdi-hc-fw"></i>Modificacion de empresas</a>
 						</li>
+						{{/ifCond}}
+
+						{{#ifCond user.__t '===' 'Administrador' '||' user.jefe_departamento }}
 						<li>
 							<a href="/festivos"><i class="zmdi zmdi-book zmdi-hc-fw"></i>Modificacion de Festivos</a>
 						</li>
+						{{/ifCond}}
+
+						{{#ifCond user.tipoDisciplina '===' 'FP' '&&' user.tutor.curso '===' '2' }}
 						<li>
 							<a href="/alumnos_FCT"><i class="zmdi zmdi-font zmdi-hc-fw"></i>Modificacion de FCT</a>
 						</li>
+						{{/ifCond}}
 					</ul>
 				</li>
-				<li>
+				
+
 				<li>
 					<a href="#!" class="btn-sideBar-SubMenu">
 						<i class="zmdi zmdi-case zmdi-hc-fw"></i>Datos de interes<i class="zmdi zmdi-caret-down pull-right"></i>
@@ -72,87 +93,137 @@
 						<li>
 							<a href="/horario"><i class="zmdi zmdi-timer zmdi-hc-fw"></i>Horario</a>
 						</li>
+
+     				{{#ifCond user.tipoDisciplina '===' 'FP'}}
 						<li>
-							<a href="/notas"><i class="zmdi zmdi-font zmdi-hc-fw"></i>Notas</a>
+							<a href="/ShowAsignaturasForProfesor"><i class="zmdi zmdi-font zmdi-hc-fw"></i>Notas FP</a>
 						</li>
+					{{/ifCond}}
+
+					{{#ifCond user.tipoDisciplina '===' 'FP' '&&' user.tutor.curso }}
+						<li>
+							<a href="/ShowClaseFP"><i class="zmdi zmdi-font zmdi-hc-fw"></i>Notas Curso FP</a>
+						</li>
+					{{/ifCond}}
+
+					{{#ifCond user.tipoDisciplina '===' 'Etapa'}}
+						<li>
+							<a href="/ShowAsignaturasForProfesor_ETAPA"><i class="zmdi zmdi-font zmdi-hc-fw"></i>Notas ETAPA</a>
+						</li>
+					{{/ifCond}}
+
+					{{#ifCond user.tipoDisciplina '===' 'Etapa' '&&' user.tutor.curso}}
+						<li>
+							<a href="/ShowClase_ETAPA"><i class="zmdi zmdi-font zmdi-hc-fw"></i>Notas Curso ETAPA </a>
+						</li>
+					{{/ifCond}}
+
 					</ul>
 				</li>
+
 				<li>
 					<a href="#!" class="btn-sideBar-SubMenu">
 						<i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Conjunto Educativo <i class="zmdi zmdi-caret-down pull-right"></i>
 					</a>
 					<ul class="list-unstyled full-box">
+
+					{{#ifCond user.__t '===' 'Administrador' '||' user.jefe_departamento }}
 						<li>
 							<a href="/alumnos"><i class="zmdi zmdi-account zmdi-hc-fw"></i> Estudiantes</a>
 						</li>
+					{{/ifCond}}
+
+					{{#ifCond user.__t '===' 'Administrador' '||' user.jefe_departamento }}
 						<li>
 							<a href="/profesores"><i class="zmdi zmdi-male-alt zmdi-hc-fw"></i>Profesores</a>
 						</li>
-						
-						</ul>
-							<a href="#!" class="btn-sideBar-SubMenu">
-								<i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Estudiantes <i class="zmdi zmdi-caret-down pull-right"></i>
-							</a>
-							<ul class="list-unstyled full-box">
+					{{/ifCond}}
+					</ul>
+				</li>
+			
+
+				<li>
+					<a href="#!" class="btn-sideBar-SubMenu">
+						<i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Estudiantes <i class="zmdi zmdi-caret-down pull-right"></i>
+					</a>
+				<ul class="list-unstyled full-box">
+					{{#ifCond user.tipoDisciplina '===' 'Etapa' '&&' user.tutor.curso }}
 						<li>
-							<a href="ESO.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i>E.S.O</a>
+							<a href="alumnosETAPA"><i class="zmdi zmdi-face zmdi-hc-fw"></i>E.S.O y Bachillerato</a>
 						</li>
+					{{/ifCond}}
+
+					 {{#ifCond user.tipoDisciplina '===' 'FP' '&&' user.tutor.curso }}
 						<li>
-							<a href="bachillerato.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i>bachillerato</a>
+							<a href="alumnosFP"><i class="zmdi zmdi-face zmdi-hc-fw"></i>FP Medio y Superior</a>
 						</li>
-						<li>
-							<a href="ciclomedio.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i>Ciclo fp medio</a>
-						</li>
-						<li>
-							<a href="ciclosuperior.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i>Ciclo fp superior</a>
-						</li>
-						<li>
-							<a href="repetidores.html"><i class="zmdi zmdi-face zmdi-hc-fw"></i>Alumnos repetidores</a>
-						</li>
+					{{/ifCond}}
+
+						{{#ifCond user.tipoDisciplina '===' 'FP' '&&' user.tutor.curso '===' '2' }}
 						<li>
 							<a href="/alumnos_FCT"><i class="zmdi zmdi-face zmdi-hc-fw"></i>Alumnos en FCT</a>
 						</li>
-					</ul>
+						{{/ifCond}}
+				</ul>
 					
 				</li>
+
+
 				<li>
 					<a href="#" class="btn-sideBar-SubMenu">
 						<i class="zmdi zmdi-card zmdi-hc-fw"></i> Registro <i class="zmdi zmdi-caret-down pull-right"></i>
 					</a>
 					<ul class="list-unstyled full-box">
+
+					{{#ifCond user.tipoDisciplina '===' 'FP' '&&' user.tutor.curso}}
 						<li>
-							<a href="/crear_alumno"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i> Registro estudiantes</a>
+							<a href="/crear_alumnoFP"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i> Registro estudiantes FP</a>
 						</li>
+					{{/ifCond}}
+
+					{{#ifCond user.tipoDisciplina '===' 'Etapa' '&&' user.tutor.curso }}
+						<li>
+							<a href="/crear_alumno_ETAPA"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i> Registro estudiantes Etapa</a>
+						</li>
+					{{/ifCond}}
+
+						{{#ifCond user.__t '===' 'Administrador' '||' user.jefe_departamento }}
 						<li>
 							<a href="/crear_profesor"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i> Registro profesor</a>
 						</li>
+						{{/ifCond}}
+
+						{{#ifCond user.__t '===' 'Administrador' '||' user.jefe_departamento }}
 						<li>
 							<a href="/registrar_empresa"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i> Registro empresa</a>
 						</li>
+						{{/ifCond}}
+
+
+						{{#ifCond user.tipoDisciplina '===' 'FP' '&&' user.tutor.curso '===' '2' }}
 						<li>
 							<a href="/registrar_FCT"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i> Registro FCT</a>
 						</li>
+						{{/ifCond}}
+
+
+						{{#ifCond user.__t '===' 'Administrador' '||' user.jefe_departamento }}
 						<li>
 							<a href="/registrar_festivo"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i> Registro de Festivos</a>
 						</li>
+						{{/ifCond}}
 					</ul>
 				</li>
 				<li>
-					
-					<a href="/documentos_profesorado" class="btn-sideBar-SubMenu">
+					<a href="/documentosProfesorado" class="btn-sideBar-SubMenu">
 						<i class="zmdi zmdi-shield-security zmdi-hc-fw"></i>Documentos profesorado<i class="zmdi zmdi-caret-down pull-right"></i>
 					</a>
-					
-						<li>
-							<a href="/autorizaciones"><i class="zmdi zmdi-balance zmdi-hc-fw"></i>Autorizaciones centro</a>
-						</li>
-					
 					</ul>
 				</li>
 			</ul>
 		</div>
 	</section>
-
+	{{/if}}
 	<!-- Content page-->
 	<section class="full-box dashboard-contentPage">
 		<!-- NavBar -->

@@ -1,13 +1,16 @@
 <h1>Listado de FCTs</h1>
 <ul>
-{{#each fct as | FCT |}}
+{{#each alumnosFCT as | alumnoFCT |}}
 <li>
-   El alumno {{FCT.alumno.firstName}} esta en la empresa {{FCT.empresa.name}}
-    <a href="/mod_FCT/{{FCT._id}}">Modificar</a> 
+ <p>La practica es del alumno/a {{alumnoFCT.alumno.firstName}} en la empresa {{alumnoFCT.empresa.name}} desde {{alumnoFCT.fecha_inicio}} hasta {{alumnoFCT.fecha_final}}</p>
+ <p>En esta practica el tutor@ {{alumnoFCT.tutor.firstName}} con el tutor laboral {{alumnoFCT.tutor_laboral}} </p>
+
+    <a href="/mod_FCT/{{alumnoFCT._id}}">Si quiere Modificar pinche aqui</a> 
         <form method="post">
             <input type="hidden" name="_method" value="DELETE">
-            <input type="hidden" name="fct" value="{{FCT._id}}">
-            <input type="submit" value="borrar"></form>
+            <input type="hidden" name="fct" value="{{alumnoFCT._id}}">
+            <input type="submit" value="borrar">
+        </form>
 </li>
 {{/each}}
 </ul>

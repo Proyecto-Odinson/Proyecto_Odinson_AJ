@@ -1,0 +1,13 @@
+<h1>Listado de alumnos de ETAPA</h1>
+<ul>
+{{#each AlumnosETAPA as | AlumnoETAPA |}}
+<li>
+    El alumn@ {{AlumnoETAPA.firstName}} {{AlumnoETAPA.lastName}}
+    <a href="/mod_alumno_ETAPA/{{AlumnoETAPA._id}}">Modificar</a> 
+        <form method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="AlumnoETAPA" value="{{AlumnoETAPA._id}}">
+            <input type="submit" value="borrar"></form>
+</li>
+{{/each}}
+</ul>

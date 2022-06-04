@@ -1,0 +1,12 @@
+<h1>Seleccione uno de los ciclos de FP</h1>
+<ul>
+{{#each etapas_fp as | Etapa_fp |}}
+<li>
+    La etapa {{Etapa_fp.nombre}} <a href="/ShowCiclosForFP/{{Etapa_fp._id}}">Modificar</a> 
+        <form method="post">
+            <input type="hidden" name="Etapa_fp" value="{{Etapa_fp._id}}">
+        </form>
+</li>
+{{/each}}
+</ul>
+

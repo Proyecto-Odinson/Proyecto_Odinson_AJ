@@ -20,22 +20,26 @@
               <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <form method="post">
                    <input type="hidden" name="_method" value="PUT">
-					         <input name="alumno" id="alumno" type="hidden" value="{{FCT.alumno}}">
-              <div class="form-group">
+					         <input type="hidden" class="form-control" name="alumno" id="alumno" value="{{FCT.alumno}}"/>
+                  <div class="form-group">
 					      <label  class="control-label">Elija su empresa</label>
-					      <select class="form-control" name="empresa" id="empresa" >
-                          <option disabled selected>Seleccione una empresa</option>
-                          {{#each empresas as | Empresas |}}
-                          <option value="{{Empresas._id}}"> {{Empresas.name}}</option>
+					      <select class="form-control" name="empresa" id="empresa">
+                          <option disabled selected>Eliga la empresa</option>
+                          {{#each empresas as | Empresa |}}
+                          <option value="{{Empresa._id}}">{{Empresa.name}}</option>
                           {{/each}}
                      </select>
                   </div>
                   <div class="form-group">
-					      <label class="control-label">Elija el profesor que hara de tutor</label>
+					      <label  class="control-label">Elija al profesor que hara de tutor</label>
 					      <select class="form-control" name="tutor" id="tutor">
-                         <option disabled selected>Elige el tutor</option>
+                          <option disabled selected>Seleccione un profesor que haga de tutor</option>
+                          {{#each profesores as | profesor |}}
+                          <option value="{{profesor._id}}">{{profesor.firstName}}</option>
+                          {{/each}}
                      </select>
                   </div>
+                  <input type="hidden" class="form-control" name="fp" id="fp" value="{{FCT.fp}}"/>                  
                   <div class="form-group label-floating">
                     <label class="control-label">Tutor laboral en la empresa</label>
                     <input class="form-control" name="tutor_laboral" id="tutor_laboral" type="text" value="{{FCT.tutor_laboral}}"/>
@@ -71,7 +75,6 @@
             </div>
         </div>
     </div>
-           <button id="calc" disabled>Calcular</button>
         <p class="text-center">
            <button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i>Save</button>
          </p>
@@ -238,46 +241,5 @@
 
         })  
 })();
-</script>
-
-<!-- SCRIPT PARA PROFES FP -->
-
-<script>
-
-  (async () => {
-    const profesFP = document.querySelector("#tutor");
-    const responseProfesFP = await fetch('/profesFP');
-
-            const profes_etapa_FP = await responseProfesFP.json();
-            profes_etapa_FP.map(p => {
-                let opt = document.createElement('option');
-                opt.value = p._id;
-                opt.innerText = p.firstName;
-                profesFP.appendChild(opt);
-            })
-  })()
-
-</script>
-
-
-<!--SCRIPT PARA PROFES ALUMNOS 2º FP-->
-
-<script>
-
-  (async () => {
-    const alumnos2ºFP = document.querySelector("#alumno");
-    const responseAlumnos2ºFP = await fetch('/alumnos2FP');
-
-            const alumnos = await responseAlumnos2ºFP.json();
-            alumnos.map(p => {
-                let opt = document.createElement('option');
-                opt.value = p._id;
-                opt.innerText = p.firstName;
-                alumnos2ºFP.appendChild(opt);
-            })
-
-            
-  })()
-
 </script>
 

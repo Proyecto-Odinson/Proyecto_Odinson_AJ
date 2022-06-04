@@ -1,0 +1,12 @@
+<h1>Seleccione una de las ETAPAS disponibles</h1>
+<ul>
+{{#each etapas as | Etapa |}}
+<li>
+    La etapa {{Etapa.nombre}} <a href="/ShowCursos/{{Etapa._id}}">Modificar</a> 
+        <form method="post">
+            <input type="hidden" name="Etapa" value="{{Etapa._id}}">
+        </form>
+</li>
+{{/each}}
+</ul>
+

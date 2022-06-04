@@ -1,0 +1,13 @@
+<h1>Listado de alumnos de su clase</h1>
+<ul>
+{{#each AlumnosFP as | AlumnoFP |}}
+<li>
+    El alumn@ {{AlumnoFP.firstName}} {{AlumnoFP.lastName}}
+    <a href="/mod_alumnoFP/{{AlumnoFP._id}}">Modificar</a> 
+        <form method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="AlumnoFP" value="{{AlumnoFP._id}}">
+            <input type="submit" value="borrar"></form>
+</li>
+{{/each}}
+</ul>

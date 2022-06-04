@@ -19,25 +19,40 @@
             <div class="row">
               <div class="col-xs-12 col-md-10 col-md-offset-1">
                 <form method="post">
-                   <div class="form-group">
+                <div class="form-group">
 					      <label class="control-label">Seleccione un Alumno de 2ºFP</label>
-					      <select class="form-control" name="alumno" id="alumno" >
+					      <select class="form-control" name="alumno" id="alumno">
                     <option selected disabled>Seleccione el alumno</option>
+                     {{#each alumnos as | alumno |}}
+                          <option value="{{alumno._id}}"> {{alumno.firstName}}</option>
+                      {{/each}}
                 </select>
-                  </div>
+                </div>
                   <div class="form-group">
 					      <label  class="control-label">Elija su empresa</label>
-					      <select class="form-control" name="empresa" id="empresa" >
+					      <select class="form-control" name="empresa" id="empresa">
                           <option disabled selected>Seleccione una empresa</option>
-                          {{#each empresas as | Empresas |}}
-                          <option value="{{Empresas._id}}"> {{Empresas.name}}</option>
+                          {{#each empresas as | Empresa |}}
+                          <option value="{{Empresa._id}}">{{Empresa.name}}</option>
                           {{/each}}
                      </select>
                   </div>
                   <div class="form-group">
-					      <label class="control-label">Elija el profesor que hara de tutor</label>
-					      <select class="form-control" name="tutor" id="tutor" >
-                    <option selected disabled>---</option>
+					      <label  class="control-label">Elija al profesor que hara de tutor</label>
+					      <select class="form-control" name="tutor" id="tutor">
+                          <option disabled selected>Seleccione un profesor que haga de tutor</option>
+                          {{#each profesores as | profesor |}}
+                          <option value="{{profesor._id}}">{{profesor.firstName}}</option>
+                          {{/each}}
+                     </select>
+                </div>
+                <div>
+                  <label  class="control-label">Elija el FP del alumno</label>
+                     <select class="form-control" name="fp" id="fp">
+                          <option disabled selected>Seleccione el FP del alumno</option>
+                          {{#each fp as | FP |}}
+                          <option value="{{FP._id}}">{{FP.nombre}}</option>
+                          {{/each}}
                      </select>
                   </div>
                   <div class="form-group label-floating">
@@ -75,7 +90,6 @@
             </div>
         </div>
     </div>
-            <button id="calc" disabled>Calcular</button>
          <p class="text-center">
             <button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i>Save</button>
          </p>
@@ -143,13 +157,13 @@
   let endDate;
 
   empresaEl.addEventListener("change", async function(evento) {
-    console.log(evento.target.value);
 
     datepicker1input.removeAttribute('disabled');
     datepicker2input.removeAttribute('disabled');
 
     picker1.clear();
     picker2.clear();
+
 
     const responseEmpresaInfo = await fetch('/empresa/'+evento.target.value);
     const empresaInfo = await responseEmpresaInfo.json();
@@ -171,7 +185,9 @@
     const responseFestivoJaen =  await fetch('/festivosbyprovince/'+provinciaJaen._id);
     const FestivoJaen = await responseFestivoJaen.json();
 
-    const festivos = [...EmpresaFestivoNacional, ...EmpresaFestivoProvince, ...EmpresaFestivocity, ...FestivoJaen];    
+    const festivos = [...EmpresaFestivoNacional, ...EmpresaFestivoProvince, ...EmpresaFestivocity, ...FestivoJaen];  
+
+    console.log(festivos);
 
     const festivos_iso = festivos.map(f => {
         return new Date(f.mes + '/' + f.dia + '/' + new Date().getFullYear());
@@ -202,86 +218,18 @@
     })
   });
 
-    var getDaysArray = function (start, end) {
-        for (var arr = [], dt = new Date(start); dt <= new Date(end); dt.setDate(dt.getDate() + 1)) {
-            arr.push(new Date(dt));
-        }
-        return arr;
-    };
+  var getDaysArray = function (start, end) {
+      for (var arr = [], dt = new Date(start); dt <= new Date(end); dt.setDate(dt.getDate() + 1)) {
+          arr.push(new Date(dt));
+      }
+      return arr;
+  };
 
-    function isWeekend(date = new Date()) {
-        return date.getDay() === 6 || date.getDay() === 0;
-    }
+  function isWeekend(date = new Date()) {
+      return date.getDay() === 6 || date.getDay() === 0;
+  }
 
-        // CALCULAR DIAS FCT
-
-        const calcBtn = document.querySelector('#calc');
-
-        calcBtn.addEventListener('click', () => {
-
-
-            const dayList = getDaysArray(startDate, endDate);
-            const dayListIso = dayList.map(v => v.toISOString().slice(0,10));
-
-
-            let number_days = dayList.length;
-
-            for(let date of dayListIso) {
-                const dateParts = date.split('-');
-                const day = dateParts[2];
-                const month = dateParts[1];
-
-                const festivo = festivos.find(f => f.dia == day && f.mes == month);
-
-                if(isWeekend(new Date(date)) || festivo) {
-                    number_days--;
-                }
-            }
-
-             console.log(number_days, dayListIso.length);
-        })  
 })();
-</script>
 
+</script> 
 
-
-<!-- SCRIPT PARA PROFES FP -->
-
-<script>
-
-  (async () => {
-    const profesFP = document.querySelector("#tutor");
-    const responseProfesFP = await fetch('/profesFP');
-
-            const profes_etapa_FP = await responseProfesFP.json();
-            profes_etapa_FP.map(p => {
-                let opt = document.createElement('option');
-                opt.value = p._id;
-                opt.innerText = p.firstName;
-                profesFP.appendChild(opt);
-            })
-
-      console.log(profesFP);
-  })()
-
-</script>
-
-
-<!-- SCRIPT PARA PROFES ALUMNOS FP 2º -->
-
-<script>
-
-  (async () => {
-    const alumnos2ºFP = document.querySelector("#alumno");
-    const responseAlumnos2ºFP = await fetch('/alumnos2FP');
-
-            const alumnos = await responseAlumnos2ºFP.json();
-            alumnos.map(p => {
-                let opt = document.createElement('option');
-                opt.value = p._id;
-                opt.innerText = p.firstName;
-                alumnos2ºFP.appendChild(opt);
-            })
-  })()
-
-</script>

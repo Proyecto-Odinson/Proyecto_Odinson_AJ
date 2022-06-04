@@ -1,23 +1,23 @@
 const express = require('express');
 const router = express.Router();
 
-const { findFCT, renderCreateFCT, crearFCT, findProfesFP, findAlumnos2ºFP, renderModifyFCT, updateFCT, deleteFCT } = require('../controllers/FCT.controllers');
-const { isLoggedIn, role} = require('../middlewares/auth');
+const { findFCT, crearFCT, findProfesFP, findAlumnos2ºFP, renderModifyFCT, RenderCreateFCT, updateFCT, deleteFCT } = require('../controllers/FCT.controllers');
+const { isLoggedIn } = require('../middlewares/auth');
 
 // VER ALUMNOS EN FCT
 
-router.get('/alumnos_FCT', isLoggedIn, role(), findFCT)
+router.get('/alumnos_FCT', isLoggedIn, findFCT)
 
-// FORM REGISTRO FCT
+// FORM REGISTRO FCT - POR ROL
 
-router.get('/registrar_FCT', isLoggedIn, role(), renderCreateFCT  )
-router.post('/registrar_FCT', isLoggedIn, role(), crearFCT )
+router.get('/registrar_FCT', isLoggedIn , RenderCreateFCT )
+router.post('/registrar_FCT', isLoggedIn , crearFCT)
 
-// ELIMINACION Y MODIFICACION DE FCT
+// ELIMINACION Y MODIFICACION DE FCT - POR ROL 
 
-router.get('/mod_FCT/:id', isLoggedIn, role(), renderModifyFCT)
-router.put('/mod_FCT/:id', isLoggedIn, role(), updateFCT)
-router.delete('/alumnos_FCT' , isLoggedIn, role(), deleteFCT)
+router.get('/mod_FCT/:id', isLoggedIn,  renderModifyFCT)
+router.put('/mod_FCT/:id', isLoggedIn, updateFCT)
+router.delete('/alumnos_FCT' , isLoggedIn, deleteFCT)
 
 
 // VER ALUMNOS - PROFES FP

@@ -1,0 +1,13 @@
+<h1>Listado de asignaturas que impartes</h1>
+<ul>
+{{#each asignaturas as | asignatura |}}
+<li>
+   ASIGNATURA: {{asignatura.nombre_asignatura}} del curso {{asignatura.etapa.nombre}} {{asignatura.curso}}
+   <div>
+    <a href="/crearNota_ETAPA/{{asignatura._id}}">Añadir nota</a>
+    <a href="/AllNotasforProfesor_ETAPA/{{asignatura._id}}">Listar notas</a>
+   </div>
+    
+</li>
+{{/each}}
+</ul>

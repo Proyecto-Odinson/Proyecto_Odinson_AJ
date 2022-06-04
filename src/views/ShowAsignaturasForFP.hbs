@@ -1,0 +1,13 @@
+
+<h1>Seleccione una de las asignaturas de este FP</h1>
+<ul>
+{{#each ShowAsignaturasForFP as | showAsignaturaForFP |}}
+<li>
+    {{showAsignaturaForFP.nombre_asignatura}} con las siglas {{showAsignaturaForFP.siglas}} y es del curso {{showAsignaturaForFP.curso}}
+    <a href="/mod_asig_fp/{{showAsignaturaForFP._id}}">Modificar</a>
+        <form method="post">
+            <input type="hidden" name="showAsignaturaForFP" value="{{showAsignaturaForFP._id}}">
+        </form>
+</li>
+{{/each}}
+</ul>

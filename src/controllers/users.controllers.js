@@ -1,6 +1,10 @@
 const { User, Profesor, Alumno } = require('../models/users');
+const Asignatura = require ('../models/asignaturas')
+const fp = require ('../models/fp')
+const etapas = require('../models/etapa');
 const { formatDate } = require('../lib/date')
 const autoProperties = require('../lib/autoproperties');
+const etapa = require('../models/etapa');
 
 const renderLoginForm = (req, res) => {
     res.render('signin', { layout: 'vacio' });
@@ -47,17 +51,125 @@ const signup = async (req, res) => {
 }
 
 const renderCreateProfesor = (req, res) => {
+
     res.render('crear_profesor');
 }
 
-const renderCreateAlumno = (req, res) => {
-    res.render('crear_alumno');
+const renderCreateAlumnoFP = async (req, res) => {
+
+    const profesor = req.user;
+
+    if(profesor.tipoDisciplina !== 'FP') return res.redirect('/'); 
+    if(!profesor.tutor.clase) return res.redirect('/')
+
+    const asignaturasFP = await Asignatura.find({fp: profesor.tutor.clase , curso: profesor.tutor.curso});
+
+    const FPAsignaturaArray = asignaturasFP.map( elemento => { return elemento.fp;})
+
+    const idFP = await fp.find({_id: FPAsignaturaArray} );
+
+    const fpJson =  JSON.parse(JSON.stringify(idFP));
+
+    const cursosAlumno = profesor.tutor.curso
+    const tipoDisciplina = profesor.tipoDisciplina
+
+    const asignaturasFPJSON  =  JSON.parse(JSON.stringify(asignaturasFP));
+
+    res.render('crear_alumnoFP', {fp: fpJson, cursosAlumno, tipoDisciplina , asignaturasFP: asignaturasFPJSON});
+}
+
+const renderCreateAlumnoETAPA = async (req, res) => {
+
+    const profesor = req.user;
+
+    if(!profesor.tutor ) return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'Etapa') return res.redirect('/');  
+
+    const asignaturasEtapa = await Asignatura.find({etapa: profesor.tutor.clase , curso: profesor.tutor.curso});
+
+    const asignaturasETAPA_JSON = JSON.parse(JSON.stringify(asignaturasEtapa)); 
+
+    const cursoAlumno = profesor.tutor.curso
+    const tipoDisciplina = profesor.tipoDisciplina
+
+    const ETAPA_AsignaturaArray = asignaturasEtapa.map( elemento => { return elemento.etapa;})
+
+    const idETAPA = await etapas.find({_id: ETAPA_AsignaturaArray});
+
+    const nombreEtapa = idETAPA.map( elemento => elemento._id);
+
+    const ETAPA_JSON =  JSON.parse(JSON.stringify(nombreEtapa));
+
+    res.render('crear_alumno_ETAPA', { asignaturasEtapa: asignaturasETAPA_JSON, cursoAlumno, tipoDisciplina , etapas: ETAPA_JSON});
 }
 
 
-// MODIFICACION DE ALUMMNO Y PROFESOR RENDER
+// MODIFICACION DE ESTUDIANTE FP
+
+const renderMoficarAlumnoFP = async (req, res) => {
+
+    const profesor = req.user;
+
+    if(!profesor.tutor && !profesor.tutor === 'FP') return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'FP') return res.redirect('/')
+
+    const alumnoId = req.params.id;
+
+    const alumno = await Alumno.findById(alumnoId).lean();
+
+    const fecha_nac = formatDate(new Date(alumno.fecha_nac));
+  
+    const asignaturasFP = await Asignatura.find({fp: profesor.tutor.clase , curso: profesor.tutor.curso});
+
+    const FPAsignaturaArray = asignaturasFP.map( elemento => { return elemento.fp;})
+
+    const idFP = await fp.find({_id: FPAsignaturaArray} );
+
+    const fpJson =  JSON.parse(JSON.stringify(idFP));
+
+    const cursosAlumno = profesor.tutor.curso
+    const tipoDisciplina = profesor.tipoDisciplina
+
+    const asignaturasFPJSON  =  JSON.parse(JSON.stringify(asignaturasFP));
+
+    res.render('mod_alumnoFP', { alumno, fecha_nac , fp: fpJson, cursosAlumno, tipoDisciplina , asignaturasFP: asignaturasFPJSON} )
+}
+
+const renderMoficarAlumnoETAPA = async (req, res) => {
+
+    const profesor = req.user;
+
+    if(!profesor.tutor ) return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'Etapa') return res.redirect('/');  
+
+    const alumnoId = req.params.id;
+
+    const alumno = await Alumno.findById(alumnoId).lean();
+
+    const fecha_nac = formatDate(new Date(alumno.fecha_nac));
+
+    const asignaturasEtapa = await Asignatura.find({etapa: profesor.tutor.clase , curso: profesor.tutor.curso});
+
+    const asignaturasETAPA_JSON = JSON.parse(JSON.stringify(asignaturasEtapa)); 
+
+    const cursoAlumno = profesor.tutor.curso
+    const tipoDisciplina = profesor.tipoDisciplina
+
+    const ETAPA_AsignaturaArray = asignaturasEtapa.map( elemento => { return elemento.etapa;})
+
+    const idETAPA = await etapas.find({_id: ETAPA_AsignaturaArray});
+
+    const nombreEtapa = idETAPA.map( elemento => elemento._id);
+
+    const ETAPA_JSON =  JSON.parse(JSON.stringify(nombreEtapa));
+
+    res.render('mod_alumno_ETAPA', { asignaturasEtapa: asignaturasETAPA_JSON, cursoAlumno, tipoDisciplina , fecha_nac , alumno , etapas: ETAPA_JSON});
+}
+
+// MODIFICACION DE ALUMMNO Y PROFESOR RENDER [SOLO PARA ADMIN ]
 
 const renderModificarAlumno = async (req, res) => {
+   
     const alumnoId = req.params.id;
 
     const alumno = await Alumno.findById(alumnoId).lean();
@@ -69,6 +181,7 @@ const renderModificarAlumno = async (req, res) => {
 
 
 const renderModificarProfesor = async (req, res) => {
+    
     const profesorId = req.params.id;
 
     const profesor = await Profesor.findById(profesorId).lean();
@@ -188,21 +301,57 @@ const crearAlumnno = async (req, res) => {
 
     });
 
-    
     try {
         await newAlumno.save();
         req.flash('success', 'Se ha creado correctamente su cuenta.');
         console.log(newAlumno)
-        return res.redirect('/alumnos');
+        return res.redirect('/');
 
     } catch (error) {
         req.flash('error', 'No se ha podido crear el usuario');
         console.log(error)
-        return res.redirect('/crear_alumno');
-    }
+        return res.redirect('/crear_alumno_ETAPA');
+    } 
 }
 
-//MODIFICAR ALUMNO Y PROFESOR EXISTENTE
+
+//MODIFICAR ALUMNO FP - ETAPA
+
+const updateAlumnoFP = async (req, res) => {
+
+    const profesor = req.user;
+
+    if(!profesor.tutor && !profesor.tutor === 'FP') return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'FP') return res.redirect('/')
+
+    const userId = req.params.id;
+    const alumnoToUpdate = await Alumno.findById(userId);
+
+    const alumnoUpdated = autoProperties(alumnoToUpdate, req.body);
+
+    await alumnoUpdated.save();
+    
+    res.redirect('/alumnosFP')   
+}
+
+const updateAlumnoETAPA = async (req, res) => {
+
+    const profesor = req.user;
+
+    if(!profesor.tutor && !profesor.tutor === 'Etapa') return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'Etapa') return res.redirect('/')
+
+    const userId = req.params.id;
+    const alumnoToUpdate = await Alumno.findById(userId);
+
+    const alumnoUpdated = autoProperties(alumnoToUpdate, req.body);
+
+    await alumnoUpdated.save();
+    
+    res.redirect('/alumnosETAPA')   
+}
+
+//MODIFICAR ALUMNO Y PROFESOR EXISTENTE [PARA ADMIN]
 
 const updateAlumno = async (req, res) => {
 
@@ -236,13 +385,13 @@ const updateProfesor = async (req, res) => {
                 updatedProfesor[property] = value;
                 console.log(property, value);
             }
-            
         }
     }
-    
+
+
     if(Boolean(req.body.tutor)) {
 
-        const etapa_o_ciclo = req.body.tipo_etapa === 'FP' ? req.body.tutor_ciclo : req.body.tutor_etapa;
+        const etapa_o_ciclo = req.body.tipoDisciplina === 'FP' ? req.body.tutor_ciclo : req.body.tutor_etapa;
         const tutor = {
             clase: etapa_o_ciclo,
             curso: req.body.tutor_curso ,
@@ -253,15 +402,19 @@ const updateProfesor = async (req, res) => {
         delete updatedProfesor.tutor;
     }
 
+
     await updatedProfesor.save();
 
     res.redirect('/profesores')
 
 }
 
-// LISTADO DE PROFESORES Y ALUMNOS
+// LISTADO DE PROFESORES Y ALUMNOS [PARA EL ADMIN]
 
 const getAllProfesores = async (req, res) => {
+
+    const profesor = req.user;
+    if(!profesor.__t === 'Administrador' || profesor.jefe_departamento == 'true') return res.redirect('/')
 
     const profesores = await Profesor.find().lean();
 
@@ -271,28 +424,109 @@ const getAllProfesores = async (req, res) => {
 
 const getAllAlumnos = async (req, res) => {
 
+    const profesor = req.user;
+
+    if(!profesor.__t === 'Administrador' || profesor.jefe_departamento == 'true') return res.redirect('/')
+
     const alumno = await Alumno.find().lean();
 
     res.render('alumnos', { alumno });
    
 }
 
+// LISTADO POR ETAPA Y FP [POR ROL]
 
-// ELIMINAR  PROFES Y ALUMNOS
+const getAllAlumnosforFP = async (req, res) => {
 
-const deleteAlumno = async ( req, res ) => {
+    const profesor = req.user
+
+    if(!profesor.tutor && !profesor.tutor === 'FP') return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'FP') return res.redirect('/'); 
+
+    const fp = profesor.tutor.clase;
+    const curso = profesor.tutor.curso
+
+   const asignaturasFP = await Asignatura.find({fp: fp , curso: curso});
+
+   const FPAsignaturaArray = asignaturasFP.map( elemento => { return elemento._id;})
+
+   const idAsignaturas = await Asignatura.find({_id: FPAsignaturaArray} );
+
+   const AlumnosFP = await Alumno.find({ asignaturas: {$in: idAsignaturas}})
+
+   const AlumnosFPJSON  =  JSON.parse(JSON.stringify(AlumnosFP));
+
+    res.render('alumnosFP', { AlumnosFP: AlumnosFPJSON, curso, fp});
+}
+
+const getAllAlumnosforETAPA = async (req, res) => {
+
+    const profesor = req.user
+
+    if(!profesor.tutor && !profesor.tutor === 'Etapa') return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'Etapa') return res.redirect('/'); 
+
+    const etapa = profesor.tutor.clase;
+    const curso = profesor.tutor.curso
+
+   const asignaturasETAPA = await Asignatura.find({etapa: etapa , curso: curso});
+
+   const ETAPA_AsignaturaArray = asignaturasETAPA.map( elemento => { return elemento._id;})
+
+   const idAsignaturas = await Asignatura.find({_id: ETAPA_AsignaturaArray} );
+
+   const AlumnosETAPA = await Alumno.find({ asignaturas: {$in: idAsignaturas}})
+
+   const Alumnos_ETAPA_JSON  =  JSON.parse(JSON.stringify(AlumnosETAPA));
+
+   console.log( AlumnosETAPA);
+
+    res.render('alumnosETAPA', { AlumnosETAPA: Alumnos_ETAPA_JSON });
+}
+
+// ELIMINAR ALUMNOS FP 
+
+const deleteAlumnoFP = async ( req, res ) => {
+
+    const profesor = req.user
+
+    if(!profesor.tutor && !profesor.tutor === 'FP') return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'FP') return res.redirect('/'); 
 
     try {
-        const deleteAlumno = await Alumno.deleteOne ( { _id: req.body.alumno } )
+        const deleteAlumno = await Alumno.deleteOne ( { _id: req.body.AlumnoFP } )
         req.flash('success', 'Se ha borrado el alumno.');
         console.log(deleteAlumno)
-        return res.redirect('/alumnos');
+        return res.redirect('/alumnosFP');
     } catch (error) {
         req.flash('error', 'No se ha podido borrar el alumno');
         console.log(error)
-        return res.redirect('/alumnos');
+        return res.redirect('/alumnosFP');
     }
 }
+
+// ELIMINAR ALUMNOS ETAPA
+
+const deleteAlumnoETAPA = async ( req, res ) => {
+
+    const profesor = req.user
+
+    if(!profesor.tutor && !profesor.tutor === 'Etapa') return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'Etapa') return res.redirect('/'); 
+
+    try {
+        const deleteAlumno = await Alumno.deleteOne ( { _id: req.body.AlumnoETAPA } )
+        req.flash('success', 'Se ha borrado el alumno.');
+        console.log(deleteAlumno)
+        return res.redirect('/alumnosETAPA');
+    } catch (error) {
+        req.flash('error', 'No se ha podido borrar el alumno');
+        console.log(error)
+        return res.redirect('/alumnosETAPA');
+    }
+}
+
+// ELIMINAR PROFES Y ALUMNOS [SOLO PARA ADMIN]
 
 const deleteProfesor = async ( req, res ) => {
 
@@ -308,13 +542,28 @@ const deleteProfesor = async ( req, res ) => {
     }
 }
 
+const deleteAlumno = async ( req, res ) => {
+
+    try {
+        const deleteAlumno = await Alumno.deleteOne ( { _id: req.body.Alumno } )
+        req.flash('success', 'Se ha borrado el alumno.');
+        console.log(deleteAlumno)
+        return res.redirect('/alumnosFP');
+    } catch (error) {
+        req.flash('error', 'No se ha podido borrar el alumno');
+        console.log(error)
+        return res.redirect('/alumnosFP');
+    }
+}
+
 module.exports = {
     renderLoginForm,
     renderSignupForm,
     logout,
     signup,
     renderCreateProfesor,
-    renderCreateAlumno,
+    renderCreateAlumnoFP,
+    renderCreateAlumnoETAPA,
     renderModificarAlumno,
     renderModificarProfesor,
     crearProfesor,
@@ -325,5 +574,13 @@ module.exports = {
     deleteProfesor,
     updateAlumno,
     updateProfesor,
+    getAllAlumnosforFP,
+    getAllAlumnosforETAPA,
+    deleteAlumnoFP,
+    deleteAlumnoETAPA,
+    renderMoficarAlumnoFP,
+    updateAlumnoFP,
+    updateAlumnoETAPA,
+    renderMoficarAlumnoETAPA,
 }
 

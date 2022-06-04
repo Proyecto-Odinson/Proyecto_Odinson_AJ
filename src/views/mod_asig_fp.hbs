@@ -1,0 +1,65 @@
+<!-- Content pagina -->
+<div class="container-fluid">
+  <div class="page-header">
+    <h1 class="text-titles"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i>Modificacion<small>de Asignatura</small></h1>
+  </div>
+  <p class="lead">Rellenando el siguiente formulario podremos cambiar datos de una asignatura en especifico. Este proceso
+      solo es posible por el jefe de departamento o el admin
+  </p>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+        <li><a href="/ShowEtapasFP">Volver al listado Etapas FP</a></li>
+      </ul>
+      <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active in" id="new">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xs-12 col-md-10 col-md-offset-1">
+                <form method="post">
+                    <input type="hidden" name="_method" value="PUT">
+                        <!-- DATOS ASIGNATURA -->
+                        <div class="form-group">
+                            <label  class="control-label">Nombre de la asignatura</label>
+                                <input type="text" class="form-control" name="nombre_asignatura" id="nombre_asignatura" value="{{asignatura.nombre_asignatura}}"/>
+                        </div>
+                        <div class="form-group">
+                            <label  class="control-label">Profesor que imparte la asignatura</label>
+                                <select class="form-control" name="profesor" id="profesor" value="{{asignatura.profesor}}"/>
+                                    <option disabled>Selecciona al profesor</option>
+                                </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label  class="control-label">Siglas de la asignatura</label>
+                                <input type="text" class="form-control" name="siglas" id="siglas" value="{{asignatura.siglas}}"/>
+                        </div>
+                    <p class="text-center">
+                    <button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i>Save</button>
+                  </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SCRIPT PARA PROFES FP -->
+
+<script>
+
+  (async () => {
+    const profesFP = document.querySelector("#profesor");
+    const responseProfesFP = await fetch('/profesFP');
+
+            const profes_etapa_FP = await responseProfesFP.json();
+            profes_etapa_FP.map(p => {
+                let opt = document.createElement('option');
+                opt.value = p._id;
+                opt.innerText = p.firstName;
+                profesFP.appendChild(opt);
+            })
+  })()
+
+</script>

@@ -1,0 +1,39 @@
+<div class="contenido">
+<h1>Listado de Autorizaciones de su clase</h1>
+<ul>
+{{#each alumnos as | alumno |}}
+<li>
+    <table border="2">
+    <tr>
+        <td width="150">Nombre: {{alumno.firstName}}</td>
+        <td width="150">Apellidos: {{alumno.lastName}}</td>
+        <td width="150"> Nombre de FP: {{alumno.disciplina.nombre}}</td>
+        <td width="200"> Autorizacion de datos: {{alumno.autorizacion_datos}}</td>
+    </tr>
+    </table>
+</li>
+
+{{/each}}
+</ul>
+</div>
+
+<ul>
+   <li><input type="button" value="Descargar"></li>
+</ul>
+
+<script>
+    
+    const contenido = document.querySelector('#contenido');
+     const pdf = require('html-pdf');
+
+const content = contenido
+
+pdf.create(content).toFile('./alumno_Autorizaciones.pdf', function(err, res) {
+    if (err){
+        console.log(err);
+    } else {
+        console.log(res);
+    }
+});
+
+</script>

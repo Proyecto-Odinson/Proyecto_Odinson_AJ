@@ -27,6 +27,7 @@ passport.use('local', new Strategy({
     //Si el usuario es correcto, pero la contraseña no, tambien lo verificaremos
     const passwordMatch = await user.checkPassword(password);
 
+    console.log(passwordMatch);
 
     //Si la verificacion de la contraseña es incorrecta, devolvera error
     if(!passwordMatch) {

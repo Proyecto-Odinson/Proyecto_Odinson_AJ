@@ -18,6 +18,7 @@ const app = express(); //Variable app que sera igual a la funcion express
 require ('./config/passport') // Importaremos el archivo passport, que contiene la autenticacion
 const morgan = require('morgan');
 var methodOverride = require('method-override')
+const helpers = require('./lib/helpers');
 
 const UserRoutes = require('./routes/user.routes'); // Importaremos a UserRoutes la configuracion del archivo user.routes 
 const ProvincesRoutes = require('./routes/province.routes');
@@ -27,6 +28,8 @@ const nofpRoutes = require('./routes/nofp.routes')
 const EmpresaRoutes = require ('./routes/empresa.routes');
 const FCTRoutes = require ('./routes/FCT.routes');
 const FestivosRouter = require ('./routes/festivos.routes')
+const NotasRouter = require ('./routes/notas.routes')
+const DocumentosRouter = require ('./routes/documentos.routes')
 
 //Config de Handlebars
 const hbs = create ({
@@ -34,13 +37,15 @@ const hbs = create ({
     layoutsDir: join(__dirname, 'views', 'layouts'), 
     defaultLayout: 'main.hbs',
     extname: '.hbs',
+    helpers: {
+        ifCond: helpers.ifCond
+    }
 })
 
 app.engine('.hbs', hbs.engine)
 app.set('view engine', '.hbs')
 app.set ('views', join(__dirname, 'views'))
 app.set('port', process.env.PORT || 3000)
-
 
 // Middlewares 
 
@@ -96,7 +101,6 @@ app.use((req, res, next) => {
     next();
 })
 
-
 //CONF ROUTES
 
 app.use('/', UserRoutes);
@@ -107,6 +111,8 @@ app.use('/', nofpRoutes);
 app.use('/', EmpresaRoutes);
 app.use('/', FCTRoutes);
 app.use('/', FestivosRouter);
+app.use('/', NotasRouter)
+app.use('/' , DocumentosRouter);
 
 // Errores
 app.use('*',(req,res) =>  {

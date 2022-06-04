@@ -1,0 +1,270 @@
+<!-- Content pagina -->
+<div class="container-fluid">
+  <div class="page-header">
+    <h1 class="text-titles"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i>Modificacion<small>Estudiantes Etapa (ESO y BACHILLER)</small></h1>
+  </div>
+  <p class="lead">Rellenando el siguiente formulario podremos añadir al sistema un nuevo Alumno. 
+   Este proceso solo podrá realizarlo el administrador.</p>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+        <li class="active"><a href="/crear_alumno_ETAPA">Nuevo Alumno Etapa</a></li>
+        <li><a href="/alumnosETAPA">Listado de Alumnos</a></li>
+      </ul>
+      <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active in" id="new">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-xs-12 col-md-10 col-md-offset-1">
+                <form method="post">
+                  <input type="hidden" name="_method" value="PUT">
+              <!--DATOS PERSONALES -->
+							<div id="datos_personales" style="display:block;">
+								<h1>DATOS PERSONALES</h1>
+                  <div class="form-group label-floating">
+                    <label class="control-label">Nombre</label>
+                    <input class="form-control" name="firstName" type="text" value="{{alumno.firstName}}"/>
+                  </div>
+                  <div class="form-group label-floating">
+                    <label class="control-label">Apellidos</label>
+                    <input class="form-control" name="lastName" type="text" value="{{alumno.lastName}}"/> 
+                  </div>
+                  <div class="form-group label-floating">
+                    <label class="control-label">DNI</label>
+                    <input class="form-control" name="DNI" type="text" value="{{alumno.DNI}}"/>
+                  </div>
+                  <div class="form-group label-floating">
+                    <label class="control-label">n_expediente</label>
+                    <input class="form-control" name="n_expediente" type="text" value="{{alumno.n_expediente}}"/> 
+                  </div>
+                <div class="form-group label-floating">
+                      <label class="control-label">email</label>
+                      <input class="form-control" name="email" type="email" value="{{alumno.email}}"/>
+                </div>
+                  <div class="form-group label-floating">
+                    <label>Fecha nacimiento</label>
+                    <input class="form-control" name="fecha_nac" type="date"  value="{{fecha_nac}}"/>
+                  </div>
+                  <div class="form-group">
+										<label class="control-label">Autorizacion de datos</label>
+										<select class="form-control" name="autorizacion_datos"  >
+											<option value="true">Si</option>
+											<option value="false">No</option>
+										</select>
+                  </div>
+                  <div class="form-group label-floating">
+                    <label class="control-label">telefono</label>
+                    <input class="form-control" name="phone" type="text" value="{{alumno.phone}}"/>
+                  </div>
+                   <div class="form-group label-floating">
+                    <label class="control-label">telefono opcional</label>
+                    <input class="form-control" name="phone2" type="text"  value="{{alumno.phone2}}"/>
+                    	<button type="button" id="button_1">Siguiente</button>
+                  </div>
+              </div>
+
+              <!-- ASIGNATURAS -->
+              <div id="datos_asignaturas" style="display:none;">
+								  <h1>ASIGNATURAS</h1>
+                  <div class="ETAPA_Alumno" style="display:none;">
+                    <input type="hidden" class="form-control" name="tipoDisciplina" id="tipoDisciplina" value="{{tipoDisciplina}}"/>
+                    <input type="hidden" class="form-control" name="nombre_etapa" id="nombre_etapa" value="{{etapas}}"/>
+                    <label class="control-label">Proporcione el Curso</label>
+                    <input type="hidden" class="form-control" name="n_cursos" id="n_cursos" value="{{cursoAlumno}}" />
+                  </div>
+
+                   <div class="form-group">
+                    <label class="control-label">Asigne las asignaturas a las cuales se va a matricular</label>
+                    <select class="form-control" name="asignaturas" id="asignaturas" multiple>
+	                      {{#each asignaturasEtapa as | asignaturaEtapa |}}
+                          <option value="{{asignaturaEtapa._id}}">{{asignaturaEtapa.nombre_asignatura}}</option>
+                        {{/each}}
+                      </select>
+                  </div> 
+                	 <button type="button" id="button_2">Siguiente</button>
+								   <button type="button" id="button_4">Atras</button>
+						</div>
+
+              <!--DIRECCION-->
+              <div id="datos_direccion" style="display:none;">
+								<h1>DATOS DIRECCION</h1>
+										<div class="form-group label-floating">
+										<label class="control-label">calle</label>
+										<input class="form-control" name="calle" value="{{alumno.calle}}"/>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">tipo_via</label>
+										<input class="form-control" name="tipo_via" value="{{alumno.tipo_via}}"/>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">n_via</label>
+										<input class="form-control" name="n_via" value="{{alumno.n_via}}"/>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">portal</label>
+										<input class="form-control" name="portal" value="{{alumno.portal}}"/>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">puerta</label>
+										<input class="form-control" name="puerta" value="{{alumno.puerta}}"/>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">escalera</label>
+										<input class="form-control" name="escalera" value="{{alumno.escalera}}"/>
+									</div>
+										<div class="form-group label-floating">
+										<label class="control-label">bloque</label>
+										<input class="form-control" name="bloque" value="{{alumno.bloque}}"/>
+									</div>
+                    <button type="button" id="button_3">Siguiente</button>
+								    <button type="button" id="button_5">Atras</button>
+							</div>
+
+								<!--PROVINCIA Y LOCALIDAD-->
+                <div id="provincia_localidad"  style="display:none;">
+								  <h1>DATOS PROVINCIA Y LOCALIDAD</h1>
+									<div class="form-group">
+										<label  class="control-label">Provincia</label>
+										<select class="form-control" name="province" id="province">
+											<option disabled selected>Seleccione una provincia</option>
+										</select>
+                  </div>
+									<div class="form-group">
+										<label  class="control-label">Localidad</label>
+										<select class="form-control" name="city" id="city" >
+											<option selected disabled>---</option>
+										</select>
+                  </div>
+                  <button type="button" id="button_6">Atras</button>
+                  <p class="text-center">
+                    <button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i>Save</button>
+                  </p>
+                </div> 
+              </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style type="text/css">
+  #asignaturas{height: 150px;}
+</style>
+
+<!--SCRIPT GEMINIS-->
+
+<script>
+
+	const button_1 = document.querySelector("#button_1");
+	const button_2 = document.querySelector("#button_2");
+	const button_3 = document.querySelector("#button_3");
+	
+	const button_4 = document.querySelector('#button_4');
+	const button_5 = document.querySelector('#button_5');
+	const button_6 = document.querySelector('#button_6');
+	
+
+	const form_datos_personales = document.querySelector("#datos_personales");
+	const form_datos_asignaturas = document.querySelector("#datos_asignaturas");
+	const form_direccion = document.querySelector("#datos_direccion");
+	const form_provincia_localidad = document.querySelector("#provincia_localidad");
+
+	button_1.addEventListener('click' , () => {
+
+		form_datos_personales.style.display = 'none';
+		form_datos_asignaturas.style.display = '';
+		button_2.style.display = '';
+		
+
+	})
+
+		button_2.addEventListener('click' , () => {
+
+		form_datos_asignaturas.style.display = 'none';
+		form_direccion.style.display = '';
+		button_2.style.display = 'none';
+		button_3.style.display = '';
+
+	})
+
+		button_3.addEventListener('click' , () => {
+
+		form_direccion.style.display = 'none';
+		form_provincia_localidad.style.display = '';
+		button_3.style.display = 'none';
+
+	})
+
+// HACIA ATRAS
+
+	button_4.addEventListener('click' , () => {
+
+		form_datos_personales.style.display = '';
+		form_datos_asignaturas.style.display = 'none';
+		button_1.style.display = ''
+	})
+
+	button_5.addEventListener('click' , () => {
+
+		form_datos_asignaturas.style.display = '';
+		form_direccion.style.display = 'none';
+		button_2.style.display = ''
+	
+	})
+
+	button_6.addEventListener('click' , () => {
+
+		form_direccion.style.display = '';
+		form_provincia_localidad.style.display = 'none';
+		button_3.style.display = ''
+	})
+
+</script>
+
+
+<!--SCRIPT PARA LOCALIDAD Y PROVINCIA-->
+
+<script>
+
+	(async () => {
+            const province = document.querySelector("#province");
+            const city = document.querySelector("#city");
+            const responseProvinces = await fetch('/select_province');
+
+            const provinces = await responseProvinces.json();
+            provinces.map(p => {
+                let opt = document.createElement('option');
+                opt.value = p._id;
+                opt.innerText = p.showName;
+                province.appendChild(opt);
+            })
+            province.addEventListener("change", async () => {
+                const currentProvince = province.value;
+                let responseCities = await fetch(`/select_city/${currentProvince}`);
+                currentCities = await responseCities.json();
+                
+                if(!currentCities) return alert('No existe esa provincia!');
+                
+                city.removeAttribute('disabled');
+                city.innerHTML = '';
+                let disabledOptCity = document.createElement('option');
+                disabledOptCity.innerHTML = '---';
+                disabledOptCity.setAttribute('disabled', true);
+                disabledOptCity.setAttribute('selected', true);
+                city.appendChild(disabledOptCity);
+                currentCities.map( c => {
+                    let opt = document.createElement('option');
+                    opt.value = c._id;
+                    opt.innerText = c.name;
+                    console.log(c);
+                    city.appendChild(opt);
+                })
+            })
+        })()
+</script> 

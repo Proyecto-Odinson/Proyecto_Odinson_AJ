@@ -113,7 +113,9 @@ const findEmpresasByID = async (req, res) => {
 
     const IDEmpresa = req.params.id;
 
-    const empresa = await Empresa.findById(IDEmpresa)
+    const empresa = await Empresa.findById(IDEmpresa);
+
+    console.log(empresa);
 
     res.json(empresa);
 }

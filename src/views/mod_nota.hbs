@@ -1,0 +1,51 @@
+<!-- Content pagina -->
+<div class="container-fluid">
+	<div class="page-header">
+		<h1 class="text-titles"><i class="zmdi zmdi-money-box zmdi-hc-fw"></i> Modificacion<small>de Notas</small></h1>
+	</div>
+	<p class="lead">Rellenando el siguiente formulario podremos modificar una nota existente</p>
+</div>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-xs-12">
+			<ul class="nav nav-tabs" style="margin-bottom: 15px;">
+				<li class="active"><a href="/crearNota/{{asignatura._id}}">Nueva Nota</a></li>
+			</ul>
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane fade active in" id="new">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-xs-12 col-md-10 col-md-offset-1">
+								<form method="post">
+								<input type="hidden" name="_method" value="PUT">
+								<!--DATOS DE LA ASIGNATURA-->
+								<div class="datos_oculto" style="display:none;">
+									<input type="hidden" name="asignatura" value="{{nota.asignatura._id}}"/>
+									<input type="hidden" name="profesor" value="{{profesor}}"/>
+									<input type="hidden" name="alumno" value="{{nota.alumno._id}}"/>
+									<input type="hidden" name="fp" value="{{nota.alumno.disciplina}}"/>
+								</div>
+								 <label class="control-label">Seleccione un trimestre</label>
+								 <input  class="form-control" type="number" name="trimestre" min="1" max="3" value="{{nota.trimestre}}"/>
+
+								 <label class="control-label">Introduzca una nota</label>
+								 <input class="form-control" type="number" name="nota" min="1" max="10" value="{{nota.nota}}"/>
+
+								 <label class="control-label">Escriba un comentario (opcional)</label>
+								<input  class="form-control" type="text" name="comentario" value="{{nota.comentario}}"/>
+							<p class="text-center">
+								<button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i> Save</button>
+							</p>
+						</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="list">
+					<div class="table-responsive">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

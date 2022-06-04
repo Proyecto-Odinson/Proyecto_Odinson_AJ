@@ -44,7 +44,7 @@
 
 									<div class="form-group">
 										<label  class="control-label">Localidad</label>
-										<select class="form-control" name="city" id="city" value="{{festivo.city}}">
+										<select class="form-control" name="city" id="city">
 											<option disabled selected>Seleccione una localidad</option>
 										</select>
 									<p class="text-center">
@@ -74,10 +74,12 @@
             const city = document.querySelector("#city");
 
 			nacional_el.addEventListener("change", () => {
-  			if(this.checked) {
+  			if(nacional_el.checked) {
     			province.setAttribute('disabled', '');
+				city.setAttribute('disabled', '')
   			} else {
     			province.removeAttribute('disabled');
+				city.setAttribute('disabled', '')
   			}
 		})
             const responseProvinces = await fetch('/select_province');

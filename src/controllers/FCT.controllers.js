@@ -5,39 +5,90 @@ const Asignatura = require('../models/asignaturas');
 const fct = require("../models/FCT");
 const etapa = require('../models/etapa');
 const { formatDate } = require('../lib/date');
+const fp = require("../models/fp");
 const empresa = require("../models/empresa");
-
-//const { $where, populate } = require("../models/FCT");
-//(const { default: mongoose } = require("mongoose");)
 
 
 // RENDER PARA CREAR FCT
 
-const renderCreateFCT =  async (req, res) => {
-    const empresas = await Empresa.find().lean();
-    res.render('registrar_FCT' , {empresas} );
+const RenderCreateFCT = async (req, res) => {
+
+    const profesor = req.user;
+
+    if(!profesor.tutor || profesor.tutor.curso !== 2) return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'FP') return res.redirect('/'); 
+
+    const empresas = await Empresa.find();
+
+    const alumnosFP = await Alumno.find({disciplina: profesor.tutor.clase});
+
+    const asignaturasFP = await Asignatura.find({fp: profesor.tutor.clase , curso: profesor.tutor.curso});
+
+    const ProfesAsignaturaArray = asignaturasFP.map( elemento => {
+        return elemento.profesor;
+    })
+
+    const ProfesAsignatura = await Profesor.find( {_id: ProfesAsignaturaArray} );
+
+
+    const FPAsignaturaArray = asignaturasFP.map( elemento => {
+        return elemento.fp;
+    })
+
+    const idFP = await fp.find( {_id: FPAsignaturaArray} );
+
+    const empresasJson = JSON.parse(JSON.stringify(empresas));
+    const alumnosFPJson = JSON.parse(JSON.stringify(alumnosFP));
+    const profesoresFPJson = JSON.parse(JSON.stringify(ProfesAsignatura));
+    const fpJson =  JSON.parse(JSON.stringify(idFP));
+
+    res.render('registrar_FCT', {fp: fpJson, alumnos: alumnosFPJson , empresas: empresasJson , profesores: profesoresFPJson})
 }
 
 // RENDER PARA MODIFICAR FCT
 
 const renderModifyFCT =  async (req, res) => {
 
+    const profesor = req.user;
+
+    if(!profesor.tutor || profesor.tutor.curso !== 2) return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'FP') return res.redirect('/'); 
+
     const fctID = req.params.id;
+
     const FCT = await fct.findById(fctID).lean();
 
     const empresas = await empresa.find().lean();
+    const alumnosFP = await Alumno.find({disciplina: profesor.tutor.clase});
+    const asignaturasFP = await Asignatura.find({fp: profesor.tutor.clase , curso: profesor.tutor.curso});
+
+    const ProfesAsignaturaArray = asignaturasFP.map( elemento => {return elemento.profesor;})
+    const ProfesAsignatura = await Profesor.find( {_id: ProfesAsignaturaArray} );
+    
+    const FPAsignaturaArray = asignaturasFP.map( elemento => { return elemento.fp;})
+    const idFP = await fp.find({_id: FPAsignaturaArray} );
+
+    const empresasJson = JSON.parse(JSON.stringify(empresas));
+    const alumnosFPJson = JSON.parse(JSON.stringify(alumnosFP));
+    const profesoresFPJson = JSON.parse(JSON.stringify(ProfesAsignatura));
+    const fpJson =  JSON.parse(JSON.stringify(idFP));
 
     const fecha_inico = formatDate(new Date(fct.fecha_inicio));
     const fecha_final = formatDate(new Date(fct.fecha_final));
-    
-    res.render('mod_FCT' , {FCT, empresas , fecha_inico , fecha_final } )
+ 
+    res.render('mod_FCT' , {FCT, empresas , fecha_inico , fecha_final , fp: fpJson , alumnos: alumnosFPJson , empresas: empresasJson , profesores: profesoresFPJson } )
 }
-
 
 //CREACION DE FCT
 
 const crearFCT = async (req, res) => {
-    const { alumno, empresa , tutor, tutor_laboral ,trimestre, horas, fecha_inicio, fecha_final} = req.body;
+
+    const profesor = req.user;
+
+    if(!profesor.tutor || profesor.tutor.curso !== 2) return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'FP') return res.redirect('/'); 
+
+    const { alumno, fp, empresa , tutor, tutor_laboral ,trimestre, horas, fecha_inicio, fecha_final} = req.body;
 
     console.log(req.body)
 
@@ -50,8 +101,8 @@ const crearFCT = async (req, res) => {
     }
 
     const newFCT = FCT ({
-
         alumno,
+        fp,
         empresa,
         tutor,
         tutor_laboral,
@@ -74,11 +125,17 @@ const crearFCT = async (req, res) => {
     }
 }
 
-// MODIFICACION FCT
+// UPDATE FCT
 
 const updateFCT = async (req, res) => {
 
+    const profesor = req.user;
+
+    if(!profesor.tutor || profesor.tutor.curso !== 2) return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'FP') return res.redirect('/');
+
     const fctId = req.params.id;
+
     const updatedFCT = await fct.updateOne({ _id: fctId}, req.body);
 
     console.log( updatedFCT);
@@ -88,6 +145,11 @@ const updateFCT = async (req, res) => {
 // BORRAR FCT
 
 const deleteFCT = async ( req, res ) => {
+
+    const profesor = req.user;
+
+    if(!profesor.tutor || profesor.tutor.curso !== 2) return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'FP') return res.redirect('/');
 
     try {
         const deleteFCT = await fct.deleteOne ( { _id: req.body.fct } )
@@ -106,14 +168,25 @@ const deleteFCT = async ( req, res ) => {
 
 const findFCT = async (req, res) => {
 
-    const fct = await FCT.find().populate('tutor').populate('empresa').populate('alumno').lean();
+    const profesor = req.user;
 
-    res.render('alumnos_FCT', { fct });
+    if(!profesor.tutor || profesor.tutor.curso !== 2) return res.redirect('/');
+    if(profesor.tipoDisciplina !== 'FP') return res.redirect('/');
+
+    const findFP_FCT = await FCT.find({fp: profesor.tutor.clase}).populate('alumno').populate('empresa').populate('tutor');
+
+    console.log(findFP_FCT);
+        
+    const alumnosFCT_JSON = JSON.parse(JSON.stringify(findFP_FCT));
+
+    res.render('alumnos_FCT', { alumnosFCT: alumnosFCT_JSON});
 }
 
+ 
 const findProfesFP = async (req, res) => {
 
     let etapas_fp = await etapa.find({ $or: [{ nombre: 'GRADO_MEDIO' }, { nombre: 'GRADO_SUPERIOR' }]});
+
     etapas_fp = etapas_fp.map(etapa => etapa._id);
     const asignaturas_fp = await Asignatura.find({
         etapa: { $in: etapas_fp},
@@ -162,15 +235,15 @@ const findAlumnos2ºFP = async (req, res ) => {
     res.json(findAlumnos2ºFP)
 };
 
+
 module.exports = {
     
     findFCT,
     crearFCT,
-    renderCreateFCT,
     findProfesFP,
     findAlumnos2ºFP,
     renderModifyFCT,
     updateFCT,
     deleteFCT,
-    
+    RenderCreateFCT,
 }

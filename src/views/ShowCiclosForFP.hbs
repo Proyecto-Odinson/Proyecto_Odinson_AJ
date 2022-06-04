@@ -1,0 +1,12 @@
+<h1>Seleccione una de las dos ETAPAS de FP</h1>
+<ul>
+{{#each ciclos_fp as | Ciclo_fp |}}
+<li>
+    Estos son los ciclos disponibles: {{Ciclo_fp.nombre}} <a href="/ShowAsignaturasForFP/{{Ciclo_fp._id}}">Modificar</a> 
+        <form method="post">
+            <input type="hidden" name="Ciclo_fp" value="{{Ciclo_fp._id}}">
+        </form>
+</li>
+{{/each}}
+</ul>
+

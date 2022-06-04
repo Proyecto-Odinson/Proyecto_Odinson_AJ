@@ -9,13 +9,10 @@ const EmpresaSchema = new Schema ({
     email: {type: String, required: true },
     NIF: {type: String, required: true },
     fax: {type: String, required: false  },
-    phone: { type: Number, required: true },
-    phone2: { type: Number, required: false},
     actividad:  { type: String , require: true},
     representante_certificado_digital :  { type: String , require: true},
     contacto: { type: String },
-
-
+    
     calle: { type: String , required: true },
     tipo_via: { type: String , required: true },
     n_via: { type: Number , required: true },

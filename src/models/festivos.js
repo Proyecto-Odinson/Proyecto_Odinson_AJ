@@ -7,8 +7,8 @@ const FestivosSchema = new Schema({
     mes: { type: String, enum: [...Array(12).keys()].map(x => x + 1) },
     nacional: { type: Boolean , default: false},
 
-    province: { type: Schema.Types.ObjectId, ref: 'Province' },
-    city: { type: Schema.Types.ObjectId, ref: 'City' },
+    province: { type: Schema.Types.ObjectId, ref: 'Province' , required: false },
+    city: { type: Schema.Types.ObjectId, ref: 'City' , required: false },
 })
 
 

@@ -1,0 +1,8 @@
+<h1>Listado de notas de su clase</h1>
+<ul>
+{{#each notasTutor as | notaTutor |}}
+<li>
+    El alumn@ {{notaTutor.alumno.firstName}} tiene un {{notaTutor.nota}} en la asignatura {{notaTutor.asignatura.nombre_asignatura}}
+</li>
+{{/each}}
+</ul>
