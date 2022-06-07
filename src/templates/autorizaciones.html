@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<h1>Listado de Autorizaciones de su clase</h1>
+<ul>
+
+    <table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>FP</th>
+            <th>Autorización</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each alumnos as | alumno |}}
+        <tr>
+            <td width="150">{{alumno.firstName}}</td>
+            <td width="150">{{alumno.lastName}}</td>
+            <td width="150">{{alumno.disciplina.nombre}}</td>
+            <td width="200">{{#if alumno.autorizacion_datos}} Si {{else}} No {{/if}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+    
+    </table>
+
+</ul>
+</div>
+
+</body>
+</html>
+

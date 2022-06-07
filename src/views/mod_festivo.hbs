@@ -17,15 +17,15 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-xs-12 col-md-10 col-md-offset-1">
-								<form method="post">
+								<form method="post" name="festivo">
 									<input type="hidden" name="_method" value="PUT">
 									<div class="form-group label-floating">
 										<label class="control-label">Nombre</label>
-										<input class="form-control" name="nombre" type="text" value="{{festivo.nombre}}"/>
+										<input class="form-control" name="nombre" type="text"  value="{{festivo.nombre}}"/>
 									</div>
 									<div class="form-group">
 										<label class="control-label">¿ Es una fiesta nacional ?</label>
-										<input name="nacional" id="nacional" type="checkbox" value="{{festivo.nacional}}"/>
+										<input name="nacional" id="nacional" type="checkbox" value="{{festivo.nacional}}" {{#if festivo.nacional}} checked {{/if}} />
 									</div>
                                     <div class="form-group label-floating">
 										<label class="control-label">Dia del festivo</label>
@@ -38,15 +38,16 @@
 									<!--PROVINCIA Y LOCALIDAD-->
 									<div class="form-group">
 										<label  class="control-label">Provincia</label>
-										<select class="form-control" name="province" id="province" value="{{festivo.province}}">
-											<option disabled>Seleccione una provincia</option>
+										<select class="form-control" name="province" id="province">
+											<option value="{{festivo.province._id}}" disabled selected></option>
 										</select>
-
+									</div>
 									<div class="form-group">
 										<label  class="control-label">Localidad</label>
 										<select class="form-control" name="city" id="city">
-											<option disabled selected>Seleccione una localidad</option>
+											<option value="{{festivo.city._id}}" disabled selected></option>
 										</select>
+									</div>
 									<p class="text-center">
 										<button class="btn btn-info btn-raised btn-sm"><i class="zmdi zmdi-floppy"></i> Save</button>
 									</p>
@@ -55,20 +56,35 @@
 						</div>
 					</div>
 				</div>
-				<div class="tab-pane fade" id="list">
-					<div class="table-responsive">
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+
+<!-- 
+
+ <div class="form-group">
+		<label  class="control-label">Provincia</label>
+			<select class="form-control" name="province" id="province" {{#if festivo.nacional}} disabled {{/if}} value="{{festivo.province._id}}">
+					<option disabled {{#if festivo.nacional}} selected {{/if}}>Seleccione una provincia</option>
+				</select>
+		</div>
+	<div class="form-group">
+	<label  class="control-label">Localidad</label>
+	<select class="form-control" name="city" id="city" {{#if festivo.nacional}} disabled {{/if}} value="{{festivo.city._id}}">
+	<option disabled {{#if festivo.nacional}} selected {{/if}}>Seleccione una ciudad</option>
+	</select>
+</div>
+	
+-->
 
 <!--SCRIPT PARA LOCALIDAD Y PROVINCIA-->
 
 <script>
 
 	(async () => {
+
 			const nacional_el = document.querySelector('#nacional') 
             const province = document.querySelector("#province");
             const city = document.querySelector("#city");
@@ -78,7 +94,7 @@
     			province.setAttribute('disabled', '');
 				city.setAttribute('disabled', '')
   			} else {
-    			province.removeAttribute('disabled');
+				province.removeAttribute('disabled');
 				city.setAttribute('disabled', '')
   			}
 		})
@@ -128,4 +144,13 @@
                 })
             })
         })()
+
+
 </script> 
+
+
+<style>
+	.hidden {
+		display: none;
+	}
+</style>

@@ -1,0 +1,23 @@
+<h1>Informe de FCT</h1>
+<ul>
+{{#each alumnos as | alumno |}}
+<li>
+  <table border="2">
+    <tr>
+      <td>Trimestre: {{alumno.trimestre}}</td>
+      <td>Nombre: {{alumno.alumno.firstName}} {{alumno.alumno.lastName}}</td>
+      <td>Email: {{alumno.alumno.email}}</td>
+      <td>Phone: {{alumno.alumno.phone}}</td>
+      <td>Empresa: {{alumno.empresa.nombre}}</td>
+      <td>Localidad: {{empresa.province.name}} {{empresa.city.name}} </td>
+      <td>Contacto: {{alumno.empresa.contacto}}</td>
+      <td>Tutor: {{alumno.tutor.firstName}}</td>
+    </tr>
+</table>
+
+
+
+</li>
+{{/each}}
+</ul>
+

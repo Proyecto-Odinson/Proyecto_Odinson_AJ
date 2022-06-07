@@ -4,6 +4,9 @@ const { Schema, model } = require('mongoose');
 //Importaremos bycrypt el cual usaremos para almacenar la contraseña cifrada 
 const bcrypt = require('bcrypt');
 
+
+//SCHEMA USER GENERAL
+
 const UserSchema = new Schema({
 
     username: { type: String , required: false  },
@@ -17,6 +20,8 @@ const UserSchema = new Schema({
     active: {type: Boolean },
 
 })
+
+// CONFIGURACION DE BYCRIPT PARA CIFRAR LAS CONTRASEÑAS
 
 UserSchema.pre('save', async function (next) {
 
@@ -38,6 +43,7 @@ UserSchema.methods.checkPassword = async function(password) {
     return await bcrypt.compare(password, this.password);
 }
 
+// SCHEMA PROFESORES
 
 const ProfeSorSchema = new Schema({
 

@@ -1,17 +1,14 @@
 // SCRIPT VALHALLA: Script para generar toda la BD del proyecto Odinson
 
+// ESTE SCRIPT SE EJECUTARA DE FORMA SECUNDARIA A INIT-DATA 
+
 // Orden de ejecucion:
 
-//1. Localidad y Ciudad
-//2. Creacion del usuario Admin ODINSON
-//3. Etapas: [ESO, BACHILLER, GRADO_MEDIO, GRADO_SUPERIOR]
-//4. FP: [SMR, DAM, DAW, ASIR]
-//5. Profesores
-//6. Asignaturas
-//7. Empresas 
-//8. Festivos
-//9. Alumnos
-//10. FCT 
+//1. Profesores
+//2. Asignaturas
+//3. Empresas 
+//4. Festivos
+//5. Alumnos
 
 require('dotenv').config()
 require('./src/database')
@@ -23,7 +20,6 @@ const fp = require('./src/models/fp');
 const Province = require('./src/models/provinces');
 const City = require('./src/models/cities');
 const empresa = require('./src/models/empresa');
-const fct = require('./src/models/FCT');
 const festivo =  require('./src/models/festivos');
 
 async function initData()  {
@@ -1546,7 +1542,7 @@ async function initData()  {
                 desdoble: 'yes'
             },
         ],
-        profesor: profesorEmilito,
+        profesor: profesorHermi,
         etapa: findESO,
     })
 
@@ -1571,7 +1567,7 @@ async function initData()  {
                 desdoble: 'yes'
             },
         ],
-        profesor: profesorHermi,
+        profesor: profesorEmilito,
         etapa: findESO,
     })
 
@@ -1813,10 +1809,6 @@ async function initData()  {
       Promise.all ([
         ramona.save(),
       ])
-
-
-      // CREACION DE FCT
-
  }
 
 initData()

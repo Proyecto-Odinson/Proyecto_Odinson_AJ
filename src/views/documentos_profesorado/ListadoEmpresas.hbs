@@ -1,0 +1,16 @@
+<h1>Listado de empresas existentes</h1>
+<ul>
+{{#each empresas as | empresa |}}
+<li>
+    <table border="2">
+        <tr>
+            <td> Nombre:{{ empresa.name}}</td>
+            <td>Localizacion: {{ empresa.province.name}} {{ empresa.city.name}}</td>
+            <td>Contacto {{empresa.contacto}}</td>
+            <td>tlf: {{empresa.phone}}</td>
+        </tr>
+    </table>
+</li>
+{{/each}}
+</ul>
+

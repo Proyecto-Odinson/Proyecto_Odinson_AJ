@@ -48,21 +48,4 @@
     </div>
 </div>
 
-<!-- SCRIPT PARA PROFES FP -->
 
-<script>
-
-  (async () => {
-    const profesFP = document.querySelector("#profesor");
-    const responseProfesFP = await fetch('/profesFP');
-
-            const profes_etapa_FP = await responseProfesFP.json();
-            profes_etapa_FP.map(p => {
-                let opt = document.createElement('option');
-                opt.value = p._id;
-                opt.innerText = p.firstName;
-                profesFP.appendChild(opt);
-            })
-  })()
-
-</script>

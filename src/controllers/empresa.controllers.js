@@ -10,7 +10,9 @@ const renderCreateEmpresa = (req, res) => {
 //CREACION DE EMPRESAS
 
 const crearEmpresa = async (req, res) => {
-    const {province, city, name, familia_profesional, phone , phone2 , email, NIF, fax , actividad, representante_certificado_digital, calle, via, tipo_via, n_via, portal, puerta, escalera, bloque, codigo_postal} = req.body;
+    const {province, city, name, familia_profesional, phone , phone2 , email, NIF, 
+    fax , actividad, representante_certificado_digital, calle, via, tipo_via, n_via,
+     portal, puerta, escalera, bloque, codigo_postal} = req.body;
 
     const empresa = await Empresa.findOne({ name });
     console.log(empresa)
@@ -22,26 +24,9 @@ const crearEmpresa = async (req, res) => {
 
     const newEmpresa = Empresa ({
 
-        province, 
-        city, 
-        name,
-        familia_profesional, 
-        phone ,
-        phone2 , 
-        email, 
-        NIF,
-        fax ,
-        actividad, 
-        representante_certificado_digital, 
-        calle,
-        via,
-        tipo_via, 
-        n_via, 
-        portal,
-        puerta,
-        escalera, 
-        bloque,
-        codigo_postal
+        province, city, name, familia_profesional, phone ,phone2 , 
+        email,  NIF,fax ,actividad, representante_certificado_digital, 
+        calle,via,tipo_via, n_via, portal,puerta,escalera, bloque,codigo_postal
     });
 
     try {
@@ -55,7 +40,6 @@ const crearEmpresa = async (req, res) => {
         console.log(error)
         return res.redirect('/registrar_empresa');
     }
-
 
 }
 
@@ -102,6 +86,13 @@ const deleteEmpresa = async ( req, res ) => {
 // FUNCIONES
 
 const findEmpresas = async (req, res) => {
+
+    const user = req.user
+
+    if(user.__t !== 'Administrador' || user.jefe_departamento !== 'true') 
+    return res.redirect('/');  
+
+    console.log(user)
 
     const empresa = await Empresa.find().lean();
 

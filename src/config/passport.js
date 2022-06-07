@@ -1,5 +1,4 @@
-
-//Se importa passport con el valor de passport
+//Se importa la const passport con el valor del modulo passport
 const passport = require('passport');
 
 //Se crea una nueva estrategia que sera la de passport-local
@@ -9,13 +8,14 @@ const { Strategy } = require('passport-local');
 const { User } = require('../models/users');
 
 //Con las costantes anteriormente creadas usaremos en passport la estrategia local
-//En esta especificamos que se necesitara del campo username y password que tendremos preparados de un formulario
+//Esta estrategia local necesitara un username y password que seran el email y password de nuestros usuarios
 passport.use('local', new Strategy({
     usernameField: 'email',
     passwordField: 'password',
     passReqToCallback: true
 
-    //Se verificara si el campo constraseña y password son correctos buscando el usuario introducido
+//Se verificara si el campo constraseña y password son correctos buscando el usuario introducido
+// Ademas buscara en la tabla de usuarios y buscara los usuarios que tenga el campo Active: true 
 }, async (req, email, password, done) => {
     const user = await User.findOne({ email, active: true});
 

@@ -2,7 +2,6 @@
 //Creamos una constante donde importamos mongoose
 const mongoose = require('mongoose');
 
-
 //Creamos una constante URI esta constante tendra el valor de la variable MONGODB_URI que ya esta importada
 const uri = process.env.MONGODB_URI;
 

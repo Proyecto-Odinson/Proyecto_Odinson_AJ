@@ -1,22 +1,22 @@
 /**
  * 
- * @param {*} model Modelo de la base de datos
- * @param {*} newData Datos desde formulario
+ * @param {*} object Modelo de la base de datos
+ * @param {*} updatedData Datos desde formulario
  * @returns Nuevo modelo con los datos actualizados
  */
 
-const autoProperties = (model, newData) => {
-    const properties = Object.keys(newData);
+const autoProperties = (object, updatedData) => {
+    const properties = Object.keys(updatedData);
 
     for (let property of properties) { 
+        let value = updatedData[property];
 
-        let value = newData[property];
         if(value) {
-            model[property] = value;
+            object[property] = value;
         }
     }
-
-    return model;
+    return object;
 }
+
 
 module.exports = autoProperties;

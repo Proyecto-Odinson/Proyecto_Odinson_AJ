@@ -2,12 +2,13 @@
 <ul>
 {{#each alumno as | Alumno |}}
 <li>
-    {{Alumno.firstName}} {{Alumno.lastName}} 
+    {{Alumno.firstName}} {{Alumno.lastName}} {{Alumno.disciplina.nombre}}
     <a href="/mod_alumno/{{Alumno._id}}">Modificar</a> 
         <form method="post">
             <input type="hidden" name="_method" value="DELETE">
             <input type="hidden" name="alumno" value="{{Alumno._id}}">
-            <input type="submit" value="borrar"></form>
+            <input type="submit" value="borrar">
+        </form>
 </li>
 {{/each}}
 </ul>

@@ -1,7 +1,5 @@
 
 const Asignaturas = require("../models/asignaturas");
-const { Alumno } = require('../models/users');
-const FCT = require('../models/FCT');
 
 // VER ASIGNATURAS FP RENDER
 

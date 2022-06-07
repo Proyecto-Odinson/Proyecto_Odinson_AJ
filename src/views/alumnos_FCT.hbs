@@ -2,7 +2,8 @@
 <ul>
 {{#each alumnosFCT as | alumnoFCT |}}
 <li>
- <p>La practica es del alumno/a {{alumnoFCT.alumno.firstName}} en la empresa {{alumnoFCT.empresa.name}} desde {{alumnoFCT.fecha_inicio}} hasta {{alumnoFCT.fecha_final}}</p>
+ <p>La practica es del alumno/a {{alumnoFCT.alumno.firstName}} en la empresa {{alumnoFCT.empresa.name}} del FP {{alumnoFCT.fp.nombre}}
+   esta en practicas desde {{alumnoFCT.fecha_inicio}} hasta {{alumnoFCT.fecha_final}}</p>
  <p>En esta practica el tutor@ {{alumnoFCT.tutor.firstName}} con el tutor laboral {{alumnoFCT.tutor_laboral}} </p>
 
     <a href="/mod_FCT/{{alumnoFCT._id}}">Si quiere Modificar pinche aqui</a> 

@@ -121,25 +121,21 @@
 					</ul>
 				</li>
 
+			{{#ifCond user.__t '===' 'Administrador' '||' user.jefe_departamento }}
 				<li>
 					<a href="#!" class="btn-sideBar-SubMenu">
 						<i class="zmdi zmdi-account-add zmdi-hc-fw"></i> Conjunto Educativo <i class="zmdi zmdi-caret-down pull-right"></i>
 					</a>
 					<ul class="list-unstyled full-box">
-
-					{{#ifCond user.__t '===' 'Administrador' '||' user.jefe_departamento }}
 						<li>
 							<a href="/alumnos"><i class="zmdi zmdi-account zmdi-hc-fw"></i> Estudiantes</a>
 						</li>
-					{{/ifCond}}
-
-					{{#ifCond user.__t '===' 'Administrador' '||' user.jefe_departamento }}
 						<li>
 							<a href="/profesores"><i class="zmdi zmdi-male-alt zmdi-hc-fw"></i>Profesores</a>
 						</li>
-					{{/ifCond}}
 					</ul>
 				</li>
+			{{/ifCond}}
 			
 
 				<li>

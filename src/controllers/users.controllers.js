@@ -4,7 +4,6 @@ const fp = require ('../models/fp')
 const etapas = require('../models/etapa');
 const { formatDate } = require('../lib/date')
 const autoProperties = require('../lib/autoproperties');
-const etapa = require('../models/etapa');
 
 const renderLoginForm = (req, res) => {
     res.render('signin', { layout: 'vacio' });
@@ -428,7 +427,9 @@ const getAllAlumnos = async (req, res) => {
 
     if(!profesor.__t === 'Administrador' || profesor.jefe_departamento == 'true') return res.redirect('/')
 
-    const alumno = await Alumno.find().lean();
+    const alumno = await Alumno.find().lean().populate('disciplina')
+
+    console.log(alumno)
 
     res.render('alumnos', { alumno });
    
@@ -545,14 +546,14 @@ const deleteProfesor = async ( req, res ) => {
 const deleteAlumno = async ( req, res ) => {
 
     try {
-        const deleteAlumno = await Alumno.deleteOne ( { _id: req.body.Alumno } )
+        const deleteAlumno = await Alumno.deleteOne ({_id: req.body.alumno} )
         req.flash('success', 'Se ha borrado el alumno.');
         console.log(deleteAlumno)
-        return res.redirect('/alumnosFP');
+        return res.redirect('/alumnos');
     } catch (error) {
         req.flash('error', 'No se ha podido borrar el alumno');
         console.log(error)
-        return res.redirect('/alumnosFP');
+        return res.redirect('/alumnos');
     }
 }
 

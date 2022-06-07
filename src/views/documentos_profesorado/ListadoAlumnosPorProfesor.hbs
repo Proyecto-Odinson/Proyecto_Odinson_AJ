@@ -1,0 +1,24 @@
+ 
+<h1>Listado de Alumnos por Profesor</h1>
+<ul>
+{{#each alumnos as | alumno |}}
+<li>
+    <table border="2">
+    <tr>
+        <p>PROFESOR:{{profesor.firstName}} {{profesor.lastName}} </p>
+        <td width="150">Alumno: {{alumno.firstName}} {{alumno.lastName}}</td>
+        <td width="150">DNI: {{alumno.DNI}}</td>
+        <td width="150">iDea: {{alumno.username}}</td>
+        <td width="150">phone: {{alumno.phone}}</td>
+    </tr>
+    </table>
+</li>
+
+{{/each}}
+</ul>
+</div>
+
+<ul>
+   <li><input type="button" value="Descargar"></li>
+</ul>
+

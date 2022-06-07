@@ -1,0 +1,22 @@
+ 
+<h1>Hojas de huelga</h1>
+<ul>
+{{#each alumnos as | alumno |}}
+<li>
+    <table border="2">
+    <tr>
+        <td width="150">Nombre: {{alumno.firstName}} {{alumno.lastName}}</td>
+        <td width="150">DNI: {{alumno.DNI}}</td>
+     
+    </tr>
+    </table>
+</li>
+
+{{/each}}
+</ul>
+</div>
+
+<ul>
+   <li><input type="button" value="Descargar"></li>
+</ul>
+

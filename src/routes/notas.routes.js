@@ -27,7 +27,7 @@ router.get('/AllNotasforProfesor/:id' , isLoggedIn, findAllNotas )
 
 // BORRAR Y MODIFICAR NOTAS FP
 
-router.delete('AllNotasforProfesor/:id' , isLoggedIn , deleteNota)
+router.delete('/AllNotasforProfesor/:id' , isLoggedIn , deleteNota)
 router.get('/mod_nota/:id', isLoggedIn, renderModificarNota)
 router.put('/mod_nota/:id', isLoggedIn, modifyNota )
 
@@ -55,7 +55,7 @@ router.get('/AllNotasforProfesor_ETAPA/:id' , isLoggedIn, findAllNotasETAPA )
 
 // BORRAR Y MODIFICAR NOTAS ETAPA
 
-router.delete('AllNotasforProfesor/:id' , isLoggedIn , deleteNotaETAPA)
+router.delete('/AllNotasforProfesor_ETAPA/:id' , isLoggedIn , deleteNotaETAPA)
 router.get('/mod_nota_ETAPA/:id', isLoggedIn, renderModificarNotaETAPA)
 router.put('/mod_nota_ETAPA/:id', isLoggedIn, modifyNotaETAPA )
 

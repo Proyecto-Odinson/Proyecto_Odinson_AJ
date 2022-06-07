@@ -1,0 +1,21 @@
+ 
+<h1>Etiquetas para mesas</h1>
+<ul>
+{{#each alumnos as | alumno |}}
+<li>
+    <table border="2">
+    <tr>
+        <td width="150">Nombre: {{alumno.firstName}}</td>
+        <td width="150">Apellidos: {{alumno.lastName}}</td>
+    </tr>
+    </table>
+</li>
+
+{{/each}}
+</ul>
+</div>
+
+<ul>
+   <li><input type="button" value="Descargar"></li>
+</ul>
+

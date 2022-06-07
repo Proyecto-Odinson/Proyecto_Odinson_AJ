@@ -21,3 +21,5 @@ const AsignaturasSchema = new Schema ({
 })
 
 module.exports = model('Asignatura', AsignaturasSchema)
+
+

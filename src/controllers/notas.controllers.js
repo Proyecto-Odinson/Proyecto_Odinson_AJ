@@ -1,7 +1,5 @@
 const Asignaturas = require("../models/asignaturas");
-const { Alumno , Profesor, User} = require('../models/users');
-const etapa = require('../models/etapa');
-const fp = require('../models/fp');
+const { Alumno } = require('../models/users');
 const notas = require("../models/notas");
 
 const autoProperties = require ('../lib/autoproperties')
@@ -47,9 +45,9 @@ const renderShowAsignaturaForProfesor = async (req, res) => {
 
     const asignaturaArray = asignaturas_Profesor.map( elemento => { return elemento._id})
 
-    const idAsignaturas = await Asignaturas.find({_id: asignaturaArray}).populate('fp');
+    const idAsignaturas = await Asignaturas.find({_id: {$in: asignaturaArray }}).populate('fp');
 
-    const AsignaturasJSON  =  JSON.parse(JSON.stringify(idAsignaturas));
+    const AsignaturasJSON = JSON.parse(JSON.stringify(idAsignaturas));
 
     res.render('ShowAsignaturasForProfesor', {asignaturas: AsignaturasJSON  }) ;
 }
@@ -142,7 +140,7 @@ const modifyNota = async (req, res) => {
 
 } 
 
-// ELIMINAR NOTA 
+// ELIMINAR NOTA PARA FP
 
 const deleteNota = async ( req, res ) => {
 
@@ -151,15 +149,15 @@ const deleteNota = async ( req, res ) => {
     if(profesor.tipoDisciplina !== 'FP') return res.redirect('/'); 
 
     try {
-        const deleteNota = await notas.deleteOne ({ _id: req.body.nota} )
+        const deleteNota = await notas.deleteOne ({_id: req.params.id} )
         req.flash('success', 'Se ha borrado la nota.');
         console.log(deleteNota)
-        return res.redirect('/ShowAsignaturasForProfesor');
+        return res.redirect('/');
 
     } catch (error) {
         req.flash('error', 'No se ha podido borrar la nota');
         console.log(error)
-        return res.redirect('/ShowAsignaturasForProfesor');
+        return res.redirect('/');
     }
 }
 
@@ -176,8 +174,6 @@ const findAllNotas = async (req, res ) => {
     const findAllNotas = await notas.find({asignatura: asignatura}).populate('asignatura').populate('alumno').populate('profesor');
 
     const notasJSON  =  JSON.parse(JSON.stringify(findAllNotas));
-
-    console.log(findAllNotas);
 
     res.render('AllNotasforProfesor' , {notas: notasJSON}) 
 }
@@ -203,7 +199,7 @@ const renderShowClaseETAPA = async (req,res) => {
 
     const idAsignaturas = await Asignaturas.find({_id: asignaturaArray});
 
-    const notasTutor = await notas.find({asignatura: idAsignaturas}).populate('alumno').populate('asignatura').populate('profesor').populate('fp')
+    const notasTutor = await notas.find({asignatura: idAsignaturas}).populate('alumno').populate('asignatura').populate('profesor').populate('etapa')
 
     const notastutorJSON  =  JSON.parse(JSON.stringify(notasTutor));
 
@@ -239,13 +235,13 @@ const renderCreateNoteETAPA = async (req, res) => {
     const Profesor = req.user
     const IDProfesor = Profesor._id
 
-     if(Profesor.tipoDisciplina !== 'Etapa') return res.redirect('/');  
+    if(Profesor.tipoDisciplina !== 'Etapa') return res.redirect('/');  
 
     const asignaturaID = req.params.id;
 
     const asignatura = await Asignaturas.findById(asignaturaID).lean().populate('etapa');
 
-    const alumnos = await Alumno.find({asignaturas: {$in: asignaturaID }})
+    const alumnos = await Alumno.find({asignaturas: {$in: asignaturaID } }) 
 
     const alumnosJSON  =  JSON.parse(JSON.stringify(alumnos));
 
@@ -320,24 +316,24 @@ const modifyNotaETAPA = async (req, res) => {
 
 } 
 
-// ELIMINAR NOTA 
+// ELIMINAR NOTA PARA ETAPA
 
 const deleteNotaETAPA = async ( req, res ) => {
 
     const profesor = req.user
 
-    if(profesor.tipoDisciplina !== 'FP') return res.redirect('/'); 
+    if(profesor.tipoDisciplina !== 'Etapa') return res.redirect('/'); 
 
     try {
-        const deleteNota = await notas.deleteOne ({ _id: req.body.nota} )
+        const deleteNota = await notas.deleteOne ({_id: req.params.id} )
         req.flash('success', 'Se ha borrado la nota.');
         console.log(deleteNota)
-        return res.redirect('/ShowAsignaturasForProfesor_ETAPA');
+        return res.redirect('/');
 
     } catch (error) {
         req.flash('error', 'No se ha podido borrar la nota');
         console.log(error)
-        return res.redirect('/ShowAsignaturasForProfesor_ETAPA');
+        return res.redirect('/');
     }
 }
 
@@ -353,9 +349,9 @@ const findAllNotasETAPA = async (req, res ) => {
 
     const findAllNotas = await notas.find({asignatura: asignatura}).populate('asignatura').populate('alumno').populate('profesor');
 
-    const notasJSON  =  JSON.parse(JSON.stringify(findAllNotas));
+    console.log(findAllNotas)
 
-    console.log(findAllNotas);
+    const notasJSON  =  JSON.parse(JSON.stringify(findAllNotas));
 
     res.render('AllNotasforProfesor_ETAPA' , {notas: notasJSON}) 
 }

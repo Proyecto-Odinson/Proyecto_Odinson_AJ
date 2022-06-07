@@ -1,0 +1,15 @@
+<h1>Notas de profesor</h1>
+<ul>
+{{#each notas as | nota |}}
+<li>
+    <table border="2">
+    <tr>
+        <td width="150">Nombre: {{nota.alumno.firstName}} {{nota.alumno.lastName}}</td>
+        <td width="150"> nota: {{nota.nota}}</td>
+        <td width="200"> Asignatura {{nota.asignatura.siglas}}</td>
+    </tr>
+    </table>
+
+</li>
+{{/each}}
+</ul>

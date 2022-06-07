@@ -5,6 +5,7 @@ const autoProperties = require('../lib/autoproperties');
 // RENDER PARA CREAR FESTIVO
 
 const renderCreateFestivo =  async (req, res) => {
+    
    res.render('registrar_festivo');
 }
 
@@ -14,7 +15,7 @@ const renderModificarFestivo = async (req, res) => {
 
     const festivoId = req.params.id;
 
-    const festivo = await festivos.findById(festivoId).lean();
+    const festivo = await festivos.findById(festivoId).lean().populate('city').populate('province');
 
     res.render('mod_festivo', { festivo });
 }
@@ -62,8 +63,13 @@ const updatedFestivo = async (req, res) => {
     const festivoToUpdate = await festivos.findById(FestivoId);
 
     if(newData.nacional) {
+
         delete festivoToUpdate.province
         delete festivoToUpdate.city
+    }
+
+    else {
+        delete festivoToUpdate.nacional
     }
 
     const festivoUpdated = autoProperties(festivoToUpdate, newData);
@@ -84,6 +90,7 @@ const deletedFestivo = async ( req, res ) => {
         req.flash('success', 'Se ha borrado el festivo.');
         console.log(deleteFestivo)
         return res.redirect('/festivos');
+        
     } catch (error) {
         req.flash('error', 'No se ha podido borrar el festivo');
         console.log(error)

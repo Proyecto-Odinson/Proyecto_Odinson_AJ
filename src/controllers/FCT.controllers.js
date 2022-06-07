@@ -2,7 +2,6 @@ const FCT = require("../models/FCT");
 const { Profesor, Alumno } = require('../models/users');
 const Empresa = require ('../models/empresa');
 const Asignatura = require('../models/asignaturas');
-const fct = require("../models/FCT");
 const etapa = require('../models/etapa');
 const { formatDate } = require('../lib/date');
 const fp = require("../models/fp");
@@ -173,7 +172,7 @@ const findFCT = async (req, res) => {
     if(!profesor.tutor || profesor.tutor.curso !== 2) return res.redirect('/');
     if(profesor.tipoDisciplina !== 'FP') return res.redirect('/');
 
-    const findFP_FCT = await FCT.find({fp: profesor.tutor.clase}).populate('alumno').populate('empresa').populate('tutor');
+    const findFP_FCT = await FCT.find({fp: profesor.tutor.clase}).populate('alumno').populate('empresa').populate('tutor').populate('fp');
 
     console.log(findFP_FCT);
         

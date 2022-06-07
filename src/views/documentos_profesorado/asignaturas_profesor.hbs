@@ -1,0 +1,12 @@
+<h1>Listado de asignaturas que impartes</h1>
+<ul>
+{{#each asignaturas as | asignatura |}}
+<li>
+   ASIGNATURA: {{asignatura.nombre_asignatura}}
+   <div>
+    <a href="/notas_finales/{{asignatura._id}}">Listar notas</a>
+   </div>
+    
+</li>
+{{/each}}
+</ul>

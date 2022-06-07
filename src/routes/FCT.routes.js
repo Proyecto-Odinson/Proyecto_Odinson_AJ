@@ -20,7 +20,7 @@ router.put('/mod_FCT/:id', isLoggedIn, updateFCT)
 router.delete('/alumnos_FCT' , isLoggedIn, deleteFCT)
 
 
-// VER ALUMNOS - PROFES FP
+// FUNCIONES: VER ALUMNOS - PROFES FP
 
 router.get('/profesFP', findProfesFP)
 router.get('/alumnos2FP', findAlumnos2ºFP)
