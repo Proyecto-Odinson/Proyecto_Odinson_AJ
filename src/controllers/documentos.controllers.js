@@ -220,6 +220,11 @@ const listEmpresas = async (req, res) => {
     res.render('documentos_profesorado/ListadoEmpresas', { empresas } ) 
 }
 
+const eventosReuniones = async (req, res) => {
+
+    res.render('eventosReuniones')
+}
+
 module.exports = {
     renderDocumentosProfesarado,
     AlumnosAutorizaciones,
@@ -232,4 +237,5 @@ module.exports = {
     ListadoForCurso,
     ListadoForProfesor,
     listEmpresas,
+    eventosReuniones
 }

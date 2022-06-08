@@ -1,4 +1,4 @@
-const Province = require('../models/Provinces');
+const Province = require('../models/provinces');
 const City = require('../models/cities');
 
     const findAllProvinceAsync = async (req, res) => {

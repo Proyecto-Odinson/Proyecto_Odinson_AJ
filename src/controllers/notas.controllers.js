@@ -69,7 +69,7 @@ const renderCreateNote = async (req, res) => {
 
     const alumnosJSON  =  JSON.parse(JSON.stringify(alumnos));
 
-    res.render('CrearNota', { asignatura , alumnos: alumnosJSON , profesor: IDProfesor}) ;
+    res.render('crearNota', { asignatura , alumnos: alumnosJSON , profesor: IDProfesor}) ;
 }
 
 // CREAR NOTA 

@@ -10,17 +10,13 @@
     
 <h1>Listado de Autorizaciones de su clase</h1>
 <ul>
-
-    <table>
-    <thead>
+    <table border="2"> 
         <tr>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>FP</th>
-            <th>Autorización</th>
+            <td>Nombre</td>
+            <td>Apellidos</td>
+            <td>FP</td>
+            <td>Autorización</td>
         </tr>
-    </thead>
-    <tbody>
         {{#each alumnos as | alumno |}}
         <tr>
             <td width="150">{{alumno.firstName}}</td>
@@ -28,9 +24,7 @@
             <td width="150">{{alumno.disciplina.nombre}}</td>
             <td width="200">{{#if alumno.autorizacion_datos}} Si {{else}} No {{/if}}</td>
         </tr>
-        {{/each}}
-    </tbody>
-    
+        {{/each}}    
     </table>
 
 </ul>

@@ -3,9 +3,9 @@ const router = express.Router();
 
 const {  renderDocumentosProfesarado , AlumnosAutorizaciones, ListarNotasFinales ,
     fichaAlumnos,  Asignaturas_Profesor, etiquetasMesas, firmaHuelga, InformeFCT ,
-    ListadoForProfesor , ListadoForCurso, listEmpresas} = require('../controllers/documentos.controllers');
+    ListadoForProfesor , ListadoForCurso, listEmpresas, eventosReuniones} = require('../controllers/documentos.controllers');
 
-const {  isLoggedIn } = require ('../middlewares/auth')
+const {  isLoggedIn } = require ('../middlewares/auth');
 
 // RENDER PARA DOCUMENTOS PROFESORADO
 
@@ -53,7 +53,9 @@ router.get('/ListadoAlumnosPorProfesor', isLoggedIn, ListadoForProfesor )
 
 router.get('/ListadoEmpresas', isLoggedIn, listEmpresas )
 
+// RENDER EVENTOS Y REUNIONES
 
+router.get('/eventosReuniones' , isLoggedIn , eventosReuniones)
 
 module.exports = router;
 

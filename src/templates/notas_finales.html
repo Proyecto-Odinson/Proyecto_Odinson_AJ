@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<h1>Listado de Notas de Profesor</h1>
+<ul>
+    <h1>Notas de profesor</h1>
+<ul>
+{{#each notas as | nota |}}
+<li>
+    <table border="2">
+    <tr>
+        <td width="150">Nombre: {{nota.alumno.firstName}} {{nota.alumno.lastName}}</td>
+        <td width="150"> nota: {{nota.nota}}</td>
+        <td width="200"> Asignatura {{nota.asignatura.siglas}}</td>
+    </tr>
+    </table>
+
+</li>
+{{/each}}
+
+</ul>
+</div>
+
+
